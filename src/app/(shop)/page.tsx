@@ -82,60 +82,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Brand Value Pillars */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="flex items-start gap-4 p-5 rounded-xl bg-white border border-neutral-200 shadow-2xs">
-            <div className="h-10 w-10 rounded-lg bg-emerald-100 text-[#005A36] flex items-center justify-center shrink-0">
-              <Award className="h-5 w-5" />
-            </div>
-            <div>
-              <h3 className="font-extrabold text-sm text-neutral-900">11 Sabores Legendarios</h3>
-              <p className="text-xs text-neutral-500 mt-1">
-                Desde el cítrico Lemon Pepper hasta el fuego del Atomic.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-4 p-5 rounded-xl bg-white border border-neutral-200 shadow-2xs">
-            <div className="h-10 w-10 rounded-lg bg-emerald-100 text-[#005A36] flex items-center justify-center shrink-0">
-              <ShieldCheck className="h-5 w-5" />
-            </div>
-            <div>
-              <h3 className="font-extrabold text-sm text-neutral-900">Cocinado al Instante</h3>
-              <p className="text-xs text-neutral-500 mt-1">
-                Nunca congelado ni recalentado, bañado frente a ti.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-4 p-5 rounded-xl bg-white border border-neutral-200 shadow-2xs">
-            <div className="h-10 w-10 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
-              <Sparkles className="h-5 w-5" />
-            </div>
-            <div>
-              <h3 className="font-extrabold text-sm text-neutral-900">Ranch Hecho en Casa</h3>
-              <p className="text-xs text-neutral-500 mt-1">
-                Receta secreta cremosa elaborada todos los días.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-4 p-5 rounded-xl bg-white border border-neutral-200 shadow-2xs">
-            <div className="h-10 w-10 rounded-lg bg-emerald-100 text-[#005A36] flex items-center justify-center shrink-0">
-              <Clock className="h-5 w-5" />
-            </div>
-            <div>
-              <h3 className="font-extrabold text-sm text-neutral-900">Entrega Rápida</h3>
-              <p className="text-xs text-neutral-500 mt-1">
-                Llega caliente y crujiente directo a tu puerta.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Products Section */}
+      {/* Featured Products Section - Directly below Hero for maximum CRO */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
           <div>
@@ -163,6 +110,61 @@ export default function HomePage() {
           {popularProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
+        </div>
+      </section>
+
+      {/* Brand Value Pillars / Trust Badges - Closing Section before Footer */}
+      <section className="border-t border-neutral-200/80 pt-12 pb-6">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="flex items-start gap-4 p-5 rounded-xl bg-white border border-neutral-200 shadow-2xs">
+              <div className="h-10 w-10 rounded-lg bg-emerald-100 text-[#005A36] flex items-center justify-center shrink-0">
+                <Award className="h-5 w-5" />
+              </div>
+              <div>
+                <h3 className="font-extrabold text-sm text-neutral-900">11 Sabores Legendarios</h3>
+                <p className="text-xs text-neutral-500 mt-1">
+                  Desde el cítrico Lemon Pepper hasta el fuego del Atomic.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4 p-5 rounded-xl bg-white border border-neutral-200 shadow-2xs">
+              <div className="h-10 w-10 rounded-lg bg-emerald-100 text-[#005A36] flex items-center justify-center shrink-0">
+                <ShieldCheck className="h-5 w-5" />
+              </div>
+              <div>
+                <h3 className="font-extrabold text-sm text-neutral-900">Cocinado al Instante</h3>
+                <p className="text-xs text-neutral-500 mt-1">
+                  Nunca congelado ni recalentado, bañado frente a ti.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4 p-5 rounded-xl bg-white border border-neutral-200 shadow-2xs">
+              <div className="h-10 w-10 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
+                <Sparkles className="h-5 w-5" />
+              </div>
+              <div>
+                <h3 className="font-extrabold text-sm text-neutral-900">Ranch Hecho en Casa</h3>
+                <p className="text-xs text-neutral-500 mt-1">
+                  Receta secreta cremosa elaborada todos los días.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4 p-5 rounded-xl bg-white border border-neutral-200 shadow-2xs">
+              <div className="h-10 w-10 rounded-lg bg-emerald-100 text-[#005A36] flex items-center justify-center shrink-0">
+                <Clock className="h-5 w-5" />
+              </div>
+              <div>
+                <h3 className="font-extrabold text-sm text-neutral-900">Entrega Rápida</h3>
+                <p className="text-xs text-neutral-500 mt-1">
+                  Llega caliente y crujiente directo a tu puerta.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </div>
