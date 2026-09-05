@@ -5,6 +5,7 @@ import Image from "next/image";
 import {
   Flame,
   Check,
+  CheckCircle2,
   Plus,
   Minus,
   AlertCircle,
@@ -12,6 +13,7 @@ import {
   ShoppingBag,
   Divide,
   Info,
+  Zap,
 } from "lucide-react";
 import { toast } from "sonner";
 import {
@@ -26,6 +28,10 @@ import { Badge } from "@/components/ui/badge";
 import { FLAVORS, DIPS, SIDES, DRINKS } from "@/lib/mock-data";
 import { useCartStore } from "@/store/cart-store";
 import { formatCurrency, getSpiceLevelBadge } from "@/lib/utils";
+import {
+  getProductDefaultConfig,
+  createFastTrackCartItem,
+} from "@/lib/product-defaults";
 import {
   productCustomizationSchema,
   generateCartItemHash,
@@ -163,6 +169,14 @@ export function ProductCustomizerModal({
         }));
         setSelectedFlavors(redistributed);
       }
+
+      // Auto-advance if product only allows 1 flavor
+      if (maxFlavors === 1) {
+        setTimeout(() => {
+          const dipsSection = document.getElementById("customizer-section-dips");
+          dipsSection?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }, 250);
+      }
     }
   };
 
@@ -283,6 +297,57 @@ export function ProductCustomizerModal({
   const firstError = !isValid
     ? validationResult.error.issues[0]?.message
     : null;
+
+  const defaultConfig = getProductDefaultConfig(product);
+
+  const handleFastTrackModalAdd = () => {
+    if (!defaultConfig) return;
+
+    if (typeof window !== "undefined" && "vibrate" in navigator) {
+      try {
+        navigator.vibrate?.(50);
+      } catch {
+        // Silently ignore
+      }
+    }
+
+    const fastTrackItem = createFastTrackCartItem(product, defaultConfig);
+    addItem(fastTrackItem);
+
+    toast.success("¡Agregado con combinación clásica!", {
+      description: `${product.name} (${defaultConfig.label}) en tu bolsa.`,
+      action: {
+        label: "Ver Bolsa",
+        onClick: () => openCart(),
+      },
+    });
+
+    onClose();
+  };
+
+  const handleSelectIncludedDip = (dipId: string) => {
+    setIncludedDip(dipId);
+    // Auto-advance after 250ms of visual feedback
+    setTimeout(() => {
+      const sidesSection = document.getElementById("customizer-section-sides");
+      sidesSection?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }, 250);
+  };
+
+  const getButtonGuidance = () => {
+    if (isValid) {
+      return `Agregar a Mi Bolsa • ${formatCurrency(grandTotal)}`;
+    }
+    if (piecesCount > 0 && selectedFlavors.length === 0) {
+      return "Falta elegir: Salsas";
+    }
+    if (piecesCount > 0 && assignedPieces !== piecesCount) {
+      return remainingPieces > 0
+        ? `Falta repartir: ${remainingPieces} pzas`
+        : `Exceso de piezas (+${Math.abs(remainingPieces)})`;
+    }
+    return `Falta: ${firstError || "Completar selecciones"}`;
+  };
 
   // Add to cart with deterministic hash
   const handleAddToCart = () => {
@@ -406,9 +471,38 @@ export function ProductCustomizerModal({
 
         {/* Scrollable Content */}
         <div className="p-6 overflow-y-auto space-y-6 flex-1 text-neutral-800 bg-white">
+          {/* Fast-Track 1-Click Express Banner */}
+          {defaultConfig && (
+            <div className="p-4 rounded-xl bg-gradient-to-r from-amber-50 to-emerald-50 border border-amber-300 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="space-y-0.5">
+                <span className="inline-flex items-center gap-1 text-[11px] font-black uppercase tracking-wider text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded-md">
+                  <Zap className="h-3 w-3 fill-amber-600 text-amber-600" />
+                  🚀 ¿Tienes prisa? Combinación favorita
+                </span>
+                <p className="text-xs font-bold text-neutral-900">
+                  {defaultConfig.label}
+                </p>
+                <p className="text-[11px] text-neutral-500">
+                  Salsas icónicas y aderezo artesanal seleccionados por los expertos.
+                </p>
+              </div>
+
+              <Button
+                type="button"
+                variant="gold"
+                size="sm"
+                onClick={handleFastTrackModalAdd}
+                className="font-black text-xs shrink-0 shadow-md flex items-center gap-1.5 cursor-pointer hover:scale-102 transition-transform"
+              >
+                <Zap className="h-3.5 w-3.5 fill-current" />
+                <span>Agregar clásica • {formatCurrency(product.basePrice)}</span>
+              </Button>
+            </div>
+          )}
+
           {/* SECTION 1: PIECE SPLITTING & FLAVORS */}
           {piecesCount > 0 && (
-            <div className="space-y-4">
+            <div id="customizer-section-flavors" className="space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-neutral-100">
                 <div>
                   <h3 className="text-base font-black uppercase text-neutral-900 flex items-center gap-1.5">
@@ -420,18 +514,32 @@ export function ProductCustomizerModal({
                   </p>
                 </div>
 
-                {selectedFlavors.length > 1 && (
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={handleSplitEvenly}
-                    className="text-xs font-bold border-emerald-600 text-[#005A36] hover:bg-emerald-50 self-start"
-                  >
-                    <Divide className="h-3.5 w-3.5 mr-1" />
-                    Repartir en partes iguales
-                  </Button>
-                )}
+                <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
+                  {/* Dynamic remaining selection indicator */}
+                  {selectedFlavors.length < maxFlavors ? (
+                    <Badge className="bg-amber-100 text-amber-900 border border-amber-300 text-xs font-bold">
+                      Selecciona {maxFlavors - selectedFlavors.length} más ({selectedFlavors.length}/{maxFlavors})
+                    </Badge>
+                  ) : (
+                    <Badge className="bg-emerald-100 text-emerald-900 border border-emerald-300 text-xs font-bold flex items-center gap-1">
+                      <Check className="h-3 w-3" />
+                      ¡Listo! ({selectedFlavors.length}/{maxFlavors})
+                    </Badge>
+                  )}
+
+                  {selectedFlavors.length > 1 && (
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={handleSplitEvenly}
+                      className="text-xs font-bold border-emerald-600 text-[#005A36] hover:bg-emerald-50 cursor-pointer"
+                    >
+                      <Divide className="h-3.5 w-3.5 mr-1" />
+                      Repartir parejo
+                    </Button>
+                  )}
+                </div>
               </div>
 
               {/* Pieces Tracker Banner */}
@@ -600,7 +708,7 @@ export function ProductCustomizerModal({
           )}
 
           {/* SECTION 2: DIPS (ADEREZOS) */}
-          <div className="pt-4 border-t border-neutral-200 space-y-3">
+          <div id="customizer-section-dips" className="pt-4 border-t border-neutral-200 space-y-3">
             <div>
               <h3 className="text-base font-black uppercase text-neutral-900 flex items-center justify-between">
                 <span>2. Aderezo Incluido (Obligatorio)</span>
@@ -616,7 +724,7 @@ export function ProductCustomizerModal({
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
               <button
                 type="button"
-                onClick={() => setIncludedDip("ranch")}
+                onClick={() => handleSelectIncludedDip("ranch")}
                 className={`p-3 rounded-xl border text-left flex items-center justify-between cursor-pointer ${
                   includedDip === "ranch"
                     ? "border-[#005A36] bg-emerald-50/70 ring-2 ring-[#005A36]/30 font-bold"
@@ -632,7 +740,7 @@ export function ProductCustomizerModal({
 
               <button
                 type="button"
-                onClick={() => setIncludedDip("blue-cheese")}
+                onClick={() => handleSelectIncludedDip("blue-cheese")}
                 className={`p-3 rounded-xl border text-left flex items-center justify-between cursor-pointer ${
                   includedDip === "blue-cheese"
                     ? "border-[#005A36] bg-emerald-50/70 ring-2 ring-[#005A36]/30 font-bold"
@@ -648,7 +756,7 @@ export function ProductCustomizerModal({
 
               <button
                 type="button"
-                onClick={() => setIncludedDip("none")}
+                onClick={() => handleSelectIncludedDip("none")}
                 className={`p-3 rounded-xl border text-left flex items-center justify-between cursor-pointer ${
                   includedDip === "none"
                     ? "border-neutral-700 bg-neutral-100 ring-2 ring-neutral-400 font-bold"
@@ -709,7 +817,7 @@ export function ProductCustomizerModal({
           </div>
 
           {/* SECTION 3: SIDES & COMPLEMENTS */}
-          <div className="pt-4 border-t border-neutral-200 space-y-3">
+          <div id="customizer-section-sides" className="pt-4 border-t border-neutral-200 space-y-3">
             <div>
               <h3 className="text-base font-black uppercase text-neutral-900">
                 3. Acompañamientos & Extras
@@ -755,7 +863,7 @@ export function ProductCustomizerModal({
           </div>
 
           {/* SECTION 4: INSTRUCTIONS */}
-          <div className="pt-4 border-t border-neutral-200">
+          <div id="customizer-section-instructions" className="pt-4 border-t border-neutral-200">
             <label className="block text-xs font-black uppercase tracking-wider text-neutral-700 mb-1">
               Instrucciones Especiales para Cocina (Opcional)
             </label>
@@ -770,8 +878,8 @@ export function ProductCustomizerModal({
           </div>
         </div>
 
-        {/* Modal Footer with Validation Banner & Action */}
-        <div className="p-4 sm:p-5 border-t border-neutral-200 bg-neutral-50 shrink-0 space-y-3">
+        {/* Sticky Modal Footer with iOS Safe Area support */}
+        <div className="p-4 sm:p-5 border-t border-neutral-200 bg-neutral-50 shrink-0 space-y-3 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-[0_-4px_16px_rgba(0,0,0,0.06)]">
           {/* Validation Warning Alert if not valid */}
           {!isValid && (
             <div className="flex items-center gap-2 p-2.5 rounded-lg bg-amber-50 border border-amber-300 text-amber-900 text-xs font-bold animate-pulse">
@@ -780,45 +888,42 @@ export function ProductCustomizerModal({
             </div>
           )}
 
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center justify-between gap-3 sm:gap-4">
             {/* Quantity Stepper */}
-            <div className="flex items-center border border-neutral-300 rounded-xl bg-white overflow-hidden shadow-2xs">
+            <div className="flex items-center border border-neutral-300 rounded-xl bg-white overflow-hidden shadow-2xs shrink-0">
               <button
                 type="button"
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
                 className="h-11 w-10 flex items-center justify-center text-neutral-600 hover:bg-neutral-100 cursor-pointer"
+                aria-label="Disminuir cantidad"
               >
                 <Minus className="h-4 w-4" />
               </button>
-              <span className="w-9 text-center text-sm font-black">{quantity}</span>
+              <span className="w-8 text-center text-sm font-black">{quantity}</span>
               <button
                 type="button"
                 onClick={() => setQuantity(quantity + 1)}
                 className="h-11 w-10 flex items-center justify-center text-neutral-600 hover:bg-neutral-100 cursor-pointer"
+                aria-label="Aumentar cantidad"
               >
                 <Plus className="h-4 w-4" />
               </button>
             </div>
 
-            {/* Total & Submit Button */}
-            <div className="flex-1 flex items-center justify-end gap-4">
-              <div className="text-right">
-                <span className="text-[10px] uppercase font-bold text-neutral-400 block leading-none">
-                  Total Orden
-                </span>
-                <span className="text-xl font-black text-neutral-950">
-                  {formatCurrency(grandTotal)}
-                </span>
-              </div>
-
+            {/* Total & Submit Button with Proactive Guidance */}
+            <div className="flex-1 flex items-center justify-end gap-3">
               <Button
-                variant="gold"
+                variant={isValid ? "gold" : "outline"}
                 size="lg"
                 disabled={!isValid}
                 onClick={handleAddToCart}
-                className="h-12 px-6 font-black text-base shadow-lg disabled:opacity-40 disabled:cursor-not-allowed"
+                className={`h-12 px-4 sm:px-6 font-black text-sm sm:text-base shadow-lg transition-all cursor-pointer ${
+                  isValid
+                    ? "bg-[#FFC72C] hover:bg-[#e5b224] text-neutral-950 hover:scale-101"
+                    : "border-amber-300 bg-amber-50 text-amber-900 opacity-90 cursor-not-allowed"
+                }`}
               >
-                Agregar a la Bolsa
+                <span>{getButtonGuidance()}</span>
               </Button>
             </div>
           </div>

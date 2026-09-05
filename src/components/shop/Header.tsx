@@ -17,11 +17,16 @@ import {
   Tag,
 } from "lucide-react";
 import { useOrderContextStore } from "@/store/order-context-store";
+import dynamic from "next/dynamic";
 import { useCartStore } from "@/store/cart-store";
 import { formatCurrency } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { BranchSelectorModal } from "./BranchSelectorModal";
+
+const BranchSelectorModal = dynamic(
+  () => import("./BranchSelectorModal").then((mod) => mod.BranchSelectorModal),
+  { ssr: false }
+);
 
 const NAVIGATION_LINKS = [
   { name: "Alitas & Boneless", href: "/menu?cat=alitas" },
@@ -36,8 +41,13 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const { orderType, selectedBranch, deliveryAddress, openSelectorModal } =
-    useOrderContextStore();
+  const {
+    orderType,
+    selectedBranch,
+    deliveryAddress,
+    openSelectorModal,
+    isSelectorModalOpen,
+  } = useOrderContextStore();
 
   const { items, openCart, getSubtotal } = useCartStore();
 
@@ -297,8 +307,8 @@ export function Header() {
         )}
       </header>
 
-      {/* Global Interactive Branch & Delivery Selector Modal */}
-      <BranchSelectorModal />
+      {/* Global Interactive Branch & Delivery Selector Modal - Lazily loaded on demand */}
+      {isSelectorModalOpen && <BranchSelectorModal />}
     </>
   );
 }

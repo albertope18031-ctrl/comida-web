@@ -1,8 +1,18 @@
 import type { Metadata, Viewport } from "next";
+import dynamic from "next/dynamic";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "sonner";
-import { CartDrawer } from "@/components/shop/CartDrawer";
+import { ServiceWorkerRegister } from "@/components/pwa/ServiceWorkerRegister";
 import "./globals.css";
+
+// Dynamic imports para optimizar First Load JS y LCP (separados en chunks asíncronos)
+const CartDrawer = dynamic(
+  () => import("@/components/shop/CartDrawer").then((mod) => mod.CartDrawer)
+);
+
+const InstallPwaBanner = dynamic(
+  () => import("@/components/pwa/InstallPwaBanner").then((mod) => mod.InstallPwaBanner)
+);
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,12 +53,18 @@ export const metadata: Metadata = {
     "Mango Habanero",
     "Papas sazonadas",
     "Wings",
+    "PWA",
   ],
   authors: [{ name: "Wingstop México" }],
   creator: "Wingstop México",
   publisher: "Wingstop México",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Comida App",
+  },
   formatDetection: {
-    telephone: true,
+    telephone: false,
     address: true,
     email: true,
   },
@@ -88,7 +104,14 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icons/icon-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icons/icon-512x512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [
+      { url: "/icons/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
 };
 
@@ -102,6 +125,8 @@ export default function RootLayout({
       <body className="min-h-screen bg-neutral-50 text-neutral-900 antialiased flex flex-col selection:bg-[#FFC72C] selection:text-neutral-900">
         {children}
         <CartDrawer />
+        <InstallPwaBanner />
+        <ServiceWorkerRegister />
         <Toaster
           richColors
           position="top-right"

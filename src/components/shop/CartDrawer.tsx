@@ -20,6 +20,7 @@ import { useOrderContextStore } from "@/store/order-context-store";
 import { formatCurrency } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { WhatsAppOrderButton } from "@/components/shop/WhatsAppOrderButton";
 
 export function CartDrawer() {
   const {
@@ -309,6 +310,22 @@ export function CartDrawer() {
                   <ArrowRight className="h-5 w-5" />
                 </Link>
               </Button>
+
+              {/* Canal de cierre alternativo de alta conversión vía WhatsApp */}
+              <div className="space-y-1.5 pt-1">
+                <div className="relative flex py-1 items-center">
+                  <div className="flex-grow border-t border-neutral-200" />
+                  <span className="flex-shrink mx-2 text-[10px] font-bold uppercase tracking-wider text-neutral-400">
+                    O pide directo
+                  </span>
+                  <div className="flex-grow border-t border-neutral-200" />
+                </div>
+
+                <WhatsAppOrderButton
+                  label="Completar orden vía WhatsApp"
+                  onClick={closeCart}
+                />
+              </div>
             </div>
           )}
         </aside>

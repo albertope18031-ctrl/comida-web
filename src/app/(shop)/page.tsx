@@ -19,6 +19,8 @@ export default function HomePage() {
             alt="Alitas de fondo"
             fill
             priority
+            sizes="100vw"
+            quality={85}
             className="object-cover"
           />
         </div>
@@ -257,6 +259,7 @@ export default function HomePage() {
               src="https://images.unsplash.com/photo-1514944298352-f43577d46816?q=80&w=800&auto=format&fit=crop"
               alt="Crew pack de alitas"
               fill
+              sizes="(max-width: 768px) 100vw, 384px"
               className="object-cover"
             />
           </div>

@@ -30,6 +30,14 @@ export interface DrinkOption {
   price: number;
 }
 
+export interface ProductDefaultConfig {
+  label: string;
+  badge?: string;
+  flavorIds: string[];
+  includedDipId: string;
+  extraPrice?: number;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -42,6 +50,9 @@ export interface Product {
   imageUrl: string;
   isCombo?: boolean;
   popular?: boolean;
+  default_configuration?: ProductDefaultConfig;
+  socialBadge?: "mas_pedido" | "favorito" | "recomendacion_chef";
+  socialProofText?: string;
 }
 
 export interface SelectedFlavor {
