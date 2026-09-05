@@ -3,8 +3,7 @@ import Image from "next/image";
 import { Flame, ArrowRight, Sparkles, Award, ShieldCheck, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/shop/ProductCard";
-import { PRODUCTS, FLAVORS } from "@/lib/mock-data";
-import { getSpiceLevelBadge } from "@/lib/utils";
+import { PRODUCTS } from "@/lib/mock-data";
 
 export default function HomePage() {
   const popularProducts = PRODUCTS.filter((p) => p.popular);
@@ -60,7 +59,7 @@ export default function HomePage() {
                 className="border-emerald-500 bg-emerald-950/40 text-white hover:bg-emerald-900 hover:text-white font-bold"
                 asChild
               >
-                <a href="#sabores">Conocer los 11 Sabores</a>
+                <Link href="/menu">Ver Menú Completo</Link>
               </Button>
             </div>
 
@@ -164,105 +163,6 @@ export default function HomePage() {
           {popularProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
-        </div>
-      </section>
-
-      {/* The 11 Flavors Heat-O-Meter Section */}
-      <section id="sabores" className="bg-[#121212] text-white py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
-            <span className="text-xs uppercase font-extrabold text-[#FFC72C] tracking-widest">
-              NUESTRA IDENTIDAD
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tight">
-              Los 11 Sabores Legendarios
-            </h2>
-            <p className="text-sm text-neutral-400">
-              ¿Dulce y suave, ahumado o fuego puro? Conoce nuestra escala de picor oficial de 0 a 5.
-            </p>
-
-            <div className="pt-4 max-w-md mx-auto">
-              <div className="h-2.5 w-full rounded-full heat-gradient" />
-              <div className="flex justify-between text-[11px] text-neutral-400 font-bold mt-1.5">
-                <span>0 • Sin Picante</span>
-                <span>2 • Medio</span>
-                <span>4 • Muy Picoso</span>
-                <span>5 • Atómico 🔥</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {FLAVORS.map((flavor) => {
-              const spiceBadge = getSpiceLevelBadge(flavor.heatLevel);
-              return (
-                <div
-                  key={flavor.id}
-                  className="p-5 rounded-xl bg-neutral-900 border border-neutral-800 hover:border-[#005A36] transition-colors flex flex-col justify-between space-y-3"
-                >
-                  <div>
-                    <div className="flex items-center justify-between gap-2 mb-1.5">
-                      <h3 className="font-black text-lg text-white">{flavor.name}</h3>
-                      {flavor.badge && (
-                        <span className="text-[10px] font-black bg-[#FFC72C] text-neutral-950 px-2 py-0.5 rounded">
-                          {flavor.badge}
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-xs text-neutral-400 leading-relaxed">
-                      {flavor.description}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center justify-between pt-3 border-t border-neutral-800 text-xs">
-                    <span
-                      className={`px-2 py-0.5 rounded-full font-bold text-[11px] border ${spiceBadge.bg} ${spiceBadge.color}`}
-                    >
-                      Nivel {flavor.heatLevel}: {spiceBadge.label}
-                    </span>
-                    <span className="text-neutral-500 font-medium text-[11px]">
-                      {flavor.isDryRub ? "Rub Seco" : "Salsa Líquida"}
-                    </span>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Promo Call To Action */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl bg-[#005A36] text-white p-8 sm:p-12 relative overflow-hidden shadow-xl flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="space-y-4 max-w-xl z-10">
-            <span className="text-xs font-black uppercase tracking-widest text-[#FFC72C]">
-              ¿Reunión o Partido?
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-black uppercase leading-tight">
-              Pide un Crew Pack de 30 Piezas con Papas y Salsas
-            </h2>
-            <p className="text-sm text-emerald-100">
-              Comparte con tus amigos hasta 4 sabores diferentes, 2 órdenes grandes de papas sazonadas y aderezos ranch incluidos.
-            </p>
-            <Button
-              variant="gold"
-              size="lg"
-              className="font-black text-base mt-2"
-              asChild
-            >
-              <Link href="/menu">Pedir Combo Familiar</Link>
-            </Button>
-          </div>
-
-          <div className="relative h-64 w-full md:w-96 rounded-2xl overflow-hidden shadow-2xl z-10">
-            <Image
-              src="https://images.unsplash.com/photo-1514944298352-f43577d46816?q=80&w=800&auto=format&fit=crop"
-              alt="Crew pack de alitas"
-              fill
-              sizes="(max-width: 768px) 100vw, 384px"
-              className="object-cover"
-            />
-          </div>
         </div>
       </section>
     </div>
