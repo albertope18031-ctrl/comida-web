@@ -70,7 +70,7 @@ export function filterProductsByCategory(
  * calculando el centrado vertical exacto en el espacio visible útil de la pantalla
  * (compensando la altura del Header fijo y cualquier barra flotante inferior).
  */
-export function scrollToCenteredProductCard() {
+export function scrollToCenteredProductCard(onlyIfOutOfView: boolean = false) {
   if (typeof window === "undefined") return;
 
   // 1. Obtener altura real del Header fijo (cerrado)
@@ -90,22 +90,40 @@ export function scrollToCenteredProductCard() {
 
   if (!card) return;
 
-  // 4. Medir posición superior absoluta y altura de la tarjeta
+  // 4. Reiniciar siempre el carrusel horizontal a la primera tarjeta
+  const carouselContainer =
+    card.closest("[data-carousel-container]") || card.parentElement;
+  if (carouselContainer) {
+    carouselContainer.scrollTo({ left: 0, behavior: "smooth" });
+  }
+
+  // 5. Medir posición superior absoluta y altura de la tarjeta
   const rect = card.getBoundingClientRect();
   const cardAbsoluteTop = rect.top + window.scrollY;
   const cardHeight = rect.height;
 
-  // 5. Espacio visible útil (pantalla menos Header y barra inferior)
+  // 6. Espacio visible útil (pantalla menos Header y barra inferior)
   const windowHeight = window.innerHeight;
   const availableHeight = windowHeight - headerHeight - bottomBarHeight;
 
-  // 6. Centrado vertical: dividir la diferencia en dos partes iguales
+  // 7. Si onlyIfOutOfView es true y la tarjeta ya se encuentra cómodamente visible,
+  // evitamos saltos verticales o rebotes innecesarios
+  if (onlyIfOutOfView) {
+    const isComfortablyVisible =
+      rect.top >= headerHeight - 15 &&
+      rect.bottom <= windowHeight - bottomBarHeight + 15;
+    if (isComfortablyVisible) {
+      return;
+    }
+  }
+
+  // 8. Centrado vertical: dividir la diferencia en dos partes iguales
   let verticalMargin = 16;
   if (cardHeight < availableHeight) {
     verticalMargin = (availableHeight - cardHeight) / 2;
   }
 
-  // 7. Punto de scroll exacto compensando Header y margen
+  // 9. Punto de scroll exacto compensando Header y margen
   const targetScrollY = Math.max(
     0,
     cardAbsoluteTop - headerHeight - verticalMargin
@@ -115,11 +133,4 @@ export function scrollToCenteredProductCard() {
     top: targetScrollY,
     behavior: "smooth",
   });
-
-  // 8. Reiniciar el carrusel horizontal a la primera tarjeta
-  const carouselContainer =
-    card.closest("[data-carousel-container]") || card.parentElement;
-  if (carouselContainer) {
-    carouselContainer.scrollTo({ left: 0, behavior: "smooth" });
-  }
 }

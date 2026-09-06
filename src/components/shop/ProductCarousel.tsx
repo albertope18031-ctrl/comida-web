@@ -146,7 +146,7 @@ export function ProductCarousel({
   }, [children, products]);
 
   return (
-    <div className={`relative group/carousel ${className}`}>
+    <div className={`relative group/carousel min-h-[530px] sm:min-h-[555px] md:min-h-[580px] ${className}`}>
       {/* Flecha Flotante Izquierda (Desktop / Tablet) */}
       <button
         type="button"
@@ -162,11 +162,11 @@ export function ProductCarousel({
         <ChevronLeft className="h-6 w-6" strokeWidth={2.5} />
       </button>
 
-      {/* Contenedor Cover Flow con Scroll Snap Centrado & Padding Móvil */}
+      {/* Contenedor Cover Flow con Scroll Snap Centrado, Altura Estable & Padding Móvil */}
       <div
         ref={scrollRef}
         data-carousel-container
-        className="flex items-stretch gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth py-3 md:py-4 px-[8.5vw] scroll-px-[8.5vw] md:px-0 md:scroll-px-0 [&::-webkit-scrollbar]:hidden [scrollbar-width:none] [-ms-overflow-style:none] -mx-4 sm:-mx-6 md:mx-0"
+        className="flex items-stretch gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth py-3 md:py-4 px-[8.5vw] scroll-px-[8.5vw] md:px-0 md:scroll-px-0 [&::-webkit-scrollbar]:hidden [scrollbar-width:none] [-ms-overflow-style:none] -mx-4 sm:-mx-6 md:mx-0 min-h-[505px] sm:min-h-[530px] md:min-h-[555px]"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {products
@@ -176,7 +176,7 @@ export function ProductCarousel({
                 <div
                   key={product.id}
                   data-carousel-item
-                  className={`w-[78vw] sm:w-[320px] md:w-[350px] flex-shrink-0 snap-center flex flex-col transition-all duration-300 ease-out transform-gpu origin-center rounded-3xl ${
+                  className={`w-[78vw] sm:w-[320px] md:w-[350px] h-[480px] sm:h-[505px] md:h-[530px] flex-shrink-0 snap-center flex flex-col transition-all duration-300 ease-out transform-gpu origin-center rounded-3xl ${
                     isActive
                       ? "scale-100 opacity-100 z-10 shadow-2xl ring-2 ring-transparent"
                       : "scale-[0.92] opacity-75 shadow-sm md:scale-100 md:opacity-100 md:shadow-none md:z-0"
@@ -192,7 +192,7 @@ export function ProductCarousel({
                 <div
                   key={index}
                   data-carousel-item
-                  className={`w-[78vw] sm:w-[320px] md:w-[350px] flex-shrink-0 snap-center flex flex-col transition-all duration-300 ease-out transform-gpu origin-center rounded-3xl ${
+                  className={`w-[78vw] sm:w-[320px] md:w-[350px] h-[480px] sm:h-[505px] md:h-[530px] flex-shrink-0 snap-center flex flex-col transition-all duration-300 ease-out transform-gpu origin-center rounded-3xl ${
                     isActive
                       ? "scale-100 opacity-100 z-10 shadow-2xl ring-2 ring-transparent"
                       : "scale-[0.92] opacity-75 shadow-sm md:scale-100 md:opacity-100 md:shadow-none md:z-0"
@@ -219,13 +219,13 @@ export function ProductCarousel({
         <ChevronRight className="h-6 w-6" strokeWidth={2.5} />
       </button>
 
-      {/* Indicadores de Paginación Táctil Móvil (Pills) */}
-      {itemCount > 1 && (
-        <div
-          className="flex md:hidden justify-center items-center gap-1.5 mt-2"
-          aria-label="Indicadores de carrusel"
-        >
-          {Array.from({ length: itemCount }).map((_, idx) => (
+      {/* Indicadores de Paginación Táctil Móvil (Pills) con altura reservada constante */}
+      <div
+        className="flex md:hidden justify-center items-center gap-1.5 mt-2 h-3"
+        aria-label="Indicadores de carrusel"
+      >
+        {itemCount > 1 &&
+          Array.from({ length: itemCount }).map((_, idx) => (
             <button
               key={idx}
               type="button"
@@ -238,8 +238,7 @@ export function ProductCarousel({
               aria-label={`Ir al producto ${idx + 1}`}
             />
           ))}
-        </div>
-      )}
+      </div>
     </div>
   );
 }

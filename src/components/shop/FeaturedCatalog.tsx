@@ -47,10 +47,11 @@ export function FeaturedCatalog() {
         const newUrl = slug === "all" ? "/" : `/?category=${slug}`;
         window.history.replaceState({}, "", newUrl);
 
-        // Retardo breve para permitir que React renderice la nueva tarjeta antes del cálculo de centrado
+        // Si la tarjeta ya se encuentra en pantalla, solo resetea el carrusel horizontal a la 1ra tarjeta;
+        // si está fuera de vista, ejecuta el centrado suave
         setTimeout(() => {
-          scrollToCenteredProductCard();
-        }, 80);
+          scrollToCenteredProductCard(true);
+        }, 50);
       }
     });
   };

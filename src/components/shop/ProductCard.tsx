@@ -59,11 +59,11 @@ export function ProductCard({ product }: ProductCardProps) {
 
   return (
     <>
-      <div className="group relative flex flex-col h-full overflow-hidden rounded-3xl border-2 border-[#1C1917]/10 bg-white shadow-sm transition-all duration-300 hover:shadow-2xl hover:border-[#FF3823]/50">
-        {/* Product Image */}
+      <div className="group relative flex flex-col h-full w-full overflow-hidden rounded-3xl border-2 border-[#1C1917]/10 bg-white shadow-sm transition-all duration-300 hover:shadow-2xl hover:border-[#FF3823]/50 select-none">
+        {/* Product Image - Fixed aspect ratio & clean cropping across all cards */}
         <Link
           href={`/product/${product.slug}`}
-          className="relative aspect-4/3 w-full overflow-hidden bg-neutral-100 block"
+          className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-neutral-100 block"
         >
           <Image
             src={product.imageUrl}
@@ -117,15 +117,16 @@ export function ProductCard({ product }: ProductCardProps) {
           )}
         </Link>
 
-        {/* Card Content */}
-        <div className="flex flex-1 flex-col p-5 sm:p-6">
-          <div className="flex-1">
-            <div className="flex items-center gap-1.5 text-xs font-heading font-black text-[#FF3823] uppercase tracking-wider mb-1.5">
-              <span>{product.category}</span>
+        {/* Card Content - Vertical flexbox with distributed slots */}
+        <div className="flex flex-1 flex-col p-4 sm:p-5 justify-between">
+          <div className="flex flex-col">
+            {/* Category & Flavors Row - Consistent reserved height */}
+            <div className="h-5 flex items-center gap-1.5 text-xs font-heading font-black text-[#FF3823] uppercase tracking-wider mb-1">
+              <span className="truncate">{product.category}</span>
               {product.maxFlavorsAllowed > 0 && (
                 <>
-                  <span className="text-[#1C1917]/40">•</span>
-                  <span className="flex items-center gap-0.5 text-[#588157]">
+                  <span className="text-[#1C1917]/40 shrink-0">•</span>
+                  <span className="flex items-center gap-0.5 text-[#588157] shrink-0 text-[11px]">
                     <Flame className="h-3 w-3" />
                     Hasta {product.maxFlavorsAllowed} salsas
                   </span>
@@ -133,37 +134,43 @@ export function ProductCard({ product }: ProductCardProps) {
               )}
             </div>
 
-            <Link href={`/product/${product.slug}`}>
-              <h3 className="font-heading font-black text-xl text-[#1C1917] leading-tight group-hover:text-[#FF3823] transition-colors">
+            {/* Product Title - Uniform reserved height for up to 2 lines */}
+            <Link href={`/product/${product.slug}`} className="block">
+              <h3 className="font-heading font-black text-lg sm:text-xl text-[#1C1917] leading-snug group-hover:text-[#FF3823] transition-colors line-clamp-2 h-12 sm:h-14 flex items-start">
                 {product.name}
               </h3>
             </Link>
 
-            {/* Social Proof Micro-text */}
-            {socialProof.text && (
-              <p className="mt-1.5 flex items-center gap-1 text-[11px] font-bold text-[#1C1917]/70 leading-tight">
-                <Star className="h-3 w-3 fill-[#FFB703] text-[#FFB703] shrink-0" />
-                <span>{socialProof.text}</span>
-              </p>
-            )}
+            {/* Social Proof Micro-text - Fixed reserved height slot (prevents layout shift when absent) */}
+            <div className="h-5 mt-1 flex items-center">
+              {socialProof.text ? (
+                <p className="flex items-center gap-1 text-[11px] font-bold text-[#1C1917]/70 leading-tight truncate">
+                  <Star className="h-3 w-3 fill-[#FFB703] text-[#FFB703] shrink-0" />
+                  <span className="truncate">{socialProof.text}</span>
+                </p>
+              ) : (
+                <span className="invisible text-[11px] select-none" aria-hidden="true">&nbsp;</span>
+              )}
+            </div>
 
-            <p className="mt-2 text-xs font-sans text-[#1C1917]/70 line-clamp-2 leading-relaxed">
+            {/* Description - Fixed reserved height clamped to 2 lines */}
+            <p className="mt-1.5 text-xs font-sans text-[#1C1917]/70 line-clamp-2 leading-relaxed h-9 sm:h-10 overflow-hidden">
               {product.description}
             </p>
           </div>
 
-          {/* Price & Action Row */}
-          <div className="mt-5 flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-neutral-100">
-            <div>
+          {/* Price & Action Row - Anchored to bottom with mt-auto */}
+          <div className="mt-auto pt-3 sm:pt-4 border-t border-neutral-100 flex items-center justify-between gap-2">
+            <div className="shrink-0">
               <span className="text-[10px] uppercase font-bold text-[#1C1917]/50 block leading-none">
                 Precio
               </span>
-              <span className="text-2xl font-display text-[#1C1917]">
+              <span className="text-xl sm:text-2xl font-display text-[#1C1917] whitespace-nowrap">
                 {formatCurrency(product.basePrice)}
               </span>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-1 justify-end">
               {/* Fast-Track 1-Click Quick Add Button */}
               {defaultConfig && (
                 <Button
@@ -171,7 +178,7 @@ export function ProductCard({ product }: ProductCardProps) {
                   variant="outline"
                   size="sm"
                   onClick={handleFastTrack}
-                  className="border-2 border-[#FFB703] bg-[#FFB703]/20 text-[#1C1917] hover:bg-[#FFB703] font-heading font-black text-xs flex items-center gap-1 shadow-2xs rounded-xl px-2.5 h-10 cursor-pointer active:scale-95 transition-all"
+                  className="border-2 border-[#FFB703] bg-[#FFB703]/20 text-[#1C1917] hover:bg-[#FFB703] font-heading font-black text-xs flex items-center gap-1 shadow-2xs rounded-xl px-2.5 h-10 cursor-pointer active:scale-95 transition-all shrink-0"
                   title={`Pedir directo: ${defaultConfig.label}`}
                 >
                   <Zap className="h-3.5 w-3.5 fill-[#FFB703] text-[#1C1917]" />
@@ -180,14 +187,16 @@ export function ProductCard({ product }: ProductCardProps) {
                 </Button>
               )}
 
-              {/* Standard CTA Button */}
+              {/* Standard CTA Button - Expands when Fast-Track is absent */}
               <Button
                 variant="primary"
                 size="sm"
                 onClick={() => setModalOpen(true)}
-                className="bg-[#FF3823] hover:bg-[#E02D1A] text-white font-heading font-black flex items-center gap-1.5 shadow-md rounded-xl h-10 px-4 cursor-pointer active:scale-95 transition-all text-xs"
+                className={`bg-[#FF3823] hover:bg-[#E02D1A] text-white font-heading font-black flex items-center justify-center gap-1.5 shadow-md rounded-xl h-10 px-3 sm:px-4 cursor-pointer active:scale-95 transition-all text-xs whitespace-nowrap ${
+                  !defaultConfig ? "w-full" : ""
+                }`}
               >
-                <Plus className="h-4 w-4" />
+                <Plus className="h-4 w-4 shrink-0" />
                 <span>AÑADIR AL CARRITO</span>
               </Button>
             </div>
