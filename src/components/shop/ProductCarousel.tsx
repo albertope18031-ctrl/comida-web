@@ -17,66 +17,124 @@ export function ProductCarousel({
   className = "",
 }: ProductCarouselProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const rafId = useRef<number | null>(null);
+
+  const [activeIndex, setActiveIndex] = useState(0);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
+  const itemCount = products ? products.length : React.Children.count(children);
+
+  // Calcula qué tarjeta está visualmente en el centro del carrusel
+  const calculateActiveIndex = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    const containerCenter = el.scrollLeft + el.clientWidth / 2;
+    const items = el.querySelectorAll<HTMLElement>("[data-carousel-item]");
+    if (items.length === 0) return;
+
+    let closestIndex = 0;
+    let minDistance = Infinity;
+
+    items.forEach((item, index) => {
+      const itemCenter = item.offsetLeft + item.offsetWidth / 2;
+      const distance = Math.abs(containerCenter - itemCenter);
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    setActiveIndex((prev) => (prev !== closestIndex ? closestIndex : prev));
+  }, []);
+
+  // Actualiza visibilidad de flechas flotantes en los límites de scroll
   const updateScrollButtons = useCallback(() => {
     const el = scrollRef.current;
     if (!el) return;
 
     const { scrollLeft, scrollWidth, clientWidth } = el;
-    // Tolerancia de 4px para cálculos de subpíxeles en pantallas de alta densidad
     setCanScrollLeft(scrollLeft > 4);
     setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 4);
   }, []);
 
-  const handleScroll = (direction: "left" | "right") => {
+  // Listener de scroll de alto rendimiento sincronizado con requestAnimationFrame
+  const handleScrollThrottled = useCallback(() => {
+    if (rafId.current !== null) return;
+    rafId.current = requestAnimationFrame(() => {
+      calculateActiveIndex();
+      updateScrollButtons();
+      rafId.current = null;
+    });
+  }, [calculateActiveIndex, updateScrollButtons]);
+
+  // Centra una tarjeta específica por índice
+  const scrollToIndex = (index: number) => {
     const el = scrollRef.current;
     if (!el) return;
 
-    // Medir ancho de tarjeta más el espaciado (gap) o 80% del ancho visible
-    const firstItem = el.querySelector<HTMLElement>("[data-carousel-item]");
-    const scrollAmount = firstItem ? firstItem.offsetWidth + 24 : el.clientWidth * 0.8;
+    const items = el.querySelectorAll<HTMLElement>("[data-carousel-item]");
+    const targetItem = items[index];
+    if (!targetItem) return;
 
-    el.scrollBy({
-      left: direction === "left" ? -scrollAmount : scrollAmount,
+    const targetScrollLeft =
+      targetItem.offsetLeft - (el.clientWidth - targetItem.offsetWidth) / 2;
+
+    el.scrollTo({
+      left: Math.max(0, targetScrollLeft),
       behavior: "smooth",
     });
+  };
+
+  const handleArrowClick = (direction: "left" | "right") => {
+    const itemsLength = itemCount;
+    if (itemsLength === 0) return;
+
+    const nextIndex =
+      direction === "left"
+        ? Math.max(0, activeIndex - 1)
+        : Math.min(itemsLength - 1, activeIndex + 1);
+
+    scrollToIndex(nextIndex);
   };
 
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
 
+    calculateActiveIndex();
     updateScrollButtons();
 
-    const onScroll = () => updateScrollButtons();
-    el.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", updateScrollButtons);
+    el.addEventListener("scroll", handleScrollThrottled, { passive: true });
+    window.addEventListener("resize", handleScrollThrottled);
 
     let resizeObserver: ResizeObserver | null = null;
     if (typeof ResizeObserver !== "undefined") {
       resizeObserver = new ResizeObserver(() => {
-        updateScrollButtons();
+        handleScrollThrottled();
       });
       resizeObserver.observe(el);
     }
 
     return () => {
-      el.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", updateScrollButtons);
+      el.removeEventListener("scroll", handleScrollThrottled);
+      window.removeEventListener("resize", handleScrollThrottled);
       resizeObserver?.disconnect();
+      if (rafId.current !== null) {
+        cancelAnimationFrame(rafId.current);
+      }
     };
-  }, [updateScrollButtons, products, children]);
+  }, [calculateActiveIndex, updateScrollButtons, handleScrollThrottled, products, children]);
 
   return (
     <div className={`relative group/carousel ${className}`}>
       {/* Flecha Flotante Izquierda (Desktop / Tablet) */}
       <button
         type="button"
-        onClick={() => handleScroll("left")}
+        onClick={() => handleArrowClick("left")}
         disabled={!canScrollLeft}
-        aria-label="Desplazar a la izquierda"
+        aria-label="Desplazar al producto anterior"
         className={`hidden md:flex items-center justify-center absolute -left-4 lg:-left-6 top-1/2 -translate-y-1/2 z-20 h-12 w-12 rounded-full bg-[#1C1917] text-white hover:bg-[#FF3823] border border-[#1C1917]/20 shadow-xl transition-all duration-300 active:scale-90 focus:outline-none focus:ring-2 focus:ring-[#FF3823] cursor-pointer ${
           canScrollLeft
             ? "opacity-100 scale-100 pointer-events-auto"
@@ -86,42 +144,53 @@ export function ProductCarousel({
         <ChevronLeft className="h-6 w-6" strokeWidth={2.5} />
       </button>
 
-      {/* Contenedor de Desplazamiento Táctil Nativo con CSS Scroll Snap */}
+      {/* Contenedor Cover Flow con Scroll Snap Centrado & Padding Móvil */}
       <div
         ref={scrollRef}
-        className="flex items-stretch gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 pt-1 [&::-webkit-scrollbar]:hidden [scrollbar-width:none] [-ms-overflow-style:none] -mx-4 px-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0"
+        className="flex items-stretch gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth py-6 px-[8.5vw] scroll-px-[8.5vw] md:px-0 md:scroll-px-0 [&::-webkit-scrollbar]:hidden [scrollbar-width:none] [-ms-overflow-style:none] -mx-4 sm:-mx-6 md:mx-0"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {products
-          ? products.map((product) => (
-              <div
-                key={product.id}
-                data-carousel-item
-                className="w-[82vw] sm:w-[320px] md:w-[340px] lg:w-[360px] flex-shrink-0 snap-start flex flex-col"
-              >
-                <ProductCard product={product} />
-              </div>
-            ))
-          : React.Children.map(children, (child, index) => (
-              <div
-                key={index}
-                data-carousel-item
-                className="w-[82vw] sm:w-[320px] md:w-[340px] lg:w-[360px] flex-shrink-0 snap-start flex flex-col"
-              >
-                {child}
-              </div>
-            ))}
-
-        {/* Espaciador final para permitir un snap completo y holgado en la última tarjeta */}
-        <div className="w-2 sm:w-4 flex-shrink-0" aria-hidden="true" />
+          ? products.map((product, index) => {
+              const isActive = index === activeIndex;
+              return (
+                <div
+                  key={product.id}
+                  data-carousel-item
+                  className={`w-[78vw] sm:w-[320px] md:w-[350px] flex-shrink-0 snap-center flex flex-col transition-all duration-300 ease-out transform-gpu origin-center rounded-3xl ${
+                    isActive
+                      ? "scale-100 opacity-100 z-10 shadow-2xl ring-2 ring-transparent"
+                      : "scale-[0.92] opacity-75 shadow-sm md:scale-100 md:opacity-100 md:shadow-none md:z-0"
+                  }`}
+                >
+                  <ProductCard product={product} />
+                </div>
+              );
+            })
+          : React.Children.map(children, (child, index) => {
+              const isActive = index === activeIndex;
+              return (
+                <div
+                  key={index}
+                  data-carousel-item
+                  className={`w-[78vw] sm:w-[320px] md:w-[350px] flex-shrink-0 snap-center flex flex-col transition-all duration-300 ease-out transform-gpu origin-center rounded-3xl ${
+                    isActive
+                      ? "scale-100 opacity-100 z-10 shadow-2xl ring-2 ring-transparent"
+                      : "scale-[0.92] opacity-75 shadow-sm md:scale-100 md:opacity-100 md:shadow-none md:z-0"
+                  }`}
+                >
+                  {child}
+                </div>
+              );
+            })}
       </div>
 
       {/* Flecha Flotante Derecha (Desktop / Tablet) */}
       <button
         type="button"
-        onClick={() => handleScroll("right")}
+        onClick={() => handleArrowClick("right")}
         disabled={!canScrollRight}
-        aria-label="Desplazar a la derecha"
+        aria-label="Desplazar al siguiente producto"
         className={`hidden md:flex items-center justify-center absolute -right-4 lg:-right-6 top-1/2 -translate-y-1/2 z-20 h-12 w-12 rounded-full bg-[#1C1917] text-white hover:bg-[#FF3823] border border-[#1C1917]/20 shadow-xl transition-all duration-300 active:scale-90 focus:outline-none focus:ring-2 focus:ring-[#FF3823] cursor-pointer ${
           canScrollRight
             ? "opacity-100 scale-100 pointer-events-auto"
@@ -130,6 +199,28 @@ export function ProductCarousel({
       >
         <ChevronRight className="h-6 w-6" strokeWidth={2.5} />
       </button>
+
+      {/* Indicadores de Paginación Táctil Móvil (Pills) */}
+      {itemCount > 1 && (
+        <div
+          className="flex md:hidden justify-center items-center gap-1.5 mt-2"
+          aria-label="Indicadores de carrusel"
+        >
+          {Array.from({ length: itemCount }).map((_, idx) => (
+            <button
+              key={idx}
+              type="button"
+              onClick={() => scrollToIndex(idx)}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                idx === activeIndex
+                  ? "w-6 bg-[#FF3823]"
+                  : "w-1.5 bg-[#1C1917]/20 hover:bg-[#1C1917]/40"
+              }`}
+              aria-label={`Ir al producto ${idx + 1}`}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
