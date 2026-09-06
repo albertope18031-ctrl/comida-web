@@ -3,18 +3,12 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Plus, Flame, Sparkles, Zap, Star } from "lucide-react";
-import { toast } from "sonner";
+import { Plus, Flame, Sparkles, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import dynamic from "next/dynamic";
 import { formatCurrency } from "@/lib/utils";
-import { useCartStore } from "@/store/cart-store";
-import {
-  getProductDefaultConfig,
-  getProductSocialProof,
-  createFastTrackCartItem,
-} from "@/lib/product-defaults";
+import { getProductSocialProof } from "@/lib/product-defaults";
 import type { Product } from "@/types/shop";
 
 const ProductCustomizerModal = dynamic(
@@ -28,34 +22,7 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const [modalOpen, setModalOpen] = useState(false);
-  const { addItem, openCart } = useCartStore();
-
-  const defaultConfig = getProductDefaultConfig(product);
   const socialProof = getProductSocialProof(product);
-
-  const handleFastTrack = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    e.preventDefault();
-
-    if (typeof window !== "undefined" && "vibrate" in navigator) {
-      try {
-        navigator.vibrate?.(50);
-      } catch {
-        // Silently ignore if vibration is not supported
-      }
-    }
-
-    const fastTrackItem = createFastTrackCartItem(product, defaultConfig || undefined);
-    addItem(fastTrackItem);
-
-    toast.success("¡Agregado con combinación clásica!", {
-      description: `${product.name} (${defaultConfig?.label || "Clásico de la casa"}) en tu bolsa.`,
-      action: {
-        label: "Ver Bolsa",
-        onClick: () => openCart(),
-      },
-    });
-  };
 
   return (
     <>
@@ -160,7 +127,7 @@ export function ProductCard({ product }: ProductCardProps) {
           </div>
 
           {/* Price & Action Row - Anchored to bottom with mt-auto */}
-          <div className="mt-auto pt-3 sm:pt-4 border-t border-neutral-100 flex items-center justify-between gap-2">
+          <div className="mt-auto pt-3 sm:pt-4 border-t border-neutral-100 flex items-center justify-between gap-3">
             <div className="shrink-0">
               <span className="text-[10px] uppercase font-bold text-[#1C1917]/50 block leading-none">
                 Precio
@@ -170,36 +137,16 @@ export function ProductCard({ product }: ProductCardProps) {
               </span>
             </div>
 
-            <div className="flex items-center gap-2 flex-1 justify-end">
-              {/* Fast-Track 1-Click Quick Add Button */}
-              {defaultConfig && (
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={handleFastTrack}
-                  className="border-2 border-[#FFB703] bg-[#FFB703]/20 text-[#1C1917] hover:bg-[#FFB703] font-heading font-black text-xs flex items-center gap-1 shadow-2xs rounded-xl px-2.5 h-10 cursor-pointer active:scale-95 transition-all shrink-0"
-                  title={`Pedir directo: ${defaultConfig.label}`}
-                >
-                  <Zap className="h-3.5 w-3.5 fill-[#FFB703] text-[#1C1917]" />
-                  <span className="hidden sm:inline">1-Clic</span>
-                  <span className="sm:hidden">Rápido</span>
-                </Button>
-              )}
-
-              {/* Standard CTA Button - Expands when Fast-Track is absent */}
-              <Button
-                variant="primary"
-                size="sm"
-                onClick={() => setModalOpen(true)}
-                className={`bg-[#FF3823] hover:bg-[#E02D1A] text-white font-heading font-black flex items-center justify-center gap-1.5 shadow-md rounded-xl h-10 px-3 sm:px-4 cursor-pointer active:scale-95 transition-all text-xs whitespace-nowrap ${
-                  !defaultConfig ? "w-full" : ""
-                }`}
-              >
-                <Plus className="h-4 w-4 shrink-0" />
-                <span>AÑADIR AL CARRITO</span>
-              </Button>
-            </div>
+            {/* Single Full Action Button */}
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => setModalOpen(true)}
+              className="bg-[#FF3823] hover:bg-[#E02D1A] text-white font-heading font-black flex items-center justify-center gap-1.5 shadow-md rounded-xl h-10 px-3.5 sm:px-4 cursor-pointer active:scale-95 transition-all text-xs tracking-tight shrink-0 whitespace-nowrap"
+            >
+              <Plus className="h-4 w-4 shrink-0" />
+              <span>AÑADIR AL CARRITO</span>
+            </Button>
           </div>
         </div>
       </div>
