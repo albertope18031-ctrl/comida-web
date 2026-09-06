@@ -22,24 +22,25 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-6 border-b border-neutral-800">
           {/* Columna 1: Logotipo Simplificado y Declaración */}
-          <div className="space-y-3">
-            <Link
-              href="/"
-              className="inline-flex items-center outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 focus-visible:ring-0 border-none select-none [-webkit-tap-highlight-color:transparent] group"
-              aria-label="Loco Rooster - Inicio"
-            >
-              <Image
-                src="/images/loco%20rooster_sin_fondo.png"
-                alt="Loco Rooster"
-                width={150}
-                height={48}
-                className="h-12 md:h-14 w-auto object-contain group-hover:scale-105 transition-transform duration-200 outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 focus-visible:ring-0 border-none select-none [-webkit-tap-highlight-color:transparent]"
-              />
-            </Link>
-
-            <p className="text-xs font-sans text-stone-400 leading-relaxed">
-              Las alitas más atrevidas, hamburguesas bestiales de 300g y tenders crujientes hechos con auténtica pasión callejera.
-            </p>
+          <div className="space-y-4 md:col-span-1">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3.5">
+              <Link
+                href="/"
+                className="inline-flex items-center outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 focus-visible:ring-0 border-none select-none [-webkit-tap-highlight-color:transparent] group shrink-0"
+                aria-label="Loco Rooster - Inicio"
+              >
+                <Image
+                  src="/images/loco%20rooster_sin_fondo.png"
+                  alt="Loco Rooster"
+                  width={150}
+                  height={48}
+                  className="h-12 md:h-14 w-auto object-contain group-hover:scale-105 transition-transform duration-200 outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 focus-visible:ring-0 border-none select-none [-webkit-tap-highlight-color:transparent]"
+                />
+              </Link>
+              <p className="text-xs text-stone-400 max-w-sm text-center sm:text-left font-sans sm:border-l sm:border-stone-700 sm:pl-4">
+                Las alitas más atrevidas, hamburguesas bestiales de 300g y tenders crujientes hechos con auténtica pasión callejera.
+              </p>
+            </div>
 
             <div className="flex items-center gap-2 text-xs text-[#588157] font-bold">
               <ShieldCheck className="h-4 w-4" />

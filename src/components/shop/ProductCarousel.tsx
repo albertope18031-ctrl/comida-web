@@ -127,14 +127,23 @@ export function ProductCarousel({
     };
   }, [calculateActiveIndex, updateScrollButtons, handleScrollThrottled, products, children]);
 
-  // Reset de posición al cambiar la lista filtrada de productos
+  // Sincroniza estado de flechas y zoom al cambiar productos o categorías
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTo({ left: 0, behavior: "smooth" });
-    }
-    setActiveIndex(0);
-    updateScrollButtons();
-  }, [products, updateScrollButtons]);
+    const container = scrollRef.current;
+    if (!container) return;
+
+    container.scrollTo({ left: 0, behavior: "instant" });
+
+    const syncState = () => {
+      const { clientWidth, scrollWidth } = container;
+      setCanScrollLeft(false);
+      setCanScrollRight(scrollWidth > clientWidth + 5);
+      setActiveIndex(0);
+    };
+
+    const timer = setTimeout(syncState, 60);
+    return () => clearTimeout(timer);
+  }, [children, products]);
 
   return (
     <div className={`relative group/carousel ${className}`}>

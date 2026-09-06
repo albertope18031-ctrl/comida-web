@@ -42,12 +42,18 @@ export function FeaturedCatalog() {
       if (typeof window !== "undefined") {
         const newUrl = slug === "all" ? "/#menu" : `/?category=${slug}#menu`;
         window.history.pushState({}, "", newUrl);
+
+        const menuEl = document.getElementById("menu");
+        if (menuEl) {
+          const offset = menuEl.offsetTop - 95;
+          window.scrollTo({ top: Math.max(0, offset), behavior: "smooth" });
+        }
       }
     });
   };
 
   return (
-    <section id="menu" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 scroll-mt-24">
+    <section id="menu" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 scroll-mt-32">
       {/* Cabecera compacta de sección */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-4 md:mb-5 gap-3">
         <div>

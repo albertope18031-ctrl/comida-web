@@ -95,7 +95,8 @@ export function Header() {
     if (pathname === "/") {
       const menuEl = document.getElementById("menu");
       if (menuEl) {
-        menuEl.scrollIntoView({ behavior: "smooth", block: "start" });
+        const offset = menuEl.offsetTop - 95;
+        window.scrollTo({ top: Math.max(0, offset), behavior: "smooth" });
       }
       if (typeof window !== "undefined") {
         window.history.pushState({}, "", `/?category=${category}#menu`);
@@ -173,28 +174,23 @@ export function Header() {
         <div className="bg-[#1C1917] text-white border-b border-[#FFB703]/20">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-20 items-center justify-between gap-4">
-              {/* Brand Logo LOCO ROOSTER & Slogan */}
-              <div className="flex items-center gap-4 xl:gap-8">
-                <div className="flex items-center gap-3.5">
-                  <Link
-                    href="/"
-                    onClick={(e) => handleNavClick("all", e)}
-                    className="outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 focus-visible:ring-0 border-none select-none [-webkit-tap-highlight-color:transparent] flex items-center shrink-0 cursor-pointer"
-                    aria-label="Loco Rooster - Inicio"
-                  >
-                    <Image
-                      src="/images/loco%20rooster_sin_fondo.png"
-                      alt="Loco Rooster"
-                      width={150}
-                      height={48}
-                      priority
-                      className="h-9 md:h-11 w-auto object-contain outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 focus-visible:ring-0 border-none select-none [-webkit-tap-highlight-color:transparent]"
-                    />
-                  </Link>
-                  <p className="hidden sm:block text-[11px] md:text-xs text-stone-300 max-w-[240px] lg:max-w-[280px] leading-snug font-sans border-l border-stone-700 pl-3">
-                    Las alitas más atrevidas, hamburguesas bestiales de 300g y tenders crujientes hechos con auténtica pasión callejera.
-                  </p>
-                </div>
+              {/* Brand Logo LOCO ROOSTER */}
+              <div className="flex items-center gap-6 xl:gap-8">
+                <Link
+                  href="/"
+                  onClick={(e) => handleNavClick("all", e)}
+                  className="outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 focus-visible:ring-0 border-none select-none [-webkit-tap-highlight-color:transparent] flex items-center shrink-0 cursor-pointer"
+                  aria-label="Loco Rooster - Inicio"
+                >
+                  <Image
+                    src="/images/loco%20rooster_sin_fondo.png"
+                    alt="Loco Rooster"
+                    width={150}
+                    height={48}
+                    priority
+                    className="h-10 md:h-12 w-auto object-contain outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 focus-visible:ring-0 border-none select-none [-webkit-tap-highlight-color:transparent]"
+                  />
+                </Link>
 
                 {/* Desktop Category Navigation */}
                 <nav
