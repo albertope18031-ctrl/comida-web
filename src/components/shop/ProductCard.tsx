@@ -59,7 +59,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
   return (
     <>
-      <div className="group relative flex flex-col overflow-hidden rounded-3xl border-2 border-[#1C1917]/10 bg-white shadow-sm transition-all duration-300 hover:shadow-2xl hover:border-[#FF3823]/50">
+      <div className="group relative flex flex-col h-full overflow-hidden rounded-3xl border-2 border-[#1C1917]/10 bg-white shadow-sm transition-all duration-300 hover:shadow-2xl hover:border-[#FF3823]/50">
         {/* Product Image */}
         <Link
           href={`/product/${product.slug}`}

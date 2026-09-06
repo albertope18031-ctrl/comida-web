@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Flame, ArrowRight, Sparkles, Award, ShieldCheck, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ProductCard } from "@/components/shop/ProductCard";
+import { ProductCarousel } from "@/components/shop/ProductCarousel";
 import { HeroSection } from "@/components/shop/HeroSection";
 import { PRODUCTS } from "@/lib/mock-data";
 
@@ -40,11 +40,7 @@ export default function HomePage() {
           </Button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {popularProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        <ProductCarousel products={popularProducts} />
       </section>
 
       {/* Brand Value Pillars / Trust Badges - Closing Section before Footer */}
