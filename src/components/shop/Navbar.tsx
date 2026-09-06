@@ -30,14 +30,18 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-40 w-full bg-[#1C1917] text-white shadow-md border-b border-[#FFB703]/20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
-        <Link href="/" className="flex items-center group" aria-label="Loco Rooster - Inicio">
+        <Link
+          href="/"
+          className="outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 focus-visible:ring-0 border-none select-none [-webkit-tap-highlight-color:transparent] flex items-center shrink-0 cursor-pointer"
+          aria-label="Loco Rooster - Inicio"
+        >
           <Image
             src="/images/loco%20rooster_sin_fondo.png"
             alt="Loco Rooster"
-            width={641}
-            height={707}
+            width={150}
+            height={48}
             priority={true}
-            className="h-10 md:h-12 w-auto object-contain group-hover:scale-105 transition-transform duration-200"
+            className="h-10 md:h-12 w-auto object-contain outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 focus-visible:ring-0 border-none select-none [-webkit-tap-highlight-color:transparent]"
           />
         </Link>
         <Button onClick={openCart} className="bg-[#FF3823] hover:bg-[#E02D1A] text-white font-bold rounded-xl">

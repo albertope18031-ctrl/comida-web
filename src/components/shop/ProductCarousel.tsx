@@ -127,6 +127,15 @@ export function ProductCarousel({
     };
   }, [calculateActiveIndex, updateScrollButtons, handleScrollThrottled, products, children]);
 
+  // Reset de posición al cambiar la lista filtrada de productos
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({ left: 0, behavior: "smooth" });
+    }
+    setActiveIndex(0);
+    updateScrollButtons();
+  }, [products, updateScrollButtons]);
+
   return (
     <div className={`relative group/carousel ${className}`}>
       {/* Flecha Flotante Izquierda (Desktop / Tablet) */}
@@ -147,7 +156,7 @@ export function ProductCarousel({
       {/* Contenedor Cover Flow con Scroll Snap Centrado & Padding Móvil */}
       <div
         ref={scrollRef}
-        className="flex items-stretch gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth py-6 px-[8.5vw] scroll-px-[8.5vw] md:px-0 md:scroll-px-0 [&::-webkit-scrollbar]:hidden [scrollbar-width:none] [-ms-overflow-style:none] -mx-4 sm:-mx-6 md:mx-0"
+        className="flex items-stretch gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth py-3 md:py-4 px-[8.5vw] scroll-px-[8.5vw] md:px-0 md:scroll-px-0 [&::-webkit-scrollbar]:hidden [scrollbar-width:none] [-ms-overflow-style:none] -mx-4 sm:-mx-6 md:mx-0"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {products

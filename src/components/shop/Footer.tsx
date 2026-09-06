@@ -18,18 +18,22 @@ function TikTokIcon({ className }: { className?: string }) {
 
 export function Footer() {
   return (
-    <footer className="bg-[#1C1917] text-white py-12 border-t-4 border-[#FF3823]">
+    <footer className="bg-[#1C1917] text-white py-8 md:py-10 border-t-4 border-[#FF3823]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 pb-10 border-b border-neutral-800">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-6 border-b border-neutral-800">
           {/* Columna 1: Logotipo Simplificado y Declaración */}
-          <div className="space-y-4">
-            <Link href="/" className="inline-flex items-center group" aria-label="Loco Rooster - Inicio">
+          <div className="space-y-3">
+            <Link
+              href="/"
+              className="inline-flex items-center outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 focus-visible:ring-0 border-none select-none [-webkit-tap-highlight-color:transparent] group"
+              aria-label="Loco Rooster - Inicio"
+            >
               <Image
                 src="/images/loco%20rooster_sin_fondo.png"
                 alt="Loco Rooster"
-                width={641}
-                height={707}
-                className="h-14 md:h-16 w-auto object-contain group-hover:scale-105 transition-transform duration-200"
+                width={150}
+                height={48}
+                className="h-12 md:h-14 w-auto object-contain group-hover:scale-105 transition-transform duration-200 outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 focus-visible:ring-0 border-none select-none [-webkit-tap-highlight-color:transparent]"
               />
             </Link>
 
@@ -136,7 +140,7 @@ export function Footer() {
         </div>
 
         {/* Copyright Oficial */}
-        <p className="font-sans text-xs text-stone-400 text-center mt-8">
+        <p className="font-sans text-xs text-stone-400 text-center mt-5">
           © 2026 LOCO ROOSTER. Derechos Reservados. ¡Hecho con pasión y salsas bravas!
         </p>
       </div>

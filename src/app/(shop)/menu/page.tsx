@@ -1,40 +1,41 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { Search, Flame, Sparkles } from "lucide-react";
 import { ProductCard } from "@/components/shop/ProductCard";
 import { PRODUCTS } from "@/lib/mock-data";
 import { Input } from "@/components/ui/input";
+import {
+  useCategoryStore,
+  MENU_CATEGORIES,
+  filterProductsByCategory,
+} from "@/store/category-store";
 
-const CATEGORIES = [
-  { id: "all", label: "TODO EL MENÚ" },
-  { id: "alitas", label: "ALITAS" },
-  { id: "sandwiches", label: "HAMBURGUESAS" },
-  { id: "boneless", label: "BONELESS" },
-  { id: "sides", label: "PAPAS & ACOMPAÑAMIENTOS" },
-  { id: "tenders", label: "CRISPY TENDERS" },
-  { id: "combos", label: "COMBOS & PACKS" },
-];
-
-export default function MenuPage() {
-  const [selectedCategory, setSelectedCategory] = useState("all");
+function MenuContent() {
+  const searchParams = useSearchParams();
+  const { selectedCategory, setSelectedCategory } = useCategoryStore();
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredProducts = PRODUCTS.filter((product) => {
-    const matchesCategory =
-      selectedCategory === "all" ||
-      product.category === selectedCategory ||
-      (selectedCategory === "sides" && product.category === "papas");
-    const matchesSearch =
+  useEffect(() => {
+    const cat = searchParams.get("cat") || searchParams.get("category");
+    if (cat) {
+      setSelectedCategory(cat);
+    }
+  }, [searchParams, setSelectedCategory]);
+
+  const categoryFiltered = filterProductsByCategory(PRODUCTS, selectedCategory);
+  const filteredProducts = categoryFiltered.filter((product) => {
+    return (
       product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.description.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
+      product.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
   });
 
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 space-y-6">
       {/* Header */}
-      <div className="space-y-3">
+      <div className="space-y-2">
         <div className="inline-flex items-center gap-1.5 text-xs font-heading font-black uppercase tracking-wider text-[#FF3823]">
           <Flame className="h-4 w-4 fill-[#FF3823] text-[#FF3823]" />
           <span>Menú Oficial LOCO ROOSTER</span>
@@ -51,18 +52,18 @@ export default function MenuPage() {
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
         {/* Category Pills */}
         <div className="flex items-center gap-2 overflow-x-auto w-full sm:w-auto pb-2 sm:pb-0 scrollbar-none">
-          {CATEGORIES.map((cat) => (
+          {MENU_CATEGORIES.map((cat) => (
             <button
               key={cat.id}
               type="button"
-              onClick={() => setSelectedCategory(cat.id)}
+              onClick={() => setSelectedCategory(cat.slug)}
               className={`whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-heading font-black transition-all cursor-pointer ${
-                selectedCategory === cat.id
+                selectedCategory === cat.slug
                   ? "bg-[#FF3823] text-white shadow-md scale-102"
                   : "bg-white text-[#1C1917] hover:bg-[#FFB703]/20 border-2 border-[#1C1917]/10"
               }`}
             >
-              {cat.label}
+              {cat.name}
             </button>
           ))}
         </div>
@@ -98,5 +99,20 @@ export default function MenuPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function MenuPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 animate-pulse text-center">
+          <div className="h-8 bg-neutral-200 rounded-xl w-64 mx-auto mb-4" />
+          <div className="h-48 bg-neutral-200 rounded-3xl w-full" />
+        </div>
+      }
+    >
+      <MenuContent />
+    </Suspense>
   );
 }
