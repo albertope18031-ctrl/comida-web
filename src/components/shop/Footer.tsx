@@ -23,24 +23,14 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 pb-10 border-b border-neutral-800">
           {/* Columna 1: Logotipo Simplificado y Declaración */}
           <div className="space-y-4">
-            <Link href="/" className="inline-flex items-center gap-3 group" aria-label="Loco Rooster - Inicio">
-              <div className="relative h-12 w-12 rounded-2xl overflow-hidden bg-[#FFB703] p-1 border-2 border-[#FAF7F2] shadow-lg shrink-0 group-hover:scale-105 transition-transform">
-                <Image
-                  src="/images/loco-rooster.png"
-                  alt="Loco Rooster Logo"
-                  fill
-                  sizes="48px"
-                  className="object-contain"
-                />
-              </div>
-              <div>
-                <span className="font-display text-2xl tracking-tight text-white block leading-none">
-                  LOCO ROOSTER
-                </span>
-                <span className="text-[10px] font-heading font-black tracking-widest text-[#FFB703] uppercase">
-                  MONCHOS DE VERDAD
-                </span>
-              </div>
+            <Link href="/" className="inline-flex items-center group" aria-label="Loco Rooster - Inicio">
+              <Image
+                src="/images/loco%20rooster_sin_fondo.png"
+                alt="Loco Rooster"
+                width={641}
+                height={707}
+                className="h-14 md:h-16 w-auto object-contain group-hover:scale-105 transition-transform duration-200"
+              />
             </Link>
 
             <p className="text-xs font-sans text-stone-400 leading-relaxed">

@@ -152,27 +152,17 @@ export function Header() {
               <div className="flex items-center gap-6 xl:gap-8">
                 <Link
                   href="/"
-                  className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-[#FF3823] rounded-xl p-1"
+                  className="flex items-center group focus:outline-none focus:ring-2 focus:ring-[#FF3823] rounded-xl p-1 shrink-0"
                   aria-label="Loco Rooster - Inicio"
                 >
-                  <div className="relative h-12 w-12 sm:h-14 sm:w-14 rounded-2xl overflow-hidden bg-[#FFB703] p-1 shadow-lg shrink-0 border-2 border-[#1C1917] group-hover:rotate-3 transition-transform">
-                    <Image
-                      src="/images/loco-rooster.png"
-                      alt="Loco Rooster"
-                      fill
-                      sizes="56px"
-                      priority
-                      className="object-contain"
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-xl sm:text-2xl font-display uppercase tracking-tight text-white leading-none drop-shadow-xs">
-                      LOCO ROOSTER
-                    </span>
-                    <span className="text-[10px] sm:text-[11px] font-heading font-black tracking-widest text-[#FFB703] uppercase leading-tight mt-0.5">
-                      MONCHOS DE VERDAD
-                    </span>
-                  </div>
+                  <Image
+                    src="/images/loco%20rooster_sin_fondo.png"
+                    alt="Loco Rooster"
+                    width={641}
+                    height={707}
+                    priority={true}
+                    className="h-12 md:h-14 w-auto object-contain group-hover:scale-105 transition-transform duration-200"
+                  />
                 </Link>
 
                 {/* Desktop Category Navigation */}
