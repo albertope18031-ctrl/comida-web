@@ -11,6 +11,7 @@ import {
   useCategoryStore,
   MENU_CATEGORIES,
   filterProductsByCategory,
+  scrollToCenteredProductCard,
 } from "@/store/category-store";
 
 export function FeaturedCatalog() {
@@ -28,6 +29,9 @@ export function FeaturedCatalog() {
       );
       if (match) {
         setSelectedCategory(match.slug);
+        setTimeout(() => {
+          scrollToCenteredProductCard();
+        }, 150);
       }
     }
   }, [searchParams, setSelectedCategory]);
@@ -38,16 +42,15 @@ export function FeaturedCatalog() {
     startTransition(() => {
       setSelectedCategory(slug);
 
-      // Actualizar URL sin reload agresivo
+      // Actualizar URL sin anclas hash para evitar saltos descontrolados
       if (typeof window !== "undefined") {
-        const newUrl = slug === "all" ? "/#menu" : `/?category=${slug}#menu`;
-        window.history.pushState({}, "", newUrl);
+        const newUrl = slug === "all" ? "/" : `/?category=${slug}`;
+        window.history.replaceState({}, "", newUrl);
 
-        const menuEl = document.getElementById("menu");
-        if (menuEl) {
-          const offset = menuEl.offsetTop - 95;
-          window.scrollTo({ top: Math.max(0, offset), behavior: "smooth" });
-        }
+        // Retardo breve para permitir que React renderice la nueva tarjeta antes del cálculo de centrado
+        setTimeout(() => {
+          scrollToCenteredProductCard();
+        }, 80);
       }
     });
   };

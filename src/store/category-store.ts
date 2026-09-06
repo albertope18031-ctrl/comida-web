@@ -64,3 +64,62 @@ export function filterProductsByCategory(
     }
   });
 }
+
+/**
+ * Desplaza la ventana de forma suave y precisa hacia la primera tarjeta de producto,
+ * calculando el centrado vertical exacto en el espacio visible útil de la pantalla
+ * (compensando la altura del Header fijo y cualquier barra flotante inferior).
+ */
+export function scrollToCenteredProductCard() {
+  if (typeof window === "undefined") return;
+
+  // 1. Obtener altura real del Header fijo (cerrado)
+  const header = document.querySelector("header");
+  const headerHeight = header ? header.offsetHeight : 80;
+
+  // 2. Obtener altura de barra flotante inferior si existe (StickyCartCTA)
+  const bottomBar = document.querySelector("aside[role='region']");
+  const bottomBarHeight = bottomBar
+    ? (bottomBar as HTMLElement).offsetHeight
+    : 0;
+
+  // 3. Localizar la primera tarjeta del producto en el catálogo
+  const card = (document.querySelector("#menu [data-carousel-item]") ||
+    document.querySelector("[data-carousel-item]") ||
+    document.getElementById("menu")) as HTMLElement | null;
+
+  if (!card) return;
+
+  // 4. Medir posición superior absoluta y altura de la tarjeta
+  const rect = card.getBoundingClientRect();
+  const cardAbsoluteTop = rect.top + window.scrollY;
+  const cardHeight = rect.height;
+
+  // 5. Espacio visible útil (pantalla menos Header y barra inferior)
+  const windowHeight = window.innerHeight;
+  const availableHeight = windowHeight - headerHeight - bottomBarHeight;
+
+  // 6. Centrado vertical: dividir la diferencia en dos partes iguales
+  let verticalMargin = 16;
+  if (cardHeight < availableHeight) {
+    verticalMargin = (availableHeight - cardHeight) / 2;
+  }
+
+  // 7. Punto de scroll exacto compensando Header y margen
+  const targetScrollY = Math.max(
+    0,
+    cardAbsoluteTop - headerHeight - verticalMargin
+  );
+
+  window.scrollTo({
+    top: targetScrollY,
+    behavior: "smooth",
+  });
+
+  // 8. Reiniciar el carrusel horizontal a la primera tarjeta
+  const carouselContainer =
+    card.closest("[data-carousel-container]") || card.parentElement;
+  if (carouselContainer) {
+    carouselContainer.scrollTo({ left: 0, behavior: "smooth" });
+  }
+}

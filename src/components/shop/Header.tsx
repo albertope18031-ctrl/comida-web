@@ -17,7 +17,10 @@ import {
   Flame,
 } from "lucide-react";
 import { useOrderContextStore } from "@/store/order-context-store";
-import { useCategoryStore } from "@/store/category-store";
+import {
+  useCategoryStore,
+  scrollToCenteredProductCard,
+} from "@/store/category-store";
 import dynamic from "next/dynamic";
 import { useCartStore } from "@/store/cart-store";
 import { formatCurrency } from "@/lib/utils";
@@ -29,15 +32,15 @@ const BranchSelectorModal = dynamic(
   { ssr: false }
 );
 
-// Categorías oficiales de LOCO ROOSTER
+// Categorías oficiales de LOCO ROOSTER (sin anclas hash para evitar saltos descontrolados)
 const NAVIGATION_LINKS = [
   { name: "INICIO", category: "all", href: "/" },
-  { name: "ALITAS", category: "alitas", href: "/?category=alitas#menu" },
-  { name: "HAMBURGUESAS", category: "hamburguesas", href: "/?category=hamburguesas#menu" },
-  { name: "BONELESS", category: "boneless", href: "/?category=boneless#menu" },
-  { name: "PAPAS & ACOMPAÑAMIENTOS", category: "papas", href: "/?category=papas#menu" },
-  { name: "CRISPY TENDERS", category: "tenders", href: "/?category=tenders#menu" },
-  { name: "COMBOS & PACKS", category: "combos", href: "/?category=combos#menu" },
+  { name: "ALITAS", category: "alitas", href: "/?category=alitas" },
+  { name: "HAMBURGUESAS", category: "hamburguesas", href: "/?category=hamburguesas" },
+  { name: "BONELESS", category: "boneless", href: "/?category=boneless" },
+  { name: "PAPAS & ACOMPAÑAMIENTOS", category: "papas", href: "/?category=papas" },
+  { name: "CRISPY TENDERS", category: "tenders", href: "/?category=tenders" },
+  { name: "COMBOS & PACKS", category: "combos", href: "/?category=combos" },
 ];
 
 export function Header() {
@@ -74,7 +77,12 @@ export function Header() {
   }, []);
 
   const handleNavClick = (category: string, e?: React.MouseEvent) => {
-    if (e) e.preventDefault();
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    // 1. Cierra primero el menú desplegable móvil
     setMobileMenuOpen(false);
 
     if (category === "all") {
@@ -82,7 +90,7 @@ export function Header() {
       if (pathname === "/") {
         window.scrollTo({ top: 0, behavior: "smooth" });
         if (typeof window !== "undefined") {
-          window.history.pushState({}, "", "/");
+          window.history.replaceState({}, "", "/");
         }
       } else {
         router.push("/");
@@ -90,19 +98,20 @@ export function Header() {
       return;
     }
 
+    // 2. Actualiza el estado de la categoría activa
     setSelectedCategory(category);
 
     if (pathname === "/") {
-      const menuEl = document.getElementById("menu");
-      if (menuEl) {
-        const offset = menuEl.offsetTop - 95;
-        window.scrollTo({ top: Math.max(0, offset), behavior: "smooth" });
-      }
       if (typeof window !== "undefined") {
-        window.history.pushState({}, "", `/?category=${category}#menu`);
+        window.history.replaceState({}, "", `/?category=${category}`);
       }
+
+      // 3. Retardo asíncrono para que React cierre el menú móvil, recalcule el Header y monte la nueva tarjeta
+      setTimeout(() => {
+        scrollToCenteredProductCard();
+      }, 120);
     } else {
-      router.push(`/?category=${category}#menu`);
+      router.push(`/?category=${category}`);
     }
   };
 
