@@ -111,8 +111,11 @@ export function FeaturedCatalog() {
         })}
       </div>
 
-      {/* Carrusel Cover Flow Filtrado de Productos */}
-      <ProductCarousel products={filteredProducts} />
+      {/* Carrusel Cover Flow Filtrado de Productos con ciclo de vida aislado por categoría */}
+      <ProductCarousel
+        key={`carousel-${selectedCategory}`}
+        products={filteredProducts}
+      />
     </section>
   );
 }

@@ -25,14 +25,24 @@ export function ProductCarousel({
 
   const itemCount = products ? products.length : React.Children.count(children);
 
-  // Calcula qué tarjeta está visualmente en el centro del carrusel
+  // Garantiza determinísticamente que siempre exista un índice activo válido en [0, itemCount - 1]
+  const safeActiveIndex =
+    itemCount > 0 ? Math.min(Math.max(0, activeIndex), itemCount - 1) : 0;
+
+  // Calcula qué tarjeta está visualmente en el centro del carrusel con resiliencia total
   const calculateActiveIndex = useCallback(() => {
     const el = scrollRef.current;
-    if (!el) return;
+    if (!el) {
+      setActiveIndex(0);
+      return;
+    }
 
     const containerCenter = el.scrollLeft + el.clientWidth / 2;
     const items = el.querySelectorAll<HTMLElement>("[data-carousel-item]");
-    if (items.length === 0) return;
+    if (items.length === 0) {
+      setActiveIndex(0);
+      return;
+    }
 
     let closestIndex = 0;
     let minDistance = Infinity;
@@ -40,13 +50,18 @@ export function ProductCarousel({
     items.forEach((item, index) => {
       const itemCenter = item.offsetLeft + item.offsetWidth / 2;
       const distance = Math.abs(containerCenter - itemCenter);
-      if (distance < minDistance) {
+      if (!Number.isNaN(distance) && distance < minDistance) {
         minDistance = distance;
         closestIndex = index;
       }
     });
 
-    setActiveIndex((prev) => (prev !== closestIndex ? closestIndex : prev));
+    // Respaldo de seguridad: si minDistance no fue determinado o es nulo/NaN, fallback determinista al índice 0
+    const targetIndex = Number.isFinite(minDistance)
+      ? Math.min(Math.max(0, closestIndex), items.length - 1)
+      : 0;
+
+    setActiveIndex((prev) => (prev !== targetIndex ? targetIndex : prev));
   }, []);
 
   // Actualiza visibilidad de flechas flotantes en los límites de scroll
@@ -93,8 +108,8 @@ export function ProductCarousel({
 
     const nextIndex =
       direction === "left"
-        ? Math.max(0, activeIndex - 1)
-        : Math.min(itemsLength - 1, activeIndex + 1);
+        ? Math.max(0, safeActiveIndex - 1)
+        : Math.min(itemsLength - 1, safeActiveIndex + 1);
 
     scrollToIndex(nextIndex);
   };
@@ -103,8 +118,17 @@ export function ProductCarousel({
     const el = scrollRef.current;
     if (!el) return;
 
-    calculateActiveIndex();
-    updateScrollButtons();
+    // Inicialización inmediata forzada a la primera tarjeta y scroll 0
+    el.scrollLeft = 0;
+    setActiveIndex(0);
+    setCanScrollLeft(false);
+    setCanScrollRight(el.scrollWidth > el.clientWidth + 5);
+
+    // Medición tras el primer frame para confirmar dimensiones renderizadas
+    const rafInit = requestAnimationFrame(() => {
+      calculateActiveIndex();
+      updateScrollButtons();
+    });
 
     el.addEventListener("scroll", handleScrollThrottled, { passive: true });
     window.addEventListener("resize", handleScrollThrottled);
@@ -118,6 +142,7 @@ export function ProductCarousel({
     }
 
     return () => {
+      cancelAnimationFrame(rafInit);
       el.removeEventListener("scroll", handleScrollThrottled);
       window.removeEventListener("resize", handleScrollThrottled);
       resizeObserver?.disconnect();
@@ -125,25 +150,25 @@ export function ProductCarousel({
         cancelAnimationFrame(rafId.current);
       }
     };
-  }, [calculateActiveIndex, updateScrollButtons, handleScrollThrottled, products, children]);
+  }, [calculateActiveIndex, updateScrollButtons, handleScrollThrottled]);
 
-  // Sincroniza estado de flechas y zoom al cambiar productos o categorías
+  // Sincroniza estado de flechas y zoom al cambiar productos o children (garantiza reseteo de índice)
   useEffect(() => {
     const container = scrollRef.current;
     if (!container) return;
 
-    container.scrollTo({ left: 0, behavior: "instant" });
+    container.scrollLeft = 0;
+    setActiveIndex(0);
+    setCanScrollLeft(false);
+    setCanScrollRight(container.scrollWidth > container.clientWidth + 5);
 
-    const syncState = () => {
-      const { clientWidth, scrollWidth } = container;
-      setCanScrollLeft(false);
-      setCanScrollRight(scrollWidth > clientWidth + 5);
-      setActiveIndex(0);
-    };
+    const timer = setTimeout(() => {
+      calculateActiveIndex();
+      updateScrollButtons();
+    }, 40);
 
-    const timer = setTimeout(syncState, 60);
     return () => clearTimeout(timer);
-  }, [children, products]);
+  }, [children, products, calculateActiveIndex, updateScrollButtons]);
 
   return (
     <div className={`relative group/carousel min-h-[530px] sm:min-h-[555px] md:min-h-[580px] ${className}`}>
@@ -171,7 +196,7 @@ export function ProductCarousel({
       >
         {products
           ? products.map((product, index) => {
-              const isActive = index === activeIndex;
+              const isActive = index === safeActiveIndex;
               return (
                 <div
                   key={product.id}
@@ -187,7 +212,7 @@ export function ProductCarousel({
               );
             })
           : React.Children.map(children, (child, index) => {
-              const isActive = index === activeIndex;
+              const isActive = index === safeActiveIndex;
               return (
                 <div
                   key={index}
@@ -231,7 +256,7 @@ export function ProductCarousel({
               type="button"
               onClick={() => scrollToIndex(idx)}
               className={`h-1.5 rounded-full transition-all duration-300 ${
-                idx === activeIndex
+                idx === safeActiveIndex
                   ? "w-6 bg-[#FF3823]"
                   : "w-1.5 bg-[#1C1917]/20 hover:bg-[#1C1917]/40"
               }`}
