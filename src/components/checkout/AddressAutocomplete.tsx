@@ -196,9 +196,9 @@ export function AddressAutocomplete({
               setShowSuggestions(true);
             }}
             onFocus={() => setShowSuggestions(true)}
-            className="pl-9 pr-4 h-11 bg-white border-neutral-300 rounded-xl text-sm focus:border-[#005A36] focus:ring-[#005A36]"
+            className="pl-9 pr-4 h-11 bg-white border-neutral-300 rounded-xl text-sm focus:border-[#FF3823] focus:ring-[#FF3823]"
           />
-          <MapPin className="absolute left-3 top-3.5 h-4 w-4 text-emerald-700 pointer-events-none" />
+          <MapPin className="absolute left-3 top-3.5 h-4 w-4 text-[#FF3823] pointer-events-none" />
         </div>
 
         {/* Suggestion Dropdown */}
@@ -219,9 +219,9 @@ export function AddressAutocomplete({
                     key={idx}
                     type="button"
                     onClick={() => handleSelectSuggestion(item)}
-                    className="w-full text-left p-3 hover:bg-emerald-50/70 transition-colors flex items-start gap-2.5 cursor-pointer text-xs"
+                    className="w-full text-left p-3 hover:bg-neutral-100 transition-colors flex items-start gap-2.5 cursor-pointer text-xs"
                   >
-                    <Navigation className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
+                    <Navigation className="h-4 w-4 text-[#FF3823] shrink-0 mt-0.5" />
                     <div>
                       <p className="font-bold text-neutral-900">{item.display}</p>
                       <p className="text-[10px] text-neutral-500">

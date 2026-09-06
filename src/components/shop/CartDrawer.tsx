@@ -69,16 +69,16 @@ export function CartDrawer() {
       <div className="fixed inset-y-0 right-0 max-w-full flex pl-6 sm:pl-10">
         <aside className="w-screen max-w-md bg-white shadow-2xl flex flex-col animate-in slide-in-from-right duration-300">
           {/* Header */}
-          <div className="flex items-center justify-between px-6 py-4 border-b border-neutral-200 bg-[#005A36] text-white">
+          <div className="flex items-center justify-between px-6 py-4 border-b border-neutral-800 bg-[#1C1917] text-white">
             <div className="flex items-center gap-2.5">
-              <div className="h-9 w-9 rounded-lg bg-[#FFC72C] flex items-center justify-center text-neutral-950 font-black">
+              <div className="h-9 w-9 rounded-lg bg-[#FFB703] flex items-center justify-center text-neutral-950 font-black">
                 <ShoppingBag className="h-5 w-5" />
               </div>
               <div>
-                <h2 className="text-base font-black tracking-wide uppercase leading-none">
+                <h2 className="text-base font-black tracking-wide uppercase leading-none font-display text-[#FAF7F2]">
                   Mi Bolsa
                 </h2>
-                <span className="text-[11px] text-emerald-200 font-semibold">
+                <span className="text-[11px] text-neutral-400 font-semibold">
                   {totalItemsCount} {totalItemsCount === 1 ? "artículo" : "artículos"}{" "}
                   {totalChickenPieces > 0 && `• ${totalChickenPieces} piezas de pollo`}
                 </span>
@@ -88,7 +88,7 @@ export function CartDrawer() {
             <button
               type="button"
               onClick={closeCart}
-              className="p-1.5 rounded-full text-emerald-200 hover:text-white hover:bg-emerald-800 transition-colors cursor-pointer"
+              className="p-1.5 rounded-full text-neutral-400 hover:text-white hover:bg-neutral-800 transition-colors cursor-pointer"
               aria-label="Cerrar bolsa"
             >
               <X className="h-5 w-5" />
@@ -96,22 +96,22 @@ export function CartDrawer() {
           </div>
 
           {/* Fulfillment Banner */}
-          <div className="bg-emerald-950/80 px-6 py-2.5 border-b border-emerald-900 text-xs flex items-center justify-between text-neutral-200">
+          <div className="bg-[#292524] px-6 py-2.5 border-b border-neutral-700 text-xs flex items-center justify-between text-neutral-200">
             <div className="flex items-center gap-1.5 font-bold">
               {orderType === "delivery" ? (
                 <>
-                  <Truck className="h-3.5 w-3.5 text-[#FFC72C]" />
+                  <Truck className="h-3.5 w-3.5 text-[#FFB703]" />
                   <span>Entrega a Domicilio</span>
                 </>
               ) : (
                 <>
-                  <Store className="h-3.5 w-3.5 text-[#FFC72C]" />
+                  <Store className="h-3.5 w-3.5 text-[#FFB703]" />
                   <span>Para Llevar en Sucursal</span>
                 </>
               )}
             </div>
 
-            <span className="text-[11px] text-emerald-300 truncate max-w-[180px] font-semibold">
+            <span className="text-[11px] text-[#FFB703] truncate max-w-[180px] font-semibold">
               {selectedBranch.name}
             </span>
           </div>
@@ -280,7 +280,7 @@ export function CartDrawer() {
                   <span className="flex items-center gap-1">
                     <span>Costo de entrega:</span>
                     {orderType === "pickup" && (
-                      <Badge className="bg-emerald-100 text-[#005A36] text-[10px] py-0 px-1">
+                      <Badge className="bg-[#588157]/15 text-[#588157] border-[#588157]/30 text-[10px] py-0 px-1 font-bold">
                         Gratis
                       </Badge>
                     )}
@@ -292,14 +292,14 @@ export function CartDrawer() {
 
                 <div className="flex justify-between items-center text-sm font-black text-neutral-950 pt-2 border-t border-neutral-200">
                   <span>Total estimado:</span>
-                  <span className="text-xl text-[#005A36]">
+                  <span className="text-2xl font-black text-[#FF3823]">
                     {formatCurrency(grandTotal)}
                   </span>
                 </div>
               </div>
 
               <Button
-                variant="gold"
+                variant="primary"
                 size="lg"
                 className="w-full h-12 font-black text-base shadow-lg flex items-center justify-center gap-2 cursor-pointer hover:scale-101 transition-transform"
                 onClick={closeCart}

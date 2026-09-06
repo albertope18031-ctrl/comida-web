@@ -12,8 +12,8 @@ export async function generateMetadata({
 }: OrderPageProps): Promise<Metadata> {
   const { orderId } = await params;
   return {
-    title: `Seguimiento de Orden | Wingstop México`,
-    description: `Monitorea en tiempo real el estado de preparación y entrega de tu pedido en Wingstop México.`,
+    title: `Seguimiento de Orden | Loco Rooster México`,
+    description: `Monitorea en tiempo real el estado de preparación y entrega de tu pedido en Loco Rooster México.`,
   };
 }
 
@@ -23,7 +23,7 @@ export default async function OrderDetailPage({ params }: OrderPageProps) {
   // Initial order payload (server-side fetched or hydrated with robust fallback)
   const initialOrder = {
     id: orderId,
-    orderNumber: `WS-${orderId.slice(-6).toUpperCase()}`,
+    orderNumber: `LR-${orderId.slice(-6).toUpperCase()}`,
     status: "preparing" as OrderStatus,
     orderType: "delivery" as const,
     branch: RESTAURANT_BRANCHES[0],
@@ -32,7 +32,7 @@ export default async function OrderDetailPage({ params }: OrderPageProps) {
     total: 424,
     createdAt: new Date().toISOString(),
     customer: {
-      name: "Cliente Wingstop",
+      name: "Cliente Loco Rooster",
       phone: "55 1234 5678",
       address: "Álvaro Obregón 151, Roma Norte, CDMX",
     },
@@ -45,7 +45,7 @@ export default async function OrderDetailPage({ params }: OrderPageProps) {
         price: 199,
       },
       {
-        name: "Papas Fritas Sazonadas Wingstop",
+        name: "Papas Fritas Sazonadas Loco Rooster",
         quantity: 1,
         flavors: [],
         dips: [],

@@ -314,9 +314,9 @@ export default function FacturacionPage() {
               <div
                 className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 ${
                   step === 1
-                    ? "bg-[#005A36] text-white ring-4 ring-emerald-500/30 shadow-lg"
+                    ? "bg-[#FF3823] text-white ring-4 ring-[#FF3823]/30 shadow-lg"
                     : step > 1
-                    ? "bg-emerald-600 text-white"
+                    ? "bg-[#FF3823] text-white"
                     : "bg-stone-800 text-stone-400"
                 }`}
               >
@@ -336,9 +336,9 @@ export default function FacturacionPage() {
               <div
                 className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 ${
                   step === 2
-                    ? "bg-[#005A36] text-white ring-4 ring-emerald-500/30 shadow-lg"
+                    ? "bg-[#FF3823] text-white ring-4 ring-[#FF3823]/30 shadow-lg"
                     : step > 2
-                    ? "bg-emerald-600 text-white"
+                    ? "bg-[#FF3823] text-white"
                     : "bg-stone-800 text-stone-400"
                 }`}
               >
@@ -358,15 +358,15 @@ export default function FacturacionPage() {
               <div
                 className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 ${
                   step === 3
-                    ? "bg-[#005A36] text-white ring-4 ring-emerald-500/30 shadow-lg"
+                    ? "bg-[#FF3823] text-white ring-4 ring-[#FF3823]/30 shadow-lg"
                     : "bg-stone-800 text-stone-400"
                 }`}
               >
-                {step === 3 ? <Sparkles className="h-5 w-5 text-amber-300" /> : "3"}
+                {step === 3 ? <Sparkles className="h-5 w-5 text-[#FFB703]" /> : "3"}
               </div>
               <span
                 className={`mt-2 text-xs font-semibold sm:text-sm ${
-                  step === 3 ? "text-[#00c853] font-bold" : "text-stone-400"
+                  step === 3 ? "text-[#FFB703] font-bold" : "text-stone-400"
                 }`}
               >
                 3. Factura Emitida
@@ -526,7 +526,7 @@ export default function FacturacionPage() {
                 <Button
                   type="submit"
                   disabled={isPending}
-                  className="w-full sm:w-auto bg-[#005A36] hover:bg-[#004227] text-white px-8 py-6 text-base font-bold uppercase tracking-wider rounded-xl shadow-lg shadow-emerald-950/50"
+                  className="w-full sm:w-auto bg-[#FF3823] hover:bg-[#E02814] text-white px-8 py-6 text-base font-bold uppercase tracking-wider rounded-xl shadow-lg"
                 >
                   {isPending ? (
                     <>
@@ -549,14 +549,14 @@ export default function FacturacionPage() {
         {step === 2 && validatedOrder && (
           <div className="space-y-6">
             {/* Ticket Summary Badge Banner */}
-            <div className="bg-emerald-950/60 border border-emerald-800/80 rounded-2xl p-5 shadow-lg flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-5 shadow-lg flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-400" />
+                  <CheckCircle2 className="h-5 w-5 text-[#588157]" />
                   <span className="font-bold text-white text-base">
                     Ticket Validado: {validatedOrder.orderNumber}
                   </span>
-                  <Badge className="bg-[#005A36] text-white text-xs">
+                  <Badge className="bg-[#FF3823] text-white text-xs">
                     {validatedOrder.branchName}
                   </Badge>
                 </div>
@@ -756,7 +756,7 @@ export default function FacturacionPage() {
                   <Button
                     type="submit"
                     disabled={isPending}
-                    className="w-full sm:w-auto bg-[#005A36] hover:bg-[#004227] text-white px-8 py-6 text-base font-bold uppercase tracking-wider rounded-xl shadow-lg shadow-emerald-950/50"
+                    className="w-full sm:w-auto bg-[#FF3823] hover:bg-[#E02814] text-white px-8 py-6 text-base font-bold uppercase tracking-wider rounded-xl shadow-lg"
                   >
                     {isPending ? (
                       <>
@@ -780,15 +780,15 @@ export default function FacturacionPage() {
         {step === 3 && stampedInvoice && (
           <div className="space-y-6">
             <div className="bg-stone-900 border border-stone-800 rounded-2xl p-6 sm:p-10 shadow-2xl text-center">
-              <div className="w-16 h-16 bg-emerald-500/20 text-[#00c853] rounded-full flex items-center justify-center mx-auto mb-4 ring-8 ring-emerald-500/10">
+              <div className="w-16 h-16 bg-[#588157]/20 text-[#588157] rounded-full flex items-center justify-center mx-auto mb-4 ring-8 ring-[#588157]/10">
                 <CheckCircle2 className="h-10 w-10" />
               </div>
 
-              <Badge className="bg-[#005A36] text-white uppercase tracking-wider text-xs px-3 py-1 mb-2">
+              <Badge className="bg-[#FF3823] text-white uppercase tracking-wider text-xs px-3 py-1 mb-2 font-bold">
                 Timbrado Fiscal SAT Exitoso
               </Badge>
 
-              <h2 className="text-2xl sm:text-3xl font-black text-white uppercase tracking-tight">
+              <h2 className="text-2xl sm:text-3xl font-black text-white uppercase tracking-tight font-display">
                 ¡Tu Factura ha sido Emitida!
               </h2>
 
@@ -798,9 +798,9 @@ export default function FacturacionPage() {
               </p>
 
               {/* UUID Banner */}
-              <div className="mt-6 p-4 rounded-xl bg-stone-950 border border-emerald-800/80 max-w-xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-left">
+              <div className="mt-6 p-4 rounded-xl bg-stone-950 border border-neutral-700 max-w-xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-left">
                 <div className="overflow-hidden w-full">
-                  <span className="text-[10px] uppercase font-bold text-emerald-400 tracking-wider block">
+                  <span className="text-[10px] uppercase font-bold text-[#FFB703] tracking-wider block">
                     Folio Fiscal SAT (UUID)
                   </span>
                   <span className="font-mono text-xs sm:text-sm font-bold text-white block truncate">
@@ -816,7 +816,7 @@ export default function FacturacionPage() {
                 >
                   {copiedUuid ? (
                     <>
-                      <Check className="h-3.5 w-3.5 mr-1 text-emerald-400" />
+                      <Check className="h-3.5 w-3.5 mr-1 text-[#588157]" />
                       Copiado
                     </>
                   ) : (
@@ -836,17 +836,17 @@ export default function FacturacionPage() {
                     <span className="font-bold text-white block">
                       {stampedInvoice.legalName}
                     </span>
-                    <span className="font-mono text-emerald-400">
+                    <span className="font-mono text-[#FFB703]">
                       RFC: {stampedInvoice.rfc}
                     </span>
                   </div>
                   <div className="text-right">
                     <span className="text-stone-500 block">Emisor:</span>
-                    <span className="font-bold text-white block">
-                      WINGSTOP MÉXICO
+                    <span className="font-bold text-white block font-display">
+                      LOCO ROOSTER MÉXICO
                     </span>
                     <span className="font-mono text-stone-400">
-                      RFC: WNG120315XX1
+                      RFC: LRO240101XX1
                     </span>
                   </div>
                 </div>
@@ -861,7 +861,7 @@ export default function FacturacionPage() {
                 </div>
                 <div className="flex justify-between items-center pt-2 border-t border-stone-800 font-bold text-white text-base">
                   <span>Total Facturado:</span>
-                  <span className="font-mono text-[#00c853]">
+                  <span className="font-mono text-[#FFB703] font-black">
                     {formatCurrency(stampedInvoice.total)}
                   </span>
                 </div>
@@ -869,7 +869,7 @@ export default function FacturacionPage() {
 
               {/* Email notification notice */}
               <div className="mt-6 flex items-center justify-center gap-2 text-xs text-stone-400">
-                <Mail className="h-4 w-4 text-emerald-400" />
+                <Mail className="h-4 w-4 text-[#FFB703]" />
                 <span>
                   Archivos enviados a:{" "}
                   <b className="text-stone-200">{stampedInvoice.emailSentTo}</b>
@@ -883,7 +883,7 @@ export default function FacturacionPage() {
                   download={`Factura_${stampedInvoice.folio}_CFDI.xml`}
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-stone-800 hover:bg-stone-700 text-white font-bold py-3.5 px-6 rounded-xl border border-stone-700 shadow-md text-sm transition-all"
                 >
-                  <Download className="h-4 w-4 text-emerald-400" />
+                  <Download className="h-4 w-4 text-[#FFB703]" />
                   Descargar XML (.xml)
                 </a>
 
@@ -891,9 +891,9 @@ export default function FacturacionPage() {
                   href={stampedInvoice.pdfUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#005A36] hover:bg-[#004227] text-white font-bold py-3.5 px-6 rounded-xl shadow-lg text-sm transition-all"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#FF3823] hover:bg-[#E02814] text-white font-bold py-3.5 px-6 rounded-xl shadow-lg text-sm transition-all"
                 >
-                  <Printer className="h-4 w-4 text-amber-300" />
+                  <Printer className="h-4 w-4 text-[#FFB703]" />
                   Descargar / Imprimir PDF
                 </a>
               </div>

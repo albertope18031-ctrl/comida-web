@@ -163,7 +163,7 @@ export function CustomizerModal({ product, isOpen, onClose }: CustomizerModalPro
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
           <div className="absolute bottom-3 left-4 right-4 text-white">
-            <span className="text-xs uppercase font-bold text-[#FFC72C] tracking-wider">
+            <span className="text-xs uppercase font-bold text-[#FFB703] tracking-wider">
               {product.category} {product.piecesCount ? `• ${product.piecesCount} Piezas` : ""}
             </span>
             <h2 className="text-2xl font-black">{product.name}</h2>
@@ -179,7 +179,7 @@ export function CustomizerModal({ product, isOpen, onClose }: CustomizerModalPro
               <div className="flex items-center justify-between mb-2">
                 <div>
                   <h3 className="font-extrabold text-base flex items-center gap-1.5 text-neutral-900">
-                    <Flame className="h-4 w-4 text-[#FFC72C]" />
+                    <Flame className="h-4 w-4 text-[#FF3823]" />
                     Elige tus Sabores
                   </h3>
                   <p className="text-xs text-neutral-500">
@@ -206,7 +206,7 @@ export function CustomizerModal({ product, isOpen, onClose }: CustomizerModalPro
                       onClick={() => handleFlavorToggle(flavor)}
                       className={`text-left p-3 rounded-xl border transition-all cursor-pointer flex items-start justify-between gap-2 ${
                         isSelected
-                          ? "border-[#005A36] bg-emerald-50/60 ring-2 ring-[#005A36]/40 shadow-sm"
+                          ? "border-[#FF3823] bg-red-50/60 ring-2 ring-[#FF3823]/30 shadow-sm"
                           : "border-neutral-200 hover:border-neutral-300 hover:bg-neutral-50/70"
                       }`}
                     >
@@ -216,7 +216,7 @@ export function CustomizerModal({ product, isOpen, onClose }: CustomizerModalPro
                             {flavor.name}
                           </span>
                           {flavor.badge && (
-                            <span className="text-[10px] bg-[#FFC72C] text-neutral-950 font-extrabold px-1.5 py-0.2 rounded">
+                            <span className="text-[10px] bg-[#FFB703] text-neutral-950 font-extrabold px-1.5 py-0.2 rounded">
                               {flavor.badge}
                             </span>
                           )}
@@ -242,7 +242,7 @@ export function CustomizerModal({ product, isOpen, onClose }: CustomizerModalPro
                       <div
                         className={`h-5 w-5 rounded-full flex items-center justify-center shrink-0 border transition-colors ${
                           isSelected
-                            ? "bg-[#005A36] border-[#005A36] text-white"
+                            ? "bg-[#FF3823] border-[#FF3823] text-white"
                             : "border-neutral-300 bg-white"
                         }`}
                       >
@@ -294,7 +294,7 @@ export function CustomizerModal({ product, isOpen, onClose }: CustomizerModalPro
                       <button
                         type="button"
                         onClick={() => handleDipChange(dip.id, 1)}
-                        className="h-7 w-7 rounded bg-[#005A36] text-white flex items-center justify-center hover:bg-[#004227] cursor-pointer"
+                        className="h-7 w-7 rounded bg-[#FF3823] text-white flex items-center justify-center hover:bg-[#E02814] cursor-pointer"
                       >
                         <Plus className="h-3.5 w-3.5" />
                       </button>
@@ -324,19 +324,19 @@ export function CustomizerModal({ product, isOpen, onClose }: CustomizerModalPro
                     onClick={() => handleSideToggle(side.id)}
                     className={`text-left p-2.5 rounded-lg border transition-all cursor-pointer flex items-center justify-between ${
                       isSelected
-                        ? "border-[#005A36] bg-emerald-50/70 font-bold"
+                        ? "border-[#FF3823] bg-red-50/70 font-bold"
                         : "border-neutral-200 hover:bg-neutral-50"
                     }`}
                   >
                     <div>
                       <p className="text-xs text-neutral-900">{side.name}</p>
-                      <p className="text-xs font-semibold text-emerald-800">
+                      <p className="text-xs font-semibold text-[#FF3823]">
                         +{formatCurrency(side.price)}
                       </p>
                     </div>
                     <div
                       className={`h-4 w-4 rounded border flex items-center justify-center ${
-                        isSelected ? "bg-[#005A36] border-[#005A36] text-white" : "border-neutral-300"
+                        isSelected ? "bg-[#FF3823] border-[#FF3823] text-white" : "border-neutral-300"
                       }`}
                     >
                       {isSelected && <Check className="h-3 w-3" />}
@@ -364,7 +364,7 @@ export function CustomizerModal({ product, isOpen, onClose }: CustomizerModalPro
                     }
                     className={`text-xs px-3 py-1.5 rounded-lg border transition-colors cursor-pointer ${
                       isSelected
-                        ? "bg-[#005A36] text-white border-[#005A36] font-bold"
+                        ? "bg-[#FF3823] text-white border-[#FF3823] font-bold"
                         : "border-neutral-300 bg-white text-neutral-800 hover:bg-neutral-50"
                     }`}
                   >
@@ -385,7 +385,7 @@ export function CustomizerModal({ product, isOpen, onClose }: CustomizerModalPro
               value={specialInstructions}
               onChange={(e) => setSpecialInstructions(e.target.value)}
               placeholder="Ej. Alitas extra doradas, aderezo aparte..."
-              className="w-full text-xs p-2 rounded-lg border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-[#005A36]"
+              className="w-full text-xs p-2 rounded-lg border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-[#FF3823]"
             />
           </div>
         </div>
@@ -420,7 +420,7 @@ export function CustomizerModal({ product, isOpen, onClose }: CustomizerModalPro
           </div>
 
           <Button
-            variant="gold"
+            variant="primary"
             size="lg"
             onClick={handleAddToCart}
             className="flex-1 max-w-xs shadow-md font-black"

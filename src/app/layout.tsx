@@ -1,11 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import dynamic from "next/dynamic";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Titan_One, Fredoka, Plus_Jakarta_Sans } from "next/font/google";
 import { Toaster } from "sonner";
 import { ServiceWorkerRegister } from "@/components/pwa/ServiceWorkerRegister";
 import "./globals.css";
 
-// Dynamic imports para optimizar First Load JS y LCP (separados en chunks asíncronos)
+// Dynamic imports para optimizar First Load JS y LCP
 const CartDrawer = dynamic(
   () => import("@/components/shop/CartDrawer").then((mod) => mod.CartDrawer)
 );
@@ -14,54 +14,64 @@ const InstallPwaBanner = dynamic(
   () => import("@/components/pwa/InstallPwaBanner").then((mod) => mod.InstallPwaBanner)
 );
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Fuentes oficiales de Google Fonts para LOCO ROOSTER
+const titanOne = Titan_One({
+  weight: "400",
   subsets: ["latin"],
+  variable: "--font-display",
   display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const fredoka = Fredoka({
   subsets: ["latin"],
+  weight: ["600", "700"],
+  variable: "--font-heading",
+  display: "swap",
+});
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-body",
   display: "swap",
 });
 
 export const viewport: Viewport = {
-  themeColor: "#005A36",
+  themeColor: "#FF3823",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
 };
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://wingstop.com.mx";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://locorooster.com.mx";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Wingstop México | Los Expertos en Alitas y Boneless",
-    template: "%s | Wingstop México",
+    default: "LOCO ROOSTER | Monchos de Verdad para Gente Loca",
+    template: "%s | LOCO ROOSTER",
   },
   description:
-    "Ordena en línea las mejores alitas y boneless de México. 11 sabores icónicos como Lemon Pepper, Mango Habanero, Atomic y Garlic Parmesan. Entrega a domicilio o para llevar.",
+    "Disfruta de las alitas más atrevidas, hamburguesas bestiales, boneless jugosos, crispy tenders y combos legendarios en Loco Rooster. ¡Sin excusas!",
   keywords: [
-    "Wingstop",
+    "Loco Rooster",
     "Alitas",
+    "Hamburguesas",
     "Boneless",
-    "Comida rápida",
-    "Delivery alitas México",
-    "Lemon Pepper",
-    "Mango Habanero",
-    "Papas sazonadas",
-    "Wings",
-    "PWA",
+    "Crispy Tenders",
+    "Comida rápida México",
+    "Monchos",
+    "Delivery",
+    "Papas con queso",
+    "Mega Combo Rooster",
   ],
-  authors: [{ name: "Wingstop México" }],
-  creator: "Wingstop México",
-  publisher: "Wingstop México",
+  authors: [{ name: "Loco Rooster" }],
+  creator: "Loco Rooster",
+  publisher: "Loco Rooster",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "Comida App",
+    title: "Loco Rooster",
   },
   formatDetection: {
     telephone: false,
@@ -72,25 +82,25 @@ export const metadata: Metadata = {
     type: "website",
     locale: "es_MX",
     url: siteUrl,
-    title: "Wingstop México | Los Expertos en Alitas y Boneless",
+    title: "LOCO ROOSTER | Monchos de Verdad para Gente Loca",
     description:
-      "Sabor insuperable preparado al momento. Elige tus salsas favoritas y recibe en la comodidad de tu casa.",
-    siteName: "Wingstop México",
+      "Alitas con salsas bravas, hamburguesas dobles de res de 300g, boneless crujientes y los tenders más bestiales.",
+    siteName: "Loco Rooster",
     images: [
       {
-        url: "https://images.unsplash.com/photo-1567620832903-9fc6debc209f?q=80&w=1200&auto=format&fit=crop",
+        url: "/images/loco-rooster.png",
         width: 1200,
         height: 630,
-        alt: "Alitas y Boneless Wingstop México",
+        alt: "Loco Rooster - Monchos de Verdad",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wingstop México | Los Expertos en Alitas",
-    description: "Ordena en línea tus alitas y boneless favoritos preparados al momento.",
-    creator: "@WingstopMexico",
-    images: ["https://images.unsplash.com/photo-1567620832903-9fc6debc209f?q=80&w=1200&auto=format&fit=crop"],
+    title: "LOCO ROOSTER | Monchos de Verdad",
+    description: "Alitas, hamburguesas bestiales y boneless jugosos preparados al momento.",
+    creator: "@LocoRooster",
+    images: ["/images/loco-rooster.png"],
   },
   robots: {
     index: true,
@@ -121,8 +131,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es-MX" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body className="min-h-screen bg-neutral-50 text-neutral-900 antialiased flex flex-col selection:bg-[#FFC72C] selection:text-neutral-900">
+    <html
+      lang="es-MX"
+      className={`${titanOne.variable} ${fredoka.variable} ${plusJakartaSans.variable}`}
+    >
+      <body className="min-h-screen bg-[#FAF7F2] text-[#1C1917] font-sans antialiased flex flex-col selection:bg-[#FFB703] selection:text-[#1C1917]">
         {children}
         <CartDrawer />
         <InstallPwaBanner />

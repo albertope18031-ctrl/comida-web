@@ -56,8 +56,8 @@ export default function RegisterPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-black text-neutral-900 tracking-tight">
-          Crea tu Cuenta Wingstop
+        <h2 className="text-xl font-black text-neutral-900 tracking-tight font-display">
+          Crea tu Cuenta Loco Rooster
         </h2>
         <p className="text-xs text-neutral-500 mt-1">
           Guarda tus direcciones favoritas y repite tus órdenes en un clic.
@@ -154,7 +154,7 @@ export default function RegisterPage() {
       <div className="text-center pt-2 border-t border-neutral-100">
         <p className="text-xs text-neutral-600">
           ¿Ya tienes una cuenta?{" "}
-          <Link href="/login" className="font-bold text-[#005A36] hover:underline">
+          <Link href="/login" className="font-bold text-[#FF3823] hover:underline">
             Inicia sesión aquí
           </Link>
         </p>

@@ -20,15 +20,15 @@ export default function AdminLayout({
       <aside className="w-full md:w-64 bg-neutral-950 border-r border-neutral-800 flex flex-col shrink-0">
         {/* Brand */}
         <div className="p-6 border-b border-neutral-800 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#005A36] text-[#FFC72C] font-black text-lg">
-              W
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#FF3823] text-white font-black text-sm">
+              LR
             </div>
             <div>
-              <span className="font-mono font-black text-white text-base tracking-wider block leading-none">
-                WINGSTOP
+              <span className="font-display font-black text-white text-base tracking-wider block leading-none">
+                LOCO ROOSTER
               </span>
-              <span className="text-[10px] font-bold text-emerald-400 tracking-wider uppercase">
+              <span className="text-[10px] font-bold text-[#FFB703] tracking-wider uppercase font-heading">
                 Panel Administrativo
               </span>
             </div>
@@ -41,7 +41,7 @@ export default function AdminLayout({
             href="/admin"
             className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-neutral-300 hover:text-white hover:bg-neutral-800 transition-colors"
           >
-            <LayoutDashboard className="h-4 w-4 text-[#FFC72C]" />
+            <LayoutDashboard className="h-4 w-4 text-[#FFB703]" />
             <span>Resumen General</span>
           </Link>
 
@@ -49,7 +49,7 @@ export default function AdminLayout({
             href="/admin/orders"
             className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-neutral-300 hover:text-white hover:bg-neutral-800 transition-colors"
           >
-            <ChefHat className="h-4 w-4 text-emerald-400" />
+            <ChefHat className="h-4 w-4 text-[#FF3823]" />
             <span>Monitor KDS / Órdenes</span>
           </Link>
 
@@ -57,7 +57,7 @@ export default function AdminLayout({
             href="/admin/branches"
             className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-neutral-300 hover:text-white hover:bg-neutral-800 transition-colors"
           >
-            <Store className="h-4 w-4 text-amber-400" />
+            <Store className="h-4 w-4 text-[#FFB703]" />
             <span>Gestión de Sucursales</span>
           </Link>
         </nav>

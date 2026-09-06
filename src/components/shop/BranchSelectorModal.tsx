@@ -154,27 +154,27 @@ export function BranchSelectorModal() {
     <Dialog open={isSelectorModalOpen} onOpenChange={(open) => !open && closeSelectorModal()}>
       <DialogContent className="max-w-2xl p-0 overflow-hidden sm:rounded-2xl border-none shadow-2xl">
         {/* Modal Header */}
-        <div className="bg-[#005A36] text-white p-6 pb-4">
+        <div className="bg-[#1C1917] text-white p-6 pb-4">
           <DialogHeader className="text-left space-y-1">
-            <span className="text-xs uppercase font-black tracking-widest text-[#FFC72C]">
-              EXPERIENCIA WINGSTOP
+            <span className="text-xs uppercase font-black tracking-widest text-[#FFB703]">
+              EXPERIENCIA LOCO ROOSTER
             </span>
-            <DialogTitle className="text-2xl font-black text-white">
+            <DialogTitle className="text-2xl font-black text-white font-display">
               ¿Cómo deseas recibir tu orden?
             </DialogTitle>
-            <DialogDescription className="text-xs text-emerald-100">
+            <DialogDescription className="text-xs text-neutral-400">
               Selecciona tu modalidad para mostrarte la disponibilidad de producto, salsas y tiempos en tiempo real.
             </DialogDescription>
           </DialogHeader>
 
           {/* Mode Switcher Tabs */}
-          <div className="mt-4 grid grid-cols-2 gap-2 p-1 bg-emerald-950/70 rounded-xl border border-emerald-800">
+          <div className="mt-4 grid grid-cols-2 gap-2 p-1 bg-neutral-800 rounded-xl border border-neutral-700">
             <button
               type="button"
               onClick={() => setActiveTab("delivery")}
               className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg text-xs font-black transition-all cursor-pointer ${
                 activeTab === "delivery"
-                  ? "bg-[#FFC72C] text-neutral-950 shadow-md scale-[1.01]"
+                  ? "bg-[#FFB703] text-neutral-950 shadow-md scale-[1.01]"
                   : "text-neutral-200 hover:text-white"
               }`}
             >
@@ -187,7 +187,7 @@ export function BranchSelectorModal() {
               onClick={() => setActiveTab("pickup")}
               className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg text-xs font-black transition-all cursor-pointer ${
                 activeTab === "pickup"
-                  ? "bg-[#FFC72C] text-neutral-950 shadow-md scale-[1.01]"
+                  ? "bg-[#FFB703] text-neutral-950 shadow-md scale-[1.01]"
                   : "text-neutral-200 hover:text-white"
               }`}
             >
@@ -207,7 +207,7 @@ export function BranchSelectorModal() {
                   Ingresa tu Calle, Número y Colonia
                 </label>
                 <div className="relative">
-                  <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-emerald-700" />
+                  <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#FF3823]" />
                   <Input
                     required
                     value={addressInput}
@@ -223,9 +223,9 @@ export function BranchSelectorModal() {
                 type="button"
                 onClick={handleUseMyLocation}
                 disabled={isLocating}
-                className="inline-flex items-center gap-2 text-xs font-bold text-[#005A36] hover:underline cursor-pointer"
+                className="inline-flex items-center gap-2 text-xs font-bold text-[#FF3823] hover:underline cursor-pointer"
               >
-                <Navigation className="h-3.5 w-3.5 text-emerald-700" />
+                <Navigation className="h-3.5 w-3.5 text-[#FF3823]" />
                 <span>{isLocating ? "Localizando dirección..." : "Usar mi ubicación actual"}</span>
               </button>
 
@@ -240,7 +240,7 @@ export function BranchSelectorModal() {
                       key={zone.zip}
                       type="button"
                       onClick={() => handleSelectZone(zone)}
-                      className="px-3 py-1.5 rounded-lg bg-white border border-neutral-200 hover:border-[#005A36] text-xs font-bold text-neutral-800 transition-colors cursor-pointer shadow-2xs"
+                      className="px-3 py-1.5 rounded-lg bg-white border border-neutral-200 hover:border-[#FF3823] text-xs font-bold text-neutral-800 transition-colors cursor-pointer shadow-2xs"
                     >
                       {zone.name}
                     </button>
@@ -249,13 +249,13 @@ export function BranchSelectorModal() {
               </div>
 
               {/* Assigned Branch Banner */}
-              <div className="p-4 rounded-xl bg-white border border-emerald-200 shadow-2xs space-y-2">
+              <div className="p-4 rounded-xl bg-white border border-neutral-200 shadow-2xs space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-emerald-800 uppercase flex items-center gap-1.5">
-                    <Store className="h-3.5 w-3.5 text-[#005A36]" />
+                  <span className="text-xs font-bold text-neutral-800 uppercase flex items-center gap-1.5">
+                    <Store className="h-3.5 w-3.5 text-[#FF3823]" />
                     Sucursal asignada para envío:
                   </span>
-                  <Badge className="bg-emerald-100 text-[#005A36] border border-emerald-300">
+                  <Badge className="bg-[#588157]/15 text-[#588157] border border-[#588157]/30">
                     Abierta
                   </Badge>
                 </div>
@@ -279,7 +279,7 @@ export function BranchSelectorModal() {
 
               <Button
                 type="submit"
-                variant="gold"
+                variant="primary"
                 size="lg"
                 className="w-full font-black text-base shadow-md h-12"
               >
@@ -311,7 +311,7 @@ export function BranchSelectorModal() {
                       key={branch.id}
                       className={`p-4 rounded-xl border bg-white transition-all shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
                         isCurrent
-                          ? "border-[#005A36] ring-2 ring-[#005A36]/30 bg-emerald-50/40"
+                          ? "border-[#FF3823] ring-2 ring-[#FF3823]/30 bg-red-50/30"
                           : "border-neutral-200 hover:border-neutral-300"
                       }`}
                     >
@@ -320,7 +320,7 @@ export function BranchSelectorModal() {
                           <h4 className="font-black text-sm text-neutral-900">
                             {branch.name}
                           </h4>
-                          <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-100 text-[#005A36]">
+                          <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-[#588157]/15 text-[#588157]">
                             Abierta
                           </span>
                         </div>
@@ -332,11 +332,11 @@ export function BranchSelectorModal() {
 
                         <div className="flex items-center gap-4 text-[11px] text-neutral-600 pt-1 font-medium">
                           <span className="flex items-center gap-1">
-                            <Clock className="h-3 w-3 text-[#005A36]" />
+                            <Clock className="h-3 w-3 text-[#FF3823]" />
                             {branch.openingTime} - {branch.closingTime} hrs
                           </span>
                           {branch.distanceKm && (
-                            <span className="text-emerald-800 font-bold">
+                            <span className="text-neutral-900 font-bold">
                               • A {branch.distanceKm} km
                             </span>
                           )}
@@ -348,8 +348,8 @@ export function BranchSelectorModal() {
 
                       <div className="shrink-0">
                         {isCurrent ? (
-                          <div className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#005A36] text-white text-xs font-black">
-                            <Check className="h-4 w-4 text-[#FFC72C]" />
+                          <div className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#1C1917] text-white text-xs font-black">
+                            <Check className="h-4 w-4 text-[#FFB703]" />
                             <span>Seleccionada</span>
                           </div>
                         ) : (
@@ -357,7 +357,7 @@ export function BranchSelectorModal() {
                             variant="outline"
                             size="sm"
                             onClick={() => handleConfirmPickup(branch)}
-                            className="font-bold text-xs hover:bg-[#005A36] hover:text-white"
+                            className="font-bold text-xs hover:bg-[#FF3823] hover:text-white"
                           >
                             Recoger Aquí
                           </Button>

@@ -26,7 +26,7 @@ export function generateWhatsAppOrderUrl(details: WhatsAppOrderDetails): string 
   const cleanPhone = rawPhone.replace(/[^0-9]/g, "");
 
   if (!details.items || details.items.length === 0) {
-    const fallbackMessage = "🍗 *¡Hola! Quiero consultar el menú y ordenar en Wingstop.*";
+    const fallbackMessage = "🍗 *¡Hola! Quiero consultar el menú y ordenar en Loco Rooster.*";
     return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(fallbackMessage)}`;
   }
 

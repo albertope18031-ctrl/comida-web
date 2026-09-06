@@ -2,14 +2,14 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Comida Wings & Boneless",
-    short_name: "Comida App",
+    name: "LOCO ROOSTER | Monchos de Verdad",
+    short_name: "Loco Rooster",
     description:
-      "Pide tus alitas, boneless y hamburguesas favoritas a domicilio o para llevar en minutos.",
+      "Disfruta de las alitas más atrevidas, hamburguesas bestiales, boneless jugosos y combos para compartir de Loco Rooster.",
     start_url: "/",
     display: "standalone",
-    background_color: "#0a0a0a",
-    theme_color: "#005A36",
+    background_color: "#FAF7F2",
+    theme_color: "#FF3823",
     orientation: "portrait-primary",
     icons: [
       {
@@ -35,7 +35,7 @@ export default function manifest(): MetadataRoute.Manifest {
       {
         name: "Ver Menú",
         url: "/menu",
-        description: "Accede directo al catálogo de alitas y promociones",
+        description: "Accede directo al catálogo de monchos y combos",
       },
       {
         name: "Mi Bolsa",

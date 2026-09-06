@@ -225,8 +225,8 @@ export function buildPacCfdi40Payload(params: {
     MetodoPago: "PUE",
     LugarExpedicion: params.branchZipCode || "06000",
     Emisor: {
-      Rfc: "WNG120315XX1",
-      Nombre: "WINGSTOP OPERADORA DE ALIMENTOS DE MEXICO",
+      Rfc: "LRO240101XX1",
+      Nombre: "LOCO ROOSTER OPERADORA DE ALIMENTOS SA DE CV",
       RegimenFiscal: "601",
     },
     Receptor: {

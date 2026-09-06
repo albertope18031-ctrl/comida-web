@@ -249,16 +249,16 @@ export default function CheckoutPage() {
   if (items.length === 0 && !isSubmitting) {
     return (
       <div className="mx-auto max-w-2xl px-4 py-24 text-center space-y-4">
-        <div className="w-16 h-16 rounded-full bg-emerald-50 text-[#005A36] flex items-center justify-center mx-auto mb-2">
+        <div className="w-16 h-16 rounded-full bg-red-50 text-[#FF3823] flex items-center justify-center mx-auto mb-2">
           <ShoppingBag className="h-8 w-8" />
         </div>
-        <h1 className="text-2xl font-black text-neutral-900 uppercase">
+        <h1 className="text-2xl font-black text-neutral-900 uppercase font-display">
           Tu bolsa está vacía
         </h1>
         <p className="text-sm text-neutral-500 max-w-md mx-auto">
           Agrega deliciosas alitas o boneless a tu pedido para continuar al checkout.
         </p>
-        <Button variant="gold" size="lg" asChild className="font-black mt-2">
+        <Button variant="primary" size="lg" asChild className="font-black mt-2">
           <Link href="/menu">Ir al Menú</Link>
         </Button>
       </div>
@@ -277,16 +277,16 @@ export default function CheckoutPage() {
             <ArrowLeft className="h-3.5 w-3.5" />
             <span>Volver al carrito</span>
           </Link>
-          <h1 className="text-2xl sm:text-3xl font-black text-neutral-950 uppercase tracking-tight mt-1 flex items-center gap-2">
+          <h1 className="text-2xl sm:text-3xl font-black text-neutral-950 uppercase tracking-tight mt-1 flex items-center gap-2 font-display">
             <span>One-Page Express Checkout</span>
-            <span className="text-[10px] bg-[#005A36] text-white px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
+            <span className="text-[10px] bg-[#FF3823] text-white px-2 py-0.5 rounded-full font-bold uppercase tracking-wider font-sans">
               1-Vista
             </span>
           </h1>
         </div>
 
-        <div className="flex items-center gap-2 text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-full">
-          <Store className="h-4 w-4 text-[#005A36]" />
+        <div className="flex items-center gap-2 text-xs font-bold text-neutral-800 bg-neutral-100 border border-neutral-200 px-3 py-1.5 rounded-full">
+          <Store className="h-4 w-4 text-[#FF3823]" />
           <span>{selectedBranch.name}</span>
         </div>
       </div>
@@ -299,12 +299,12 @@ export default function CheckoutPage() {
           className="w-full flex items-center justify-between font-black text-sm text-neutral-900 cursor-pointer"
         >
           <div className="flex items-center gap-2 text-left">
-            <ShoppingBag className="h-4 w-4 text-[#005A36]" />
+            <ShoppingBag className="h-4 w-4 text-[#FF3823]" />
             <span>
               Ver detalle de compra ({totalCount} {totalCount === 1 ? "artículo" : "artículos"})
             </span>
           </div>
-          <div className="flex items-center gap-1.5 text-[#005A36]">
+          <div className="flex items-center gap-1.5 text-[#FF3823]">
             <span className="text-base font-black">{formatCurrency(grandTotal)}</span>
             {mobileSummaryOpen ? (
               <ChevronUp className="h-4 w-4" />
@@ -318,15 +318,15 @@ export default function CheckoutPage() {
           <div className="mt-4 pt-3 border-t border-neutral-100 space-y-2.5 text-xs animate-in fade-in">
             {items.map((item) => (
               <div key={item.cartItemId} className="flex justify-between items-center py-1">
-                <span className="text-neutral-700">
+                <span className="font-bold text-neutral-800">
                   {item.quantity}x {item.name}
                 </span>
-                <span className="font-bold text-neutral-900">
+                <span className="font-extrabold text-neutral-900">
                   {formatCurrency(item.unitPrice * item.quantity)}
                 </span>
               </div>
             ))}
-            <div className="pt-2 border-t border-neutral-100 flex justify-between text-neutral-500 text-[11px]">
+            <div className="flex justify-between items-center pt-2 border-t border-neutral-100 font-bold text-neutral-600">
               <span>Costo de envío:</span>
               <span>{deliveryFee > 0 ? formatCurrency(deliveryFee) : "Gratis"}</span>
             </div>
@@ -340,7 +340,7 @@ export default function CheckoutPage() {
           {/* BLOQUE 1: DATOS DE CONTACTO */}
           <div className="p-6 rounded-2xl border border-neutral-200 bg-white shadow-sm space-y-4">
             <div className="flex items-center gap-2 border-b border-neutral-100 pb-3">
-              <div className="h-7 w-7 rounded-lg bg-emerald-50 text-[#005A36] flex items-center justify-center font-bold text-xs">
+              <div className="h-7 w-7 rounded-lg bg-red-50 text-[#FF3823] flex items-center justify-center font-bold text-xs">
                 1
               </div>
               <h2 className="text-base font-black uppercase text-neutral-900">
@@ -438,14 +438,14 @@ export default function CheckoutPage() {
           <div className="p-6 rounded-2xl border border-neutral-200 bg-white shadow-sm space-y-5">
             <div className="flex items-center justify-between border-b border-neutral-100 pb-3">
               <div className="flex items-center gap-2">
-                <div className="h-7 w-7 rounded-lg bg-emerald-50 text-[#005A36] flex items-center justify-center font-bold text-xs">
+                <div className="h-7 w-7 rounded-lg bg-red-50 text-[#FF3823] flex items-center justify-center font-bold text-xs">
                   2
                 </div>
                 <h2 className="text-base font-black uppercase text-neutral-900">
                   Modalidad y Entrega
                 </h2>
               </div>
-              <Badge className="bg-[#005A36] text-white text-[11px] py-0.5 px-2">
+              <Badge className="bg-[#1C1917] text-[#FAF7F2] text-[11px] py-0.5 px-2">
                 {selectedBranch.name}
               </Badge>
             </div>
@@ -457,7 +457,7 @@ export default function CheckoutPage() {
                 onClick={() => setOrderType("delivery")}
                 className={`p-3.5 rounded-xl border flex items-center justify-center gap-2.5 font-extrabold text-xs sm:text-sm transition-all cursor-pointer ${
                   orderType === "delivery"
-                    ? "border-[#005A36] bg-emerald-50 text-[#005A36] ring-2 ring-[#005A36]/30 shadow-xs"
+                    ? "border-[#FF3823] bg-red-50 text-[#FF3823] ring-2 ring-[#FF3823]/30 shadow-xs"
                     : "border-neutral-200 text-neutral-600 hover:bg-neutral-50"
                 }`}
               >
@@ -470,7 +470,7 @@ export default function CheckoutPage() {
                 onClick={() => setOrderType("pickup")}
                 className={`p-3.5 rounded-xl border flex items-center justify-center gap-2.5 font-extrabold text-xs sm:text-sm transition-all cursor-pointer ${
                   orderType === "pickup"
-                    ? "border-[#005A36] bg-emerald-50 text-[#005A36] ring-2 ring-[#005A36]/30 shadow-xs"
+                    ? "border-[#FF3823] bg-red-50 text-[#FF3823] ring-2 ring-[#FF3823]/30 shadow-xs"
                     : "border-neutral-200 text-neutral-600 hover:bg-neutral-50"
                 }`}
               >
@@ -502,15 +502,15 @@ export default function CheckoutPage() {
               </div>
             ) : (
               /* Pickup Mode: Pickup Instructions Card */
-              <div className="p-4 rounded-xl bg-emerald-50/60 border border-emerald-200 space-y-2 text-xs">
-                <div className="flex items-center gap-2 text-emerald-900 font-black">
-                  <Clock className="h-4 w-4 text-[#005A36]" />
+              <div className="p-4 rounded-xl bg-[#588157]/10 border border-[#588157]/30 space-y-2 text-xs">
+                <div className="flex items-center gap-2 text-[#1C1917] font-black">
+                  <Clock className="h-4 w-4 text-[#588157]" />
                   <span>Tiempo estimado de preparación: ~20 minutos</span>
                 </div>
                 <p className="text-neutral-700">
                   Pasa a recoger tu pedido directamente en el mostrador de <b>{selectedBranch.name}</b> ubicado en:
                 </p>
-                <p className="font-bold text-neutral-900 pl-6 border-l-2 border-[#005A36]">
+                <p className="font-bold text-neutral-900 pl-6 border-l-2 border-[#FF3823]">
                   {selectedBranch.address} (Tel. {selectedBranch.phone})
                 </p>
               </div>
@@ -520,7 +520,7 @@ export default function CheckoutPage() {
           {/* BLOQUE 3: MÉTODO DE PAGO Y FACTURACIÓN CFDI 4.0 */}
           <div className="p-6 rounded-2xl border border-neutral-200 bg-white shadow-sm space-y-5">
             <div className="flex items-center gap-2 border-b border-neutral-100 pb-3">
-              <div className="h-7 w-7 rounded-lg bg-emerald-50 text-[#005A36] flex items-center justify-center font-bold text-xs">
+              <div className="h-7 w-7 rounded-lg bg-red-50 text-[#FF3823] flex items-center justify-center font-bold text-xs">
                 3
               </div>
               <h2 className="text-base font-black uppercase text-neutral-900">
@@ -535,7 +535,7 @@ export default function CheckoutPage() {
                 onClick={() => setPaymentMethod("card")}
                 className={`p-3.5 rounded-xl border text-left flex flex-col justify-between gap-2 transition-all cursor-pointer ${
                   paymentMethod === "card"
-                    ? "border-[#005A36] bg-emerald-50 text-[#005A36] ring-2 ring-[#005A36]/30 shadow-xs"
+                    ? "border-[#FF3823] bg-red-50 text-[#FF3823] ring-2 ring-[#FF3823]/30 shadow-xs"
                     : "border-neutral-200 text-neutral-600 hover:bg-neutral-50"
                 }`}
               >
@@ -551,7 +551,7 @@ export default function CheckoutPage() {
                 onClick={() => setPaymentMethod("cash")}
                 className={`p-3.5 rounded-xl border text-left flex flex-col justify-between gap-2 transition-all cursor-pointer ${
                   paymentMethod === "cash"
-                    ? "border-[#005A36] bg-emerald-50 text-[#005A36] ring-2 ring-[#005A36]/30 shadow-xs"
+                    ? "border-[#FF3823] bg-red-50 text-[#FF3823] ring-2 ring-[#FF3823]/30 shadow-xs"
                     : "border-neutral-200 text-neutral-600 hover:bg-neutral-50"
                 }`}
               >
@@ -586,10 +586,10 @@ export default function CheckoutPage() {
                   type="checkbox"
                   checked={requiresInvoice}
                   onChange={(e) => setRequiresInvoice(e.target.checked)}
-                  className="h-4 w-4 rounded border-neutral-300 text-[#005A36] focus:ring-[#005A36]"
+                  className="h-4 w-4 rounded border-neutral-300 text-[#FF3823] focus:ring-[#FF3823]"
                 />
                 <span className="text-xs font-bold text-neutral-800 flex items-center gap-1.5">
-                  <Receipt className="h-4 w-4 text-[#005A36]" />
+                  <Receipt className="h-4 w-4 text-[#FF3823]" />
                   <span>¿Requieres factura electrónica CFDI 4.0?</span>
                 </span>
               </label>

@@ -93,7 +93,7 @@ export const useCartStore = create<CartState>()(
       },
     }),
     {
-      name: "wingstop-cart-storage",
+      name: "loco-rooster-cart-storage",
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({ items: state.items }),
     }

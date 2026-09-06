@@ -44,7 +44,7 @@ export interface Product {
   slug: string;
   description: string;
   basePrice: number;
-  category: "alitas" | "boneless" | "tenders" | "combos" | "papas" | "bebidas" | "aderezos";
+  category: "alitas" | "hamburguesas" | "boneless" | "tenders" | "combos" | "papas" | "bebidas" | "aderezos" | "sides" | "sandwiches";
   piecesCount?: number;
   maxFlavorsAllowed: number;
   imageUrl: string;

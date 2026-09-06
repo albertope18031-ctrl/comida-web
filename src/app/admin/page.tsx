@@ -52,7 +52,7 @@ export default function AdminOverviewPage() {
         <div className="p-5 rounded-xl bg-neutral-950 border border-neutral-800 space-y-2">
           <div className="flex items-center justify-between text-neutral-400 text-xs font-bold uppercase">
             <span>Órdenes Activas</span>
-            <ShoppingBag className="h-4 w-4 text-[#FFC72C]" />
+            <ShoppingBag className="h-4 w-4 text-[#FFB703]" />
           </div>
           <div className="text-2xl font-black text-white">18</div>
           <p className="text-[11px] text-neutral-400">7 en freidora, 11 en empaque</p>

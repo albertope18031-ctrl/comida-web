@@ -35,7 +35,7 @@ interface KdsOrder {
 const INITIAL_ORDERS: KdsOrder[] = [
   {
     id: "ord-1",
-    orderNumber: "WS-9104",
+    orderNumber: "LR-9104",
     customerName: "Rodrigo Navarro",
     fulfillmentType: "delivery",
     elapsedMinutes: 4,
@@ -59,7 +59,7 @@ const INITIAL_ORDERS: KdsOrder[] = [
   },
   {
     id: "ord-2",
-    orderNumber: "WS-9103",
+    orderNumber: "LR-9103",
     customerName: "Camila Torres",
     fulfillmentType: "pickup",
     elapsedMinutes: 11,
@@ -76,14 +76,14 @@ const INITIAL_ORDERS: KdsOrder[] = [
   },
   {
     id: "ord-3",
-    orderNumber: "WS-9102",
+    orderNumber: "LR-9102",
     customerName: "David Valencia",
     fulfillmentType: "delivery",
     elapsedMinutes: 19,
     status: "ready",
     items: [
       {
-        name: "Crew Pack (30 Piezas + 2 Papas)",
+        name: "Mega Combo Rooster (30 Piezas + 2 Papas)",
         quantity: 1,
         flavors: ["Original Hot", "Lemon Pepper", "Hickory BBQ", "Louisiana Rub"],
         dips: ["3x Ranch", "1x Blue Cheese"],
@@ -93,14 +93,14 @@ const INITIAL_ORDERS: KdsOrder[] = [
   },
   {
     id: "ord-4",
-    orderNumber: "WS-9101",
+    orderNumber: "LR-9101",
     customerName: "Sofia Méndez",
     fulfillmentType: "delivery",
     elapsedMinutes: 28,
     status: "on_the_way",
     items: [
       {
-        name: "Wingstop All-in-One Combo",
+        name: "Loco Rooster All-in-One Combo",
         quantity: 1,
         flavors: ["Spicy Korean Q"],
         dips: ["Ranch"],
@@ -302,7 +302,7 @@ function OrderCard({
                 {item.flavors.map((f, i) => (
                   <span
                     key={i}
-                    className="text-[10px] font-bold bg-[#FFC72C] text-neutral-950 px-1.5 py-0.2 rounded"
+                    className="text-[10px] font-bold bg-[#FFB703] text-neutral-950 px-1.5 py-0.2 rounded"
                   >
                     {f}
                   </span>
@@ -330,7 +330,7 @@ function OrderCard({
         <button
           type="button"
           onClick={onNextStatus}
-          className="px-3 py-1.5 rounded-lg bg-[#005A36] hover:bg-[#004227] text-white text-xs font-bold transition-colors cursor-pointer"
+          className="px-3 py-1.5 rounded-lg bg-[#FF3823] hover:bg-[#E02814] text-white text-xs font-bold transition-colors cursor-pointer"
         >
           {nextActionLabel}
         </button>

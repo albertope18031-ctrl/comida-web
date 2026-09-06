@@ -16,8 +16,8 @@ export async function GET(req: NextRequest) {
 
   if (type === "xml") {
     const xml = `<?xml version="1.0" encoding="utf-8"?>
-<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd" Version="4.0" Serie="WNG" Folio="${folio.replace(/[^0-9]/g, "").slice(-8) || "10001"}" Fecha="${today}" FormaPago="04" NoCertificado="30001000000500003416" SubTotal="${subtotalNum.toFixed(2)}" Moneda="MXN" Total="${totalNum.toFixed(2)}" TipoDeComprobante="I" Exportacion="01" MetodoPago="PUE" LugarExpedicion="06000" xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital">
-  <cfdi:Emisor Rfc="WNG120315XX1" Nombre="WINGSTOP OPERADORA DE ALIMENTOS DE MEXICO" RegimenFiscal="601"/>
+<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd" Version="4.0" Serie="LRO" Folio="${folio.replace(/[^0-9]/g, "").slice(-8) || "10001"}" Fecha="${today}" FormaPago="04" NoCertificado="30001000000500003416" SubTotal="${subtotalNum.toFixed(2)}" Moneda="MXN" Total="${totalNum.toFixed(2)}" TipoDeComprobante="I" Exportacion="01" MetodoPago="PUE" LugarExpedicion="06000" xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital">
+  <cfdi:Emisor Rfc="LRO240101XX1" Nombre="LOCO ROOSTER OPERADORA DE ALIMENTOS SA DE CV" RegimenFiscal="601"/>
   <cfdi:Receptor Rfc="${rfc}" Nombre="${name}" DomicilioFiscalReceptor="06000" RegimenFiscalReceptor="605" UsoCFDI="G03"/>
   <cfdi:Conceptos>
     <cfdi:Concepto ClaveProdServ="90101503" NoIdentificacion="${folio}" Cantidad="1.00" ClaveUnidad="E48" Unidad="Servicio" Descripcion="Consumo de alimentos y bebidas según ticket ${folio}" ValorUnitario="${subtotalNum.toFixed(2)}" Importe="${subtotalNum.toFixed(2)}" ObjetoImp="02">
@@ -56,22 +56,22 @@ export async function GET(req: NextRequest) {
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #1f2937; margin: 0; padding: 24px; background: #f9fafb; }
     .page { max-width: 800px; margin: 0 auto; background: #ffffff; padding: 36px; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
-    .header { display: flex; justify-content: space-between; border-bottom: 2px solid #005A36; padding-bottom: 16px; margin-bottom: 24px; }
-    .brand h1 { color: #005A36; margin: 0; font-size: 24px; font-weight: 900; }
+    .header { display: flex; justify-content: space-between; border-bottom: 2px solid #FF3823; padding-bottom: 16px; margin-bottom: 24px; }
+    .brand h1 { color: #FF3823; margin: 0; font-size: 24px; font-weight: 900; }
     .brand p { margin: 4px 0 0 0; font-size: 12px; color: #4b5563; }
     .cfdi-info { text-align: right; font-size: 12px; }
-    .cfdi-info strong { color: #005A36; font-size: 14px; }
-    .section-title { font-size: 12px; font-weight: 700; text-transform: uppercase; color: #005A36; background: #f0fdf4; padding: 6px 10px; border-radius: 4px; margin-top: 16px; margin-bottom: 8px; }
+    .cfdi-info strong { color: #FF3823; font-size: 14px; }
+    .section-title { font-size: 12px; font-weight: 700; text-transform: uppercase; color: #FF3823; background: #fff1f0; padding: 6px 10px; border-radius: 4px; margin-top: 16px; margin-bottom: 8px; }
     .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; font-size: 12px; margin-bottom: 16px; }
     .table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 12px; }
-    .table th { background: #005A36; color: #fff; padding: 8px; text-align: left; }
+    .table th { background: #FF3823; color: #fff; padding: 8px; text-align: left; }
     .table td { padding: 8px; border-bottom: 1px solid #e5e7eb; }
     .totals { margin-top: 16px; display: flex; justify-content: flex-end; }
     .totals table { font-size: 13px; border-collapse: collapse; }
     .totals td { padding: 4px 12px; }
-    .totals .total-row { font-weight: bold; font-size: 16px; color: #005A36; border-top: 2px solid #005A36; }
+    .totals .total-row { font-weight: bold; font-size: 16px; color: #FF3823; border-top: 2px solid #FF3823; }
     .stamp-box { margin-top: 24px; border: 1px dashed #9ca3af; padding: 12px; border-radius: 6px; font-size: 10px; color: #4b5563; word-break: break-all; }
-    .btn-print { background: #005A36; color: white; border: none; padding: 10px 20px; font-size: 14px; font-weight: bold; border-radius: 6px; cursor: pointer; margin-bottom: 20px; }
+    .btn-print { background: #FF3823; color: white; border: none; padding: 10px 20px; font-size: 14px; font-weight: bold; border-radius: 6px; cursor: pointer; margin-bottom: 20px; }
     @media print {
       body { background: white; padding: 0; }
       .page { box-shadow: none; padding: 0; }
@@ -88,16 +88,16 @@ export async function GET(req: NextRequest) {
   <div class="page">
     <div class="header">
       <div class="brand">
-        <h1>WINGSTOP</h1>
-        <p><strong>WINGSTOP OPERADORA DE ALIMENTOS DE MEXICO</strong></p>
-        <p>RFC: WNG120315XX1</p>
+        <h1>LOCO ROOSTER</h1>
+        <p><strong>LOCO ROOSTER OPERADORA DE ALIMENTOS SA DE CV</strong></p>
+        <p>RFC: LRO240101XX1</p>
         <p>Régimen Fiscal: 601 - General de Ley Personas Morales</p>
         <p>Lugar de Expedición: 06000, Ciudad de México</p>
       </div>
       <div class="cfdi-info">
         <strong>FACTURA ELECTRÓNICA (CFDI 4.0)</strong><br />
         Folio: <b>${folio}</b><br />
-        Serie: WNG<br />
+        Serie: LRO<br />
         Fecha de Emisión: ${today}<br />
         Tipo: Ingreso (I)<br />
         Moneda: MXN | Forma de Pago: 04 - Tarjeta

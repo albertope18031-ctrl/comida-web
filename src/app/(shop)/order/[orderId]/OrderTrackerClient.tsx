@@ -89,7 +89,7 @@ const STEPS = [
   {
     status: "delivered",
     label: "¡Entregado!",
-    desc: "Buen provecho, disfruta tu sabor Wingstop",
+    desc: "Buen provecho, disfruta tu sabor Loco Rooster",
     icon: CheckCircle2,
   },
 ];
@@ -152,33 +152,33 @@ export function OrderTrackerClient({
   return (
     <div className="space-y-8">
       {/* Top Banner */}
-      <div className="rounded-3xl bg-[#005A36] text-white p-6 sm:p-8 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="rounded-3xl bg-[#1C1917] text-white p-6 sm:p-8 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-black uppercase tracking-widest text-[#FFC72C]">
+            <span className="text-xs font-black uppercase tracking-widest text-[#FFB703]">
               SEGUIMIENTO EN TIEMPO REAL
             </span>
-            <span className="inline-block h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
+            <span className="inline-block h-2 w-2 rounded-full bg-[#FF3823] animate-ping" />
           </div>
 
-          <h1 className="text-2xl sm:text-3xl font-black">
+          <h1 className="text-2xl sm:text-3xl font-black font-display text-[#FAF7F2]">
             Orden #{initialOrder.orderNumber}
           </h1>
 
-          <p className="text-xs text-emerald-100 flex items-center gap-1.5">
-            <Store className="h-3.5 w-3.5 text-[#FFC72C]" />
+          <p className="text-xs text-neutral-300 flex items-center gap-1.5">
+            <Store className="h-3.5 w-3.5 text-[#FFB703]" />
             <span>Preparada en: {initialOrder.branch.name}</span>
           </p>
         </div>
 
-        <div className="bg-emerald-950/70 p-4 rounded-2xl border border-emerald-700/60 text-right shrink-0">
-          <span className="text-[11px] font-bold text-neutral-300 block uppercase">
+        <div className="bg-neutral-800 p-4 rounded-2xl border border-neutral-700 text-right shrink-0">
+          <span className="text-[11px] font-bold text-neutral-400 block uppercase">
             Tiempo estimado restante
           </span>
-          <span className="text-2xl sm:text-3xl font-black text-[#FFC72C]">
+          <span className="text-2xl sm:text-3xl font-black text-[#FFB703] font-display">
             ~{countdownMinutes} minutos
           </span>
-          <span className="text-[10px] text-emerald-300 block mt-0.5">
+          <span className="text-[10px] text-neutral-400 block mt-0.5">
             Llegada estimada a tu ubicación
           </span>
         </div>
@@ -215,18 +215,18 @@ export function OrderTrackerClient({
                 key={step.status}
                 className={`p-4 rounded-2xl border transition-all flex flex-col items-center text-center space-y-2 relative ${
                   isCurrent
-                    ? "border-[#005A36] bg-emerald-50/80 shadow-md ring-2 ring-[#005A36]/30 scale-[1.02]"
+                    ? "border-[#FF3823] bg-red-50/80 shadow-md ring-2 ring-[#FF3823]/30 scale-[1.02]"
                     : isCompleted
-                    ? "border-emerald-200 bg-emerald-50/30"
+                    ? "border-[#588157]/40 bg-[#588157]/10"
                     : "border-neutral-200 bg-neutral-50/60 opacity-60"
                 }`}
               >
                 <div
                   className={`h-10 w-10 rounded-full flex items-center justify-center font-black ${
                     isCurrent
-                      ? "bg-[#005A36] text-[#FFC72C] shadow-sm animate-pulse"
+                      ? "bg-[#FF3823] text-white shadow-sm animate-pulse"
                       : isCompleted
-                      ? "bg-[#005A36] text-white"
+                      ? "bg-[#1C1917] text-[#FFB703]"
                       : "bg-neutral-200 text-neutral-500"
                   }`}
                 >
@@ -243,7 +243,7 @@ export function OrderTrackerClient({
                 </div>
 
                 {isCurrent && (
-                  <span className="inline-block px-2 py-0.5 rounded-full bg-[#FFC72C] text-neutral-950 font-black text-[9px] uppercase tracking-wider mt-1">
+                  <span className="inline-block px-2 py-0.5 rounded-full bg-[#FFB703] text-neutral-950 font-black text-[9px] uppercase tracking-wider mt-1">
                     En Proceso
                   </span>
                 )}
@@ -312,7 +312,7 @@ export function OrderTrackerClient({
             </div>
             <div className="flex justify-between items-center text-sm font-black text-neutral-950 pt-2 border-t border-neutral-200">
               <span>Total Pagado:</span>
-              <span className="text-xl text-[#005A36]">
+              <span className="text-xl text-[#FF3823] font-black">
                 {formatCurrency(initialOrder.total)}
               </span>
             </div>
@@ -324,7 +324,7 @@ export function OrderTrackerClient({
           {/* Branch Card */}
           <div className="p-6 rounded-3xl bg-white border border-neutral-200 shadow-sm space-y-4">
             <h3 className="text-base font-black text-neutral-900 uppercase flex items-center gap-2">
-              <Store className="h-4 w-4 text-[#005A36]" />
+              <Store className="h-4 w-4 text-[#FF3823]" />
               <span>Sucursal Preparadora</span>
             </h3>
 
@@ -333,11 +333,11 @@ export function OrderTrackerClient({
                 {initialOrder.branch.name}
               </p>
               <p className="text-neutral-500 flex items-start gap-1.5">
-                <MapPin className="h-3.5 w-3.5 text-emerald-700 shrink-0 mt-0.5" />
+                <MapPin className="h-3.5 w-3.5 text-[#FF3823] shrink-0 mt-0.5" />
                 <span>{initialOrder.branch.address}</span>
               </p>
               <p className="text-neutral-600 flex items-center gap-1.5">
-                <Phone className="h-3.5 w-3.5 text-emerald-700" />
+                <Phone className="h-3.5 w-3.5 text-[#FF3823]" />
                 <span>{initialOrder.branch.phone}</span>
               </p>
             </div>
@@ -346,7 +346,7 @@ export function OrderTrackerClient({
               variant="outline"
               size="sm"
               asChild
-              className="w-full text-xs font-bold border-neutral-300 hover:bg-emerald-50 hover:text-[#005A36]"
+              className="w-full text-xs font-bold border-neutral-300 hover:bg-red-50 hover:text-[#FF3823]"
             >
               <a href={`tel:${initialOrder.branch.phone.replace(/\s+/g, "")}`}>
                 Llamar a la Sucursal

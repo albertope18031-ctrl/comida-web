@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   ShoppingBag,
   MapPin,
@@ -13,8 +14,6 @@ import {
   ChevronDown,
   User,
   Flame,
-  FileText,
-  Tag,
 } from "lucide-react";
 import { useOrderContextStore } from "@/store/order-context-store";
 import dynamic from "next/dynamic";
@@ -28,13 +27,15 @@ const BranchSelectorModal = dynamic(
   { ssr: false }
 );
 
+// Categorías oficiales de LOCO ROOSTER
 const NAVIGATION_LINKS = [
-  { name: "Alitas & Boneless", href: "/menu?cat=alitas" },
-  { name: "Hamburguesas", href: "/menu?cat=sandwiches" },
-  { name: "Combos", href: "/menu?cat=combos" },
-  { name: "Bebidas", href: "/menu?cat=bebidas" },
-  { name: "Promociones", href: "/#promociones", icon: Tag },
-  { name: "Facturación", href: "/facturacion", icon: FileText },
+  { name: "INICIO", href: "/" },
+  { name: "ALITAS", href: "/menu?cat=alitas" },
+  { name: "HAMBURGUESAS", href: "/menu?cat=sandwiches" },
+  { name: "BONELESS", href: "/menu?cat=boneless" },
+  { name: "PAPAS & ACOMPAÑAMIENTOS", href: "/menu?cat=sides" },
+  { name: "CRISPY TENDERS", href: "/menu?cat=tenders" },
+  { name: "COMBOS & PACKS", href: "/menu?cat=combos" },
 ];
 
 export function Header() {
@@ -54,7 +55,6 @@ export function Header() {
   const subtotal = getSubtotal();
   const totalCount = items.reduce((acc, item) => acc + item.quantity, 0);
 
-  // Calculate total chicken pieces in cart for extra fidelity
   const totalPieces = items.reduce(
     (acc, item) => acc + (item.piecesCount || 0) * item.quantity,
     0
@@ -72,25 +72,25 @@ export function Header() {
     <>
       <header
         className={`sticky top-0 z-40 w-full transition-all duration-200 ${
-          isScrolled ? "shadow-xl" : "shadow-md"
+          isScrolled ? "shadow-2xl" : "shadow-md"
         }`}
       >
         {/* Top Operational Bar: Context & Fulfillment Selector */}
-        <div className="bg-[#004227] text-white border-b border-emerald-800/80 px-4 py-2">
+        <div className="bg-[#141210] text-neutral-300 border-b border-neutral-800 px-4 py-1.5 text-xs">
           <div className="mx-auto max-w-7xl flex flex-wrap items-center justify-between gap-3">
             {/* Prominent Fulfillment & Branch Toggle Button */}
             <button
               type="button"
               onClick={openSelectorModal}
-              className="flex items-center gap-2.5 rounded-full bg-emerald-950/90 hover:bg-emerald-900 px-3.5 py-1.5 border border-emerald-600/60 transition-all cursor-pointer group shadow-sm"
+              className="flex items-center gap-2.5 rounded-full bg-neutral-900 hover:bg-neutral-800 px-3 py-1 border border-neutral-700 transition-all cursor-pointer group shadow-xs"
               aria-label="Seleccionar modalidad de entrega y sucursal"
             >
               {/* Order Mode Pill */}
               <span
-                className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-black uppercase tracking-wider ${
+                className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-heading font-black uppercase tracking-wider ${
                   orderType === "delivery"
-                    ? "bg-[#FFC72C] text-neutral-950"
-                    : "bg-white text-[#005A36]"
+                    ? "bg-[#FF3823] text-white"
+                    : "bg-[#FFB703] text-[#1C1917]"
                 }`}
               >
                 {orderType === "delivery" ? (
@@ -107,19 +107,19 @@ export function Header() {
               </span>
 
               {/* Branch / Address Label */}
-              <div className="flex items-center gap-1.5 text-xs text-neutral-100 font-bold group-hover:text-[#FFC72C] transition-colors">
-                <MapPin className="h-3.5 w-3.5 text-[#FFC72C] shrink-0" />
-                <span className="truncate max-w-[200px] sm:max-w-[320px]">
+              <div className="flex items-center gap-1.5 text-xs text-neutral-200 font-bold group-hover:text-[#FFB703] transition-colors">
+                <MapPin className="h-3.5 w-3.5 text-[#FFB703] shrink-0" />
+                <span className="truncate max-w-[180px] sm:max-w-[300px]">
                   {orderType === "delivery" && deliveryAddress
                     ? deliveryAddress.fullAddress
                     : selectedBranch.name}
                 </span>
-                <ChevronDown className="h-3.5 w-3.5 text-neutral-300 group-hover:translate-y-0.5 transition-transform" />
+                <ChevronDown className="h-3.5 w-3.5 text-neutral-400 group-hover:translate-y-0.5 transition-transform" />
               </div>
 
               {/* Estimated Time Badge */}
-              <div className="hidden sm:flex items-center gap-1 text-[11px] text-emerald-300 bg-emerald-900/80 px-2 py-0.5 rounded-md">
-                <Clock className="h-3 w-3 text-[#FFC72C]" />
+              <div className="hidden sm:flex items-center gap-1 text-[11px] text-[#FFB703] bg-neutral-950 px-2 py-0.5 rounded-md border border-neutral-800">
+                <Clock className="h-3 w-3 text-[#FFB703]" />
                 <span>
                   {orderType === "delivery"
                     ? `${selectedBranch.estimatedDeliveryMin} min`
@@ -129,14 +129,14 @@ export function Header() {
             </button>
 
             {/* Quick Secondary Actions */}
-            <div className="flex items-center gap-4 text-xs font-semibold text-neutral-300">
+            <div className="flex items-center gap-4 text-xs font-semibold text-neutral-400">
               <Link
                 href="/admin"
-                className="hidden lg:flex items-center gap-1 text-emerald-300 hover:text-white transition-colors text-[11px] font-bold px-2 py-0.5 rounded bg-emerald-900/60 border border-emerald-700/50"
+                className="hidden lg:flex items-center gap-1 text-[#FFB703] hover:text-white transition-colors text-[11px] font-bold px-2 py-0.5 rounded bg-neutral-900 border border-neutral-800"
               >
                 Panel Admin
               </Link>
-              <span className="hidden sm:inline text-neutral-400">|</span>
+              <span className="hidden sm:inline text-neutral-600">|</span>
               <span className="hidden sm:inline text-[11px] text-neutral-300">
                 Horario: {selectedBranch.openingTime} a {selectedBranch.closingTime} hrs
               </span>
@@ -145,79 +145,87 @@ export function Header() {
         </div>
 
         {/* Main Header Bar */}
-        <div className="bg-[#005A36] text-white">
+        <div className="bg-[#1C1917] text-white border-b border-[#FFB703]/20">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="flex h-18 items-center justify-between gap-4">
-              {/* Brand Logo */}
-              <div className="flex items-center gap-8">
+            <div className="flex h-20 items-center justify-between gap-4">
+              {/* Brand Logo LOCO ROOSTER */}
+              <div className="flex items-center gap-6 xl:gap-8">
                 <Link
                   href="/"
-                  className="flex items-center gap-2.5 group focus:outline-none focus:ring-2 focus:ring-[#FFC72C] rounded-lg p-1"
-                  aria-label="Wingstop México - Inicio"
+                  className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-[#FF3823] rounded-xl p-1"
+                  aria-label="Loco Rooster - Inicio"
                 >
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#FFC72C] text-[#005A36] font-black text-2xl shadow-md group-hover:scale-105 transition-transform">
-                    W
+                  <div className="relative h-12 w-12 sm:h-14 sm:w-14 rounded-2xl overflow-hidden bg-[#FFB703] p-1 shadow-lg shrink-0 border-2 border-[#1C1917] group-hover:rotate-3 transition-transform">
+                    <Image
+                      src="/images/loco-rooster.png"
+                      alt="Loco Rooster"
+                      fill
+                      sizes="56px"
+                      priority
+                      className="object-contain"
+                    />
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-2xl font-black tracking-wider uppercase text-white font-mono leading-none">
-                      WINGSTOP
+                    <span className="text-xl sm:text-2xl font-display uppercase tracking-tight text-white leading-none drop-shadow-xs">
+                      LOCO ROOSTER
                     </span>
-                    <span className="text-[10px] font-extrabold tracking-widest text-[#FFC72C] uppercase leading-tight">
-                      MÉXICO
+                    <span className="text-[10px] sm:text-[11px] font-heading font-black tracking-widest text-[#FFB703] uppercase leading-tight mt-0.5">
+                      MONCHOS DE VERDAD
                     </span>
                   </div>
                 </Link>
 
                 {/* Desktop Category Navigation */}
                 <nav
-                  className="hidden xl:flex items-center space-x-6 text-sm font-bold"
+                  className="hidden xl:flex items-center space-x-5 text-xs font-heading font-bold"
                   aria-label="Navegación principal de categorías"
                 >
                   {NAVIGATION_LINKS.map((link) => (
                     <Link
                       key={link.name}
                       href={link.href}
-                      className="text-neutral-100 hover:text-[#FFC72C] transition-colors flex items-center gap-1.5 whitespace-nowrap"
+                      className="text-neutral-200 hover:text-[#FFB703] transition-colors py-1 whitespace-nowrap tracking-wide"
                     >
-                      {link.icon && <link.icon className="h-3.5 w-3.5 text-[#FFC72C]" />}
-                      <span>{link.name}</span>
+                      {link.name}
                     </Link>
                   ))}
                 </nav>
               </div>
 
-              {/* Right Action Icons: Cart & Auth */}
+              {/* Right Action Buttons */}
               <div className="flex items-center gap-3">
-                {/* User / Login Button */}
-                <Link
-                  href="/login"
-                  className="hidden sm:flex items-center gap-1.5 text-xs font-black text-white hover:text-[#FFC72C] px-3 py-2 rounded-lg hover:bg-emerald-900/60 transition-colors"
-                >
-                  <User className="h-4 w-4" />
-                  <span>Mi Cuenta</span>
-                </Link>
-
-                {/* Shopping Cart Button */}
+                {/* Botón CTA ¡PEDIR AHORA! */}
                 <Button
-                  variant="gold"
+                  asChild
+                  className="bg-[#FF3823] hover:bg-[#E02D1A] text-white font-heading font-black text-xs sm:text-sm rounded-xl shadow-lg transition-transform active:scale-95 px-3.5 sm:px-5 h-11 flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Link href="/menu">
+                    <Flame className="h-4 w-4 fill-white text-white" />
+                    <span>¡PEDIR AHORA!</span>
+                  </Link>
+                </Button>
+
+                {/* Shopping Cart Bag Button */}
+                <Button
+                  variant="secondary"
                   onClick={openCart}
-                  className="relative h-12 px-4.5 flex items-center gap-3 rounded-xl font-black shadow-lg hover:scale-102 active:scale-98 transition-all cursor-pointer"
+                  className="relative h-11 px-3 sm:px-4 flex items-center gap-2.5 rounded-xl font-heading font-black shadow-md bg-[#FFB703] hover:bg-[#E5A400] text-[#1C1917] active:scale-95 cursor-pointer border border-[#1C1917]/20"
                   aria-label={`Abrir carrito de compras. ${totalCount} artículos por ${formatCurrency(subtotal)}`}
                 >
                   <div className="relative">
-                    <ShoppingBag className="h-5 w-5 text-neutral-950" />
+                    <ShoppingBag className="h-5 w-5 text-[#1C1917]" />
                     {totalCount > 0 && (
-                      <span className="absolute -top-2.5 -right-2.5 h-5 min-w-[20px] px-1 bg-red-600 text-white rounded-full text-[10px] font-black border-2 border-[#FFC72C] flex items-center justify-center animate-bounce">
+                      <span className="absolute -top-2.5 -right-2.5 h-5 min-w-[20px] px-1 bg-[#FF3823] text-white rounded-full text-[10px] font-black border-2 border-white flex items-center justify-center animate-bounce">
                         {totalCount}
                       </span>
                     )}
                   </div>
 
-                  <div className="flex flex-col items-start text-left leading-tight">
-                    <span className="text-[10px] uppercase font-black text-neutral-800 tracking-wider">
+                  <div className="hidden sm:flex flex-col items-start text-left leading-tight">
+                    <span className="text-[10px] uppercase font-bold text-[#1C1917]/80 tracking-wider">
                       {totalPieces > 0 ? `${totalPieces} pzas` : "Mi Bolsa"}
                     </span>
-                    <span className="text-xs font-black text-neutral-950">
+                    <span className="text-xs font-black text-[#1C1917]">
                       {subtotal > 0 ? formatCurrency(subtotal) : "$0.00"}
                     </span>
                   </div>
@@ -227,15 +235,15 @@ export function Header() {
                 <button
                   type="button"
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  className="xl:hidden p-2.5 rounded-xl text-white hover:bg-emerald-900/60 focus:outline-none focus:ring-2 focus:ring-[#FFC72C] cursor-pointer"
+                  className="xl:hidden p-2.5 rounded-xl text-white hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-[#FFB703] cursor-pointer"
                   aria-expanded={mobileMenuOpen}
                   aria-controls="mobile-navigation-drawer"
                   aria-label={mobileMenuOpen ? "Cerrar menú móvil" : "Abrir menú móvil"}
                 >
                   {mobileMenuOpen ? (
-                    <X className="h-6 w-6" />
+                    <X className="h-6 w-6 text-[#FFB703]" />
                   ) : (
-                    <MenuIcon className="h-6 w-6" />
+                    <MenuIcon className="h-6 w-6 text-white" />
                   )}
                 </button>
               </div>
@@ -247,17 +255,17 @@ export function Header() {
         {mobileMenuOpen && (
           <div
             id="mobile-navigation-drawer"
-            className="xl:hidden bg-[#004227] border-t border-emerald-800 text-white px-4 py-6 space-y-5 shadow-2xl animate-in slide-in-from-top-2 duration-200"
+            className="xl:hidden bg-[#1C1917] border-t border-neutral-800 text-white px-4 py-6 space-y-5 shadow-2xl animate-in slide-in-from-top-2 duration-200"
           >
             {/* Mobile Modal Trigger */}
-            <div className="p-3.5 rounded-xl bg-emerald-950/80 border border-emerald-700 space-y-2">
+            <div className="p-3.5 rounded-xl bg-neutral-900 border border-neutral-800 space-y-2">
               <div className="flex items-center justify-between text-xs">
                 <span className="font-bold text-neutral-300">Modalidad Actual:</span>
-                <Badge variant="gold">
+                <Badge variant={orderType === "delivery" ? "primary" : "secondary"}>
                   {orderType === "delivery" ? "A Domicilio" : "Para Llevar"}
                 </Badge>
               </div>
-              <p className="text-xs font-black text-white truncate">
+              <p className="text-xs font-bold text-white truncate">
                 {orderType === "delivery" && deliveryAddress
                   ? deliveryAddress.fullAddress
                   : selectedBranch.name}
@@ -269,20 +277,20 @@ export function Header() {
                   setMobileMenuOpen(false);
                   openSelectorModal();
                 }}
-                className="w-full text-xs font-bold border-emerald-500 bg-transparent text-white hover:bg-emerald-800"
+                className="w-full text-xs font-bold border-neutral-700 bg-transparent text-white hover:bg-neutral-800"
               >
                 Cambiar Sucursal o Dirección
               </Button>
             </div>
 
             {/* Mobile Category Links */}
-            <nav className="space-y-2 pt-2 border-t border-emerald-800/80" aria-label="Menú móvil">
+            <nav className="space-y-2 pt-2 border-t border-neutral-800" aria-label="Menú móvil">
               {NAVIGATION_LINKS.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block py-2 text-base font-black text-neutral-100 hover:text-[#FFC72C] transition-colors"
+                  className="block py-2 text-base font-heading font-bold text-neutral-100 hover:text-[#FFB703] transition-colors"
                 >
                   {link.name}
                 </Link>
@@ -291,14 +299,14 @@ export function Header() {
               <Link
                 href="/admin"
                 onClick={() => setMobileMenuOpen(false)}
-                className="block py-2 text-base font-bold text-emerald-300 hover:text-white"
+                className="block py-2 text-base font-heading font-bold text-[#FFB703] hover:text-white"
               >
                 Panel de Administración (KDS)
               </Link>
               <Link
                 href="/login"
                 onClick={() => setMobileMenuOpen(false)}
-                className="block py-2 text-base font-bold text-neutral-200 hover:text-white pt-3 border-t border-emerald-800"
+                className="block py-2 text-base font-bold text-neutral-300 hover:text-white pt-3 border-t border-neutral-800"
               >
                 Mi Cuenta / Iniciar Sesión
               </Link>

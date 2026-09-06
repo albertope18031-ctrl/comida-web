@@ -89,7 +89,7 @@ function LoginForm() {
             </label>
             <Link
               href="/recuperar"
-              className="text-[11px] font-semibold text-[#005A36] hover:underline"
+              className="text-[11px] font-semibold text-[#FF3823] hover:underline"
             >
               ¿Olvidaste tu contraseña?
             </Link>
@@ -123,7 +123,7 @@ function LoginForm() {
           ¿No tienes una cuenta aún?{" "}
           <Link
             href="/register"
-            className="font-bold text-[#005A36] hover:underline inline-flex items-center gap-1"
+            className="font-bold text-[#FF3823] hover:underline inline-flex items-center gap-1"
           >
             <span>Crear cuenta</span>
             <ArrowRight className="h-3 w-3" />

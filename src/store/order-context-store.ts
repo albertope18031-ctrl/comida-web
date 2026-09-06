@@ -34,7 +34,7 @@ export interface DeliveryAddressData {
 export const RESTAURANT_BRANCHES: BranchInfo[] = [
   {
     id: "a0000000-0000-0000-0000-000000000001",
-    name: "Wingstop Roma Norte",
+    name: "Loco Rooster Roma Norte",
     slug: "roma-norte",
     address: "Álvaro Obregón 151, Roma Norte, Cuauhtémoc, CDMX",
     city: "Ciudad de México",
@@ -51,7 +51,7 @@ export const RESTAURANT_BRANCHES: BranchInfo[] = [
   },
   {
     id: "a0000000-0000-0000-0000-000000000002",
-    name: "Wingstop Polanco",
+    name: "Loco Rooster Polanco",
     slug: "polanco",
     address: "Av. Homero 1425, Polanco, Miguel Hidalgo, CDMX",
     city: "Ciudad de México",
@@ -68,7 +68,7 @@ export const RESTAURANT_BRANCHES: BranchInfo[] = [
   },
   {
     id: "a0000000-0000-0000-0000-000000000003",
-    name: "Wingstop Insurgentes Sur",
+    name: "Loco Rooster Insurgentes Sur",
     slug: "insurgentes-sur",
     address: "Av. Insurgentes Sur 1235, Del Valle, Benito Juárez, CDMX",
     city: "Ciudad de México",
@@ -85,7 +85,7 @@ export const RESTAURANT_BRANCHES: BranchInfo[] = [
   },
   {
     id: "a0000000-0000-0000-0000-000000000004",
-    name: "Wingstop Ciudad Satélite",
+    name: "Loco Rooster Ciudad Satélite",
     slug: "satelite",
     address: "Circuito Centro Comercial 2251, Naucalpan, Edo. Méx.",
     city: "Estado de México",
@@ -145,7 +145,7 @@ export const useOrderContextStore = create<OrderContextState>()(
         set((state) => ({ isSelectorModalOpen: !state.isSelectorModalOpen })),
     }),
     {
-      name: "wingstop-order-context",
+      name: "loco-rooster-order-context",
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         orderType: state.orderType,

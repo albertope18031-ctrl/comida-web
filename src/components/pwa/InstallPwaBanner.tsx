@@ -107,54 +107,53 @@ export function InstallPwaBanner() {
         aria-label="Instalación de Aplicación"
         className="fixed bottom-20 md:bottom-6 left-3 right-3 md:left-auto md:right-6 md:max-w-md z-50 animate-in fade-in slide-in-from-bottom-5 duration-300"
       >
-        <div className="relative overflow-hidden rounded-2xl bg-[#004227] text-white p-4 shadow-2xl border-2 border-[#FFC72C]/70 backdrop-blur-md">
+        <div className="relative overflow-hidden rounded-2xl bg-[#1C1917] text-white p-4 shadow-2xl border-2 border-[#FFB703]/80 backdrop-blur-md">
           {/* Fondo sutil decorativo */}
-          <div className="absolute -right-8 -bottom-8 h-28 w-28 rounded-full bg-[#FFC72C]/10 blur-xl pointer-events-none" />
+          <div className="absolute -right-8 -bottom-8 h-28 w-28 rounded-full bg-[#FFB703]/10 blur-xl pointer-events-none" />
 
           {/* Botón cerrar */}
           <button
             onClick={handleDismiss}
-            className="absolute top-2.5 right-2.5 p-1 text-emerald-200 hover:text-white rounded-full hover:bg-emerald-800/60 transition-colors"
+            className="absolute top-2.5 right-2.5 p-1 text-stone-400 hover:text-white rounded-full hover:bg-neutral-800 transition-colors"
             aria-label="Cerrar notificación"
           >
             <X className="h-4 w-4" />
           </button>
 
           <div className="flex items-start gap-3.5 pr-6">
-            <div className="relative h-12 w-12 shrink-0 rounded-xl overflow-hidden border border-emerald-500/50 shadow-md bg-emerald-950">
+            <div className="relative h-12 w-12 shrink-0 rounded-xl overflow-hidden border border-neutral-700 shadow-md bg-[#FFB703] p-1">
               <Image
-                src="/icons/icon-192x192.png"
-                alt="Logo Comida App"
+                src="/images/loco-rooster.png"
+                alt="Logo Loco Rooster"
                 width={48}
                 height={48}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-contain"
               />
             </div>
 
             <div className="flex-1 space-y-1">
-              <div className="flex items-center gap-1.5 text-xs font-black text-[#FFC72C] tracking-wide uppercase">
+              <div className="flex items-center gap-1.5 text-xs font-heading font-black text-[#FFB703] tracking-wide uppercase">
                 <Sparkles className="h-3 w-3" />
-                <span>Experiencia Móvil VIP</span>
+                <span>Experiencia Móvil Loco Rooster</span>
               </div>
-              <p className="text-xs text-emerald-100 font-medium leading-snug">
-                📲 Instala nuestra App para ordenar en 1 toque y recibir promociones exclusivas.
+              <p className="text-xs text-stone-200 font-sans font-medium leading-snug">
+                📲 Instala nuestra App para ordenar tus monchos en 1 toque y recibir promos exclusivas.
               </p>
             </div>
           </div>
 
           {/* Acciones */}
-          <div className="mt-3.5 flex items-center justify-end gap-2 pt-2 border-t border-emerald-800/80">
+          <div className="mt-3.5 flex items-center justify-end gap-2 pt-2 border-t border-neutral-800">
             <button
               onClick={handleDismiss}
-              className="text-xs text-emerald-200 hover:text-white font-semibold px-2.5 py-1.5 transition-colors"
+              className="text-xs text-stone-400 hover:text-white font-semibold px-2.5 py-1.5 transition-colors"
             >
               Ahora no
             </button>
             <Button
               onClick={handleInstallClick}
-              variant="gold"
               size="sm"
-              className="font-black text-xs h-8 px-3.5 rounded-lg shadow-md hover:scale-105 transition-transform flex items-center gap-1.5"
+              className="bg-[#FF3823] hover:bg-[#E02D1A] text-white font-heading font-black text-xs h-9 px-4 rounded-xl shadow-md hover:scale-105 transition-transform flex items-center gap-1.5"
             >
               <Download className="h-3.5 w-3.5" />
               <span>Instalar Ahora</span>
@@ -169,7 +168,7 @@ export function InstallPwaBanner() {
           <div className="w-full max-w-sm rounded-3xl bg-neutral-900 border border-neutral-800 text-white p-6 shadow-2xl space-y-5 animate-in slide-in-from-bottom-6 sm:zoom-in-95">
             <div className="flex items-center justify-between pb-3 border-b border-neutral-800">
               <div className="flex items-center gap-2">
-                <Smartphone className="h-5 w-5 text-[#FFC72C]" />
+                <Smartphone className="h-5 w-5 text-[#FFB703]" />
                 <h3 className="font-black text-base uppercase tracking-wide">
                   Instalar en tu iPhone / iPad
                 </h3>

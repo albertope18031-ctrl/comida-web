@@ -58,7 +58,7 @@ export function OrderSummaryCard({
         </div>
         <Link
           href="/cart"
-          className="text-xs font-bold text-[#005A36] hover:underline flex items-center gap-1"
+          className="text-xs font-bold text-[#FF3823] hover:underline flex items-center gap-1"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
           <span>Editar</span>
@@ -116,7 +116,7 @@ export function OrderSummaryCard({
                       key={f.flavorId}
                       className="text-[10px] font-bold bg-amber-50 text-amber-900 border border-amber-200 px-1.5 py-0.2 rounded flex items-center gap-0.5"
                     >
-                      <Flame className="h-2.5 w-2.5 text-amber-600" />
+                      <Flame className="h-2.5 w-2.5 text-[#FF3823]" />
                       <span>{f.flavorName}</span>
                     </span>
                   ))}
@@ -147,7 +147,7 @@ export function OrderSummaryCard({
           <span className="flex items-center gap-1.5">
             <span>Costo de envío:</span>
             {orderType === "pickup" && (
-              <Badge className="bg-emerald-100 text-[#005A36] text-[10px] py-0 px-1.5 border-none font-bold">
+              <Badge className="bg-[#588157]/15 text-[#588157] text-[10px] py-0 px-1.5 border border-[#588157]/30 font-bold">
                 Gratis
               </Badge>
             )}
@@ -159,7 +159,7 @@ export function OrderSummaryCard({
 
         <div className="flex justify-between items-center text-base font-black text-neutral-950 pt-2 border-t border-neutral-200">
           <span>Total Neto a Pagar:</span>
-          <span className="text-2xl text-[#005A36] font-black">
+          <span className="text-2xl text-[#FF3823] font-black">
             {formatCurrency(grandTotal)}
           </span>
         </div>
@@ -178,7 +178,7 @@ export function OrderSummaryCard({
       {/* Action Submit Button */}
       <Button
         type="submit"
-        variant="gold"
+        variant="primary"
         size="lg"
         disabled={isSubmitting || (isCoverageBlocked && orderType === "delivery")}
         onClick={onPrimarySubmit}
@@ -198,7 +198,7 @@ export function OrderSummaryCard({
 
       {/* Trust & Security Badge */}
       <div className="flex items-center justify-center gap-1.5 text-[11px] text-neutral-500">
-        <ShieldCheck className="h-4 w-4 text-emerald-700" />
+        <ShieldCheck className="h-4 w-4 text-[#588157]" />
         <span>Pago seguro y encriptado con Supabase</span>
       </div>
 
@@ -208,7 +208,7 @@ export function OrderSummaryCard({
           <span className="font-bold text-neutral-800">
             ¿Prefieres ordenar por WhatsApp?
           </span>
-          <span className="text-[10px] bg-emerald-100 text-[#005A36] font-extrabold px-2 py-0.5 rounded-full">
+          <span className="text-[10px] bg-[#FFB703]/30 text-neutral-900 font-extrabold px-2 py-0.5 rounded-full">
             Atención directa
           </span>
         </div>

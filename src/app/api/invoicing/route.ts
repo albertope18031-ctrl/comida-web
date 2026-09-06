@@ -45,8 +45,8 @@ function generateMockCfdiXml(params: {
   invoicedAt: string;
 }): string {
   return `<?xml version="1.0" encoding="utf-8"?>
-<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd" Version="4.0" Serie="WNG" Folio="${params.orderNumber.replace(/[^0-9]/g, "").slice(-8) || "10001"}" Fecha="${params.invoicedAt}" FormaPago="04" NoCertificado="30001000000500003416" SubTotal="${params.subtotal}" Moneda="MXN" Total="${params.total}" TipoDeComprobante="I" Exportacion="01" MetodoPago="PUE" LugarExpedicion="06000" xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital">
-  <cfdi:Emisor Rfc="WNG120315XX1" Nombre="WINGSTOP OPERADORA DE ALIMENTOS DE MEXICO" RegimenFiscal="601"/>
+<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd" Version="4.0" Serie="LRO" Folio="${params.orderNumber.replace(/[^0-9]/g, "").slice(-8) || "10001"}" Fecha="${params.invoicedAt}" FormaPago="04" NoCertificado="30001000000500003416" SubTotal="${params.subtotal}" Moneda="MXN" Total="${params.total}" TipoDeComprobante="I" Exportacion="01" MetodoPago="PUE" LugarExpedicion="06000" xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital">
+  <cfdi:Emisor Rfc="LRO240101XX1" Nombre="LOCO ROOSTER OPERADORA DE ALIMENTOS SA DE CV" RegimenFiscal="601"/>
   <cfdi:Receptor Rfc="${params.rfc}" Nombre="${params.legalName}" DomicilioFiscalReceptor="${params.fiscalZipCode}" RegimenFiscalReceptor="${params.fiscalRegime}" UsoCFDI="${params.cfdiUsage}"/>
   <cfdi:Conceptos>
     <cfdi:Concepto ClaveProdServ="90101503" NoIdentificacion="${params.orderNumber}" Cantidad="1.00" ClaveUnidad="E48" Unidad="Servicio" Descripcion="Consumo de alimentos y bebidas según ticket ${params.orderNumber}" ValorUnitario="${params.subtotal}" Importe="${params.subtotal}" ObjetoImp="02">
@@ -191,7 +191,7 @@ export async function POST(req: NextRequest) {
         order: {
           id: foundOrder.id,
           orderNumber: foundOrder.order_number,
-          branchName: foundOrder.branches?.name || "Wingstop Sucursal",
+          branchName: foundOrder.branches?.name || "Loco Rooster Sucursal",
           branchAddress: foundOrder.branches?.address || "",
           total: orderTotal,
           subtotal: Number(foundOrder.subtotal) || Math.round((orderTotal / 1.16) * 100) / 100,

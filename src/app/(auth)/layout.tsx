@@ -10,16 +10,21 @@ export default function AuthLayout({
     <div className="min-h-screen bg-neutral-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       {/* Brand Header */}
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center space-y-2">
-        <Link href="/" className="inline-flex items-center gap-2 group">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#005A36] text-[#FFC72C] font-black text-2xl shadow-md group-hover:scale-105 transition-transform">
-            W
+        <Link href="/" className="inline-flex items-center gap-3 group justify-center">
+          <div className="relative h-12 w-12 rounded-xl bg-[#1C1917] p-1 shadow-md group-hover:scale-105 transition-transform shrink-0 flex items-center justify-center border border-neutral-700">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/loco-rooster.png"
+              alt="Loco Rooster Logo"
+              className="h-10 w-10 object-contain"
+            />
           </div>
           <div className="text-left">
-            <span className="text-2xl font-black tracking-wider uppercase text-neutral-900 font-mono block leading-none">
-              WINGSTOP
+            <span className="text-2xl font-black tracking-wider uppercase text-neutral-900 font-display block leading-none">
+              LOCO ROOSTER
             </span>
-            <span className="text-xs font-bold tracking-widest text-[#005A36] uppercase">
-              MÉXICO
+            <span className="text-[10px] font-black tracking-widest text-[#FF3823] uppercase">
+              MONCHOS DE VERDAD
             </span>
           </div>
         </Link>

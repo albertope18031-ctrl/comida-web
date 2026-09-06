@@ -399,22 +399,22 @@ export function ProductCustomizerModal({
       specialInstructions: specialInstructions.trim() || undefined,
     });
 
-    // High fidelity Wingstop Mexico Toast Notification
+    // High fidelity Loco Rooster Mexico Toast Notification
     toast.custom(
       (t) => (
-        <div className="w-full sm:w-96 rounded-2xl bg-[#005A36] text-white p-4 shadow-2xl border-2 border-[#FFC72C] flex items-center justify-between gap-3 animate-in fade-in slide-in-from-top-3">
+        <div className="w-full sm:w-96 rounded-2xl bg-[#1C1917] text-white p-4 shadow-2xl border-2 border-[#FFB703] flex items-center justify-between gap-3 animate-in fade-in slide-in-from-top-3">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-full bg-[#FFC72C] text-[#005A36] flex items-center justify-center font-black shrink-0">
-              <ShoppingBag className="h-5 w-5 text-[#005A36]" />
+            <div className="h-10 w-10 rounded-full bg-[#FFB703] text-neutral-950 flex items-center justify-center font-black shrink-0">
+              <ShoppingBag className="h-5 w-5 text-neutral-950" />
             </div>
             <div>
-              <p className="text-xs font-black uppercase tracking-wider text-[#FFC72C]">
+              <p className="text-xs font-black uppercase tracking-wider text-[#FFB703]">
                 ¡AGREGADO A TU BOLSA!
               </p>
               <h5 className="font-extrabold text-sm leading-tight text-white">
                 {quantity}x {product.name}
               </h5>
-              <p className="text-[11px] text-emerald-200">
+              <p className="text-[11px] text-neutral-300">
                 {selectedFlavors.map((f) => `${f.pieces} ${f.flavorName}`).join(" • ")}
               </p>
             </div>
@@ -426,7 +426,7 @@ export function ProductCustomizerModal({
               toast.dismiss(t);
               openCart();
             }}
-            className="px-3 py-1.5 rounded-lg bg-[#FFC72C] text-neutral-950 font-black text-xs hover:bg-[#e5b224] transition-colors cursor-pointer shrink-0 shadow-md"
+            className="px-3 py-1.5 rounded-lg bg-[#FF3823] text-white font-black text-xs hover:bg-[#E02814] transition-colors cursor-pointer shrink-0 shadow-md"
           >
             Ver Bolsa
           </button>
@@ -453,7 +453,7 @@ export function ProductCustomizerModal({
           <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent" />
           <div className="absolute bottom-4 left-5 right-5 text-white">
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-xs uppercase font-black text-[#FFC72C] tracking-widest">
+              <span className="text-xs uppercase font-black text-[#FFB703] tracking-widest">
                 {product.category}
               </span>
               {piecesCount > 0 && (
@@ -473,10 +473,10 @@ export function ProductCustomizerModal({
         <div className="p-6 overflow-y-auto space-y-6 flex-1 text-neutral-800 bg-white">
           {/* Fast-Track 1-Click Express Banner */}
           {defaultConfig && (
-            <div className="p-4 rounded-xl bg-gradient-to-r from-amber-50 to-emerald-50 border border-amber-300 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="p-4 rounded-xl bg-gradient-to-r from-amber-50 to-orange-50 border border-[#FFB703] shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="space-y-0.5">
-                <span className="inline-flex items-center gap-1 text-[11px] font-black uppercase tracking-wider text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded-md">
-                  <Zap className="h-3 w-3 fill-amber-600 text-amber-600" />
+                <span className="inline-flex items-center gap-1 text-[11px] font-black uppercase tracking-wider text-amber-900 bg-[#FFB703]/30 px-2 py-0.5 rounded-md">
+                  <Zap className="h-3 w-3 fill-[#FF3823] text-[#FF3823]" />
                   🚀 ¿Tienes prisa? Combinación favorita
                 </span>
                 <p className="text-xs font-bold text-neutral-900">
@@ -506,7 +506,7 @@ export function ProductCustomizerModal({
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-neutral-100">
                 <div>
                   <h3 className="text-base font-black uppercase text-neutral-900 flex items-center gap-1.5">
-                    <Flame className="h-4 w-4 text-[#FFC72C]" />
+                    <Flame className="h-4 w-4 text-[#FF3823]" />
                     <span>1. Elige y divide tus Salsas</span>
                   </h3>
                   <p className="text-xs text-neutral-500">
@@ -521,8 +521,8 @@ export function ProductCustomizerModal({
                       Selecciona {maxFlavors - selectedFlavors.length} más ({selectedFlavors.length}/{maxFlavors})
                     </Badge>
                   ) : (
-                    <Badge className="bg-emerald-100 text-emerald-900 border border-emerald-300 text-xs font-bold flex items-center gap-1">
-                      <Check className="h-3 w-3" />
+                    <Badge className="bg-neutral-900 text-white border border-neutral-800 text-xs font-bold flex items-center gap-1">
+                      <Check className="h-3 w-3 text-[#FFB703]" />
                       ¡Listo! ({selectedFlavors.length}/{maxFlavors})
                     </Badge>
                   )}
@@ -533,7 +533,7 @@ export function ProductCustomizerModal({
                       variant="outline"
                       size="sm"
                       onClick={handleSplitEvenly}
-                      className="text-xs font-bold border-emerald-600 text-[#005A36] hover:bg-emerald-50 cursor-pointer"
+                      className="text-xs font-bold border-neutral-400 text-neutral-800 hover:bg-neutral-100 cursor-pointer"
                     >
                       <Divide className="h-3.5 w-3.5 mr-1" />
                       Repartir parejo
@@ -546,7 +546,7 @@ export function ProductCustomizerModal({
               <div
                 className={`p-3.5 rounded-xl border flex items-center justify-between transition-colors ${
                   isPiecesBalanced
-                    ? "bg-emerald-50/80 border-emerald-300 text-emerald-900"
+                    ? "bg-[#588157]/10 border-[#588157]/30 text-[#1C1917]"
                     : "bg-amber-50 border-amber-300 text-amber-900"
                 }`}
               >
@@ -554,7 +554,7 @@ export function ProductCustomizerModal({
                   <div
                     className={`h-7 w-7 rounded-full flex items-center justify-center font-black text-xs ${
                       isPiecesBalanced
-                        ? "bg-[#005A36] text-white"
+                        ? "bg-[#588157] text-white"
                         : "bg-amber-500 text-white"
                     }`}
                   >
@@ -578,7 +578,7 @@ export function ProductCustomizerModal({
                 <div className="w-24 h-2 bg-neutral-200 rounded-full overflow-hidden">
                   <div
                     className={`h-full transition-all ${
-                      isPiecesBalanced ? "bg-[#005A36]" : "bg-amber-500"
+                      isPiecesBalanced ? "bg-[#588157]" : "bg-amber-500"
                     }`}
                     style={{
                       width: `${Math.min(
@@ -632,7 +632,7 @@ export function ProductCustomizerModal({
                               type="button"
                               onClick={() => handlePieceStep(flavor.flavorId, 1)}
                               disabled={assignedPieces >= piecesCount}
-                              className="h-7 w-7 rounded bg-[#005A36] text-white flex items-center justify-center hover:bg-[#004227] disabled:opacity-40 cursor-pointer"
+                              className="h-7 w-7 rounded bg-[#FF3823] text-white flex items-center justify-center hover:bg-[#E02814] disabled:opacity-40 cursor-pointer"
                             >
                               <Plus className="h-3.5 w-3.5" />
                             </button>
@@ -648,7 +648,7 @@ export function ProductCustomizerModal({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
                 {FLAVORS.map((flavor) => {
                   const isSelected = selectedFlavors.some(
-                    (f) => f.flavorId === flavor.id
+                     (f) => f.flavorId === flavor.id
                   );
                   const spiceBadge = getSpiceLevelBadge(flavor.heatLevel);
 
@@ -659,7 +659,7 @@ export function ProductCustomizerModal({
                       onClick={() => handleFlavorToggle(flavor)}
                       className={`text-left p-3 rounded-xl border transition-all cursor-pointer flex items-start justify-between gap-2 ${
                         isSelected
-                          ? "border-[#005A36] bg-emerald-50/70 ring-2 ring-[#005A36]/40"
+                          ? "border-[#FF3823] bg-red-50/70 ring-2 ring-[#FF3823]/30"
                           : "border-neutral-200 hover:border-neutral-300 hover:bg-neutral-50"
                       }`}
                     >
@@ -669,7 +669,7 @@ export function ProductCustomizerModal({
                             {flavor.name}
                           </span>
                           {flavor.badge && (
-                            <span className="text-[10px] bg-[#FFC72C] text-neutral-950 font-black px-1.5 py-0.2 rounded">
+                            <span className="text-[10px] bg-[#FFB703] text-neutral-950 font-black px-1.5 py-0.2 rounded">
                               {flavor.badge}
                             </span>
                           )}
@@ -694,7 +694,7 @@ export function ProductCustomizerModal({
                       <div
                         className={`h-5 w-5 rounded-full flex items-center justify-center shrink-0 border transition-colors ${
                           isSelected
-                            ? "bg-[#005A36] border-[#005A36] text-white"
+                            ? "bg-[#FF3823] border-[#FF3823] text-white"
                             : "border-neutral-300 bg-white"
                         }`}
                       >
@@ -712,7 +712,7 @@ export function ProductCustomizerModal({
             <div>
               <h3 className="text-base font-black uppercase text-neutral-900 flex items-center justify-between">
                 <span>2. Aderezo Incluido (Obligatorio)</span>
-                <span className="text-[11px] text-emerald-800 font-bold bg-emerald-50 px-2 py-0.5 rounded">
+                <span className="text-[11px] text-[#588157] font-bold bg-[#588157]/10 px-2 py-0.5 rounded">
                   1 Incluido
                 </span>
               </h3>
@@ -727,15 +727,15 @@ export function ProductCustomizerModal({
                 onClick={() => handleSelectIncludedDip("ranch")}
                 className={`p-3 rounded-xl border text-left flex items-center justify-between cursor-pointer ${
                   includedDip === "ranch"
-                    ? "border-[#005A36] bg-emerald-50/70 ring-2 ring-[#005A36]/30 font-bold"
+                    ? "border-[#FF3823] bg-red-50/70 ring-2 ring-[#FF3823]/30 font-bold"
                     : "border-neutral-200 hover:bg-neutral-50"
                 }`}
               >
                 <div>
                   <p className="text-xs font-black text-neutral-900">Ranch Casero</p>
-                  <p className="text-[10px] text-emerald-700 font-extrabold">Incluido</p>
+                  <p className="text-[10px] text-[#588157] font-extrabold">Incluido</p>
                 </div>
-                {includedDip === "ranch" && <Check className="h-4 w-4 text-[#005A36]" />}
+                {includedDip === "ranch" && <Check className="h-4 w-4 text-[#FF3823]" />}
               </button>
 
               <button
@@ -743,15 +743,15 @@ export function ProductCustomizerModal({
                 onClick={() => handleSelectIncludedDip("blue-cheese")}
                 className={`p-3 rounded-xl border text-left flex items-center justify-between cursor-pointer ${
                   includedDip === "blue-cheese"
-                    ? "border-[#005A36] bg-emerald-50/70 ring-2 ring-[#005A36]/30 font-bold"
+                    ? "border-[#FF3823] bg-red-50/70 ring-2 ring-[#FF3823]/30 font-bold"
                     : "border-neutral-200 hover:bg-neutral-50"
                 }`}
               >
                 <div>
                   <p className="text-xs font-black text-neutral-900">Blue Cheese</p>
-                  <p className="text-[10px] text-emerald-700 font-extrabold">Incluido</p>
+                  <p className="text-[10px] text-[#588157] font-extrabold">Incluido</p>
                 </div>
-                {includedDip === "blue-cheese" && <Check className="h-4 w-4 text-[#005A36]" />}
+                {includedDip === "blue-cheese" && <Check className="h-4 w-4 text-[#FF3823]" />}
               </button>
 
               <button
@@ -804,7 +804,7 @@ export function ProductCustomizerModal({
                         <button
                           type="button"
                           onClick={() => handleExtraDipChange(dip.id, 1)}
-                          className="h-6 w-6 rounded bg-[#005A36] text-white flex items-center justify-center hover:bg-[#004227] cursor-pointer"
+                          className="h-6 w-6 rounded bg-[#FF3823] text-white flex items-center justify-center hover:bg-[#E02814] cursor-pointer"
                         >
                           <Plus className="h-3 w-3" />
                         </button>
@@ -837,20 +837,20 @@ export function ProductCustomizerModal({
                     onClick={() => handleSideToggle(side)}
                     className={`text-left p-3 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
                       isSelected
-                        ? "border-[#005A36] bg-emerald-50/70 font-bold ring-2 ring-[#005A36]/30"
+                        ? "border-[#FF3823] bg-red-50/70 font-bold ring-2 ring-[#FF3823]/30"
                         : "border-neutral-200 hover:bg-neutral-50"
                     }`}
                   >
                     <div>
                       <p className="text-xs text-neutral-900">{side.name}</p>
-                      <p className="text-xs font-bold text-emerald-800">
+                      <p className="text-xs font-bold text-[#FF3823]">
                         +{formatCurrency(side.price)}
                       </p>
                     </div>
                     <div
                       className={`h-4 w-4 rounded border flex items-center justify-center ${
                         isSelected
-                          ? "bg-[#005A36] border-[#005A36] text-white"
+                          ? "bg-[#FF3823] border-[#FF3823] text-white"
                           : "border-neutral-300"
                       }`}
                     >
@@ -873,7 +873,7 @@ export function ProductCustomizerModal({
               onChange={(e) => setSpecialInstructions(e.target.value)}
               placeholder="Ej. Alitas extra crujientes, salsa bien bañada..."
               maxLength={200}
-              className="w-full text-xs p-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-[#005A36] bg-neutral-50"
+              className="w-full text-xs p-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-[#FF3823] bg-neutral-50"
             />
           </div>
         </div>
@@ -913,13 +913,13 @@ export function ProductCustomizerModal({
             {/* Total & Submit Button with Proactive Guidance */}
             <div className="flex-1 flex items-center justify-end gap-3">
               <Button
-                variant={isValid ? "gold" : "outline"}
+                variant={isValid ? "primary" : "outline"}
                 size="lg"
                 disabled={!isValid}
                 onClick={handleAddToCart}
                 className={`h-12 px-4 sm:px-6 font-black text-sm sm:text-base shadow-lg transition-all cursor-pointer ${
                   isValid
-                    ? "bg-[#FFC72C] hover:bg-[#e5b224] text-neutral-950 hover:scale-101"
+                    ? "bg-[#FF3823] hover:bg-[#E02814] text-white hover:scale-101"
                     : "border-amber-300 bg-amber-50 text-amber-900 opacity-90 cursor-not-allowed"
                 }`}
               >

@@ -183,11 +183,11 @@ export default function CartPage() {
 
           <div className="flex justify-between items-center">
             <span className="text-sm font-black text-neutral-900">Total a pagar:</span>
-            <span className="text-2xl font-black text-[#005A36]">{formatCurrency(total)}</span>
+            <span className="text-2xl font-black text-[#FF3823]">{formatCurrency(total)}</span>
           </div>
 
           <Button
-            variant="gold"
+            variant="primary"
             size="lg"
             className="w-full font-black text-base shadow-md flex items-center justify-center gap-2"
             asChild
