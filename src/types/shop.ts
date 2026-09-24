@@ -38,6 +38,17 @@ export interface ProductDefaultConfig {
   extraPrice?: number;
 }
 
+export interface ProductVariant {
+  id: string;
+  name: string;
+  slug: string;
+  piecesCount: number;
+  basePrice: number;
+  maxFlavorsAllowed: number;
+  description?: string;
+  imageUrl?: string;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -53,6 +64,7 @@ export interface Product {
   default_configuration?: ProductDefaultConfig;
   socialBadge?: "mas_pedido" | "favorito" | "recomendacion_chef";
   socialProofText?: string;
+  variants?: ProductVariant[];
 }
 
 export interface SelectedFlavor {

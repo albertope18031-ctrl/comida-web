@@ -1,7 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-import { PRODUCTS, DIPS, SIDES, DRINKS } from "@/lib/mock-data";
+import { PRODUCTS, DIPS, SIDES, DRINKS, findProductById } from "@/lib/mock-data";
 import type { OrderType, PaymentStatus, OrderStatus } from "@/types/database";
 
 export interface OrderItemPayload {
@@ -95,8 +95,8 @@ export async function createOrderAction(
     // 2. Server-side price re-validation (prevents client-side price tampering)
     let validatedSubtotal = 0;
     const validatedItems = payload.items.map((item) => {
-      // Find trusted product in catalog or database
-      const productDef = PRODUCTS.find((p) => p.id === item.productId);
+      // Find trusted product in catalog or database (including variants)
+      const productDef = findProductById(item.productId) || PRODUCTS.find((p) => p.id === item.productId);
       const basePrice = productDef ? productDef.basePrice : 199;
 
       // Validate dips cost

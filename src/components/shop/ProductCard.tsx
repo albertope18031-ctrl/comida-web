@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Plus, Flame, Sparkles, Star } from "lucide-react";
@@ -22,19 +22,40 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const [modalOpen, setModalOpen] = useState(false);
-  const socialProof = getProductSocialProof(product);
+  const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
+
+  const hasVariants = Boolean(product.variants && product.variants.length > 0);
+  const currentVariant = hasVariants ? product.variants![selectedVariantIndex] : null;
+
+  // Active product merged with variant data if available
+  const activeProduct: Product = useMemo(() => {
+    if (!currentVariant) return product;
+    return {
+      ...product,
+      id: currentVariant.id,
+      name: currentVariant.name,
+      slug: currentVariant.slug,
+      piecesCount: currentVariant.piecesCount,
+      basePrice: currentVariant.basePrice,
+      maxFlavorsAllowed: currentVariant.maxFlavorsAllowed,
+      description: currentVariant.description || product.description,
+      imageUrl: currentVariant.imageUrl || product.imageUrl,
+    };
+  }, [product, currentVariant]);
+
+  const socialProof = getProductSocialProof(activeProduct);
 
   return (
     <>
       <div className="group relative flex flex-col h-full w-full overflow-hidden rounded-3xl border-2 border-[#1C1917]/10 bg-white shadow-sm transition-all duration-300 hover:shadow-2xl hover:border-[#FF3823]/50 select-none">
         {/* Product Image - Fixed aspect ratio & clean cropping across all cards */}
         <Link
-          href={`/product/${product.slug}`}
+          href={`/product/${activeProduct.slug}`}
           className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-neutral-100 block"
         >
           <Image
-            src={product.imageUrl}
-            alt={product.name}
+            src={activeProduct.imageUrl}
+            alt={activeProduct.name}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -77,10 +98,42 @@ export function ProductCard({ product }: ProductCardProps) {
             )}
           </div>
 
-          {product.piecesCount && (
-            <div className="absolute bottom-2.5 right-2.5 bg-[#1C1917]/90 backdrop-blur-sm text-[#FFB703] border border-[#FFB703]/30 px-3 py-1 rounded-lg text-xs font-heading font-black tracking-wide shadow-md">
-              {product.piecesCount} Piezas
+          {/* Piece Counter Badge or Interactive Variant Selector */}
+          {hasVariants ? (
+            <div
+              className="absolute bottom-2.5 right-2.5 flex items-center p-0.5 rounded-xl bg-[#1C1917]/95 backdrop-blur-md border border-[#FFB703]/50 shadow-lg z-20"
+              role="group"
+              aria-label="Seleccionar cantidad de piezas"
+            >
+              {product.variants!.map((variant, idx) => {
+                const isSelected = selectedVariantIndex === idx;
+                return (
+                  <button
+                    key={variant.id}
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setSelectedVariantIndex(idx);
+                    }}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-heading font-black tracking-wide transition-all cursor-pointer select-none [-webkit-tap-highlight-color:transparent] ${
+                      isSelected
+                        ? "bg-[#FF3823] text-white shadow-xs scale-102"
+                        : "text-[#FFB703] hover:text-white hover:bg-white/10"
+                    }`}
+                    aria-pressed={isSelected}
+                  >
+                    {variant.piecesCount} Piezas
+                  </button>
+                );
+              })}
             </div>
+          ) : (
+            activeProduct.piecesCount && (
+              <div className="absolute bottom-2.5 right-2.5 bg-[#1C1917]/90 backdrop-blur-sm text-[#FFB703] border border-[#FFB703]/30 px-3 py-1 rounded-lg text-xs font-heading font-black tracking-wide shadow-md">
+                {activeProduct.piecesCount} Piezas
+              </div>
+            )
           )}
         </Link>
 
@@ -89,22 +142,22 @@ export function ProductCard({ product }: ProductCardProps) {
           <div className="flex flex-col">
             {/* Category & Flavors Row - Consistent reserved height */}
             <div className="h-5 flex items-center gap-1.5 text-xs font-heading font-black text-[#FF3823] uppercase tracking-wider mb-1">
-              <span className="truncate">{product.category}</span>
-              {product.maxFlavorsAllowed > 0 && (
+              <span className="truncate">{activeProduct.category}</span>
+              {activeProduct.maxFlavorsAllowed > 0 && (
                 <>
                   <span className="text-[#1C1917]/40 shrink-0">•</span>
                   <span className="flex items-center gap-0.5 text-[#588157] shrink-0 text-[11px]">
                     <Flame className="h-3 w-3" />
-                    Hasta {product.maxFlavorsAllowed} salsas
+                    Hasta {activeProduct.maxFlavorsAllowed} salsas
                   </span>
                 </>
               )}
             </div>
 
             {/* Product Title - Uniform reserved height for up to 2 lines */}
-            <Link href={`/product/${product.slug}`} className="block">
+            <Link href={`/product/${activeProduct.slug}`} className="block">
               <h3 className="font-heading font-black text-lg sm:text-xl text-[#1C1917] leading-snug group-hover:text-[#FF3823] transition-colors line-clamp-2 h-12 sm:h-14 flex items-start">
-                {product.name}
+                {activeProduct.name}
               </h3>
             </Link>
 
@@ -122,7 +175,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
             {/* Description - Fixed reserved height clamped to 2 lines */}
             <p className="mt-1.5 text-xs font-sans text-[#1C1917]/70 line-clamp-2 leading-relaxed h-9 sm:h-10 overflow-hidden">
-              {product.description}
+              {activeProduct.description}
             </p>
           </div>
 
@@ -133,7 +186,7 @@ export function ProductCard({ product }: ProductCardProps) {
                 Precio
               </span>
               <span className="text-xl sm:text-2xl font-display text-[#1C1917] whitespace-nowrap">
-                {formatCurrency(product.basePrice)}
+                {formatCurrency(activeProduct.basePrice)}
               </span>
             </div>
 
@@ -154,7 +207,7 @@ export function ProductCard({ product }: ProductCardProps) {
       {/* Dynamic Product Customizer Modal - Code split & lazily loaded */}
       {modalOpen && (
         <ProductCustomizerModal
-          product={product}
+          product={activeProduct}
           isOpen={modalOpen}
           onClose={() => setModalOpen(false)}
         />

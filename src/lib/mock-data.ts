@@ -111,12 +111,12 @@ export const PRODUCTS: Product[] = [
     category: "tenders",
     piecesCount: 6,
     maxFlavorsAllowed: 1,
-    imageUrl: "https://images.unsplash.com/photo-1562967916-eb82221dfb92?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/crispy-tenders.jpg",
     popular: true,
   },
-  // Catálogo complementario por categorías
+  // Catálogo complementario por categorías (Boneless unificado con selector de 10 o 20 piezas)
   {
-    id: "prod-boneless-10",
+    id: "prod-boneless",
     name: "BONELESS (10 PZAS)",
     slug: "boneless-10-piezas",
     description: "10 bocados de 100% pechuga de pollo empanizada y bañada en tus salsas preferidas. Cero huesos, puro sabor.",
@@ -124,19 +124,28 @@ export const PRODUCTS: Product[] = [
     category: "boneless",
     piecesCount: 10,
     maxFlavorsAllowed: 2,
-    imageUrl: "https://images.unsplash.com/photo-1562967914-608f82629710?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/boneless.jpg",
     popular: true,
-  },
-  {
-    id: "prod-boneless-20",
-    name: "BONELESS (20 PZAS)",
-    slug: "boneless-20-piezas",
-    description: "20 piezas de pechuga crujiente para compartir con amigos, hasta 3 salsas combinables.",
-    basePrice: 349,
-    category: "boneless",
-    piecesCount: 20,
-    maxFlavorsAllowed: 3,
-    imageUrl: "https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?q=80&w=800&auto=format&fit=crop",
+    variants: [
+      {
+        id: "prod-boneless-10",
+        name: "BONELESS (10 PZAS)",
+        slug: "boneless-10-piezas",
+        piecesCount: 10,
+        basePrice: 189,
+        maxFlavorsAllowed: 2,
+        description: "10 bocados de 100% pechuga de pollo empanizada y bañada en tus salsas preferidas. Cero huesos, puro sabor.",
+      },
+      {
+        id: "prod-boneless-20",
+        name: "BONELESS (20 PZAS)",
+        slug: "boneless-20-piezas",
+        piecesCount: 20,
+        basePrice: 349,
+        maxFlavorsAllowed: 3,
+        description: "20 piezas de pechuga crujiente para compartir con amigos, hasta 3 salsas combinables.",
+      },
+    ],
   },
   {
     id: "prod-mega-combo-rooster",
@@ -147,7 +156,7 @@ export const PRODUCTS: Product[] = [
     category: "combos",
     piecesCount: 15,
     maxFlavorsAllowed: 3,
-    imageUrl: "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/mega-combo-rooster.jpg",
     isCombo: true,
     popular: true,
   },
@@ -159,6 +168,58 @@ export const PRODUCTS: Product[] = [
     basePrice: 89,
     category: "papas",
     maxFlavorsAllowed: 0,
-    imageUrl: "https://images.unsplash.com/photo-1576107232684-1279f3908594?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/papas-rooster-queso.jpg",
   },
 ];
+
+/**
+ * Busca un producto por slug considerando productos principales y variantes
+ */
+export function findProductBySlug(slug: string): Product | undefined {
+  for (const product of PRODUCTS) {
+    if (product.slug === slug) return product;
+    if (product.variants) {
+      const variant = product.variants.find((v) => v.slug === slug);
+      if (variant) {
+        return {
+          ...product,
+          id: variant.id,
+          name: variant.name,
+          slug: variant.slug,
+          basePrice: variant.basePrice,
+          piecesCount: variant.piecesCount,
+          maxFlavorsAllowed: variant.maxFlavorsAllowed,
+          description: variant.description || product.description,
+          imageUrl: variant.imageUrl || product.imageUrl,
+        };
+      }
+    }
+  }
+  return undefined;
+}
+
+/**
+ * Busca un producto por id considerando productos principales y variantes
+ */
+export function findProductById(id: string): Product | undefined {
+  for (const product of PRODUCTS) {
+    if (product.id === id) return product;
+    if (product.variants) {
+      const variant = product.variants.find((v) => v.id === id);
+      if (variant) {
+        return {
+          ...product,
+          id: variant.id,
+          name: variant.name,
+          slug: variant.slug,
+          basePrice: variant.basePrice,
+          piecesCount: variant.piecesCount,
+          maxFlavorsAllowed: variant.maxFlavorsAllowed,
+          description: variant.description || product.description,
+          imageUrl: variant.imageUrl || product.imageUrl,
+        };
+      }
+    }
+  }
+  return undefined;
+}

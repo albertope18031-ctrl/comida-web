@@ -10,7 +10,7 @@ import {
   ChevronRight,
   Clock,
 } from "lucide-react";
-import { PRODUCTS, FLAVORS } from "@/lib/mock-data";
+import { PRODUCTS, FLAVORS, findProductBySlug } from "@/lib/mock-data";
 import { formatCurrency, getSpiceLevelBadge } from "@/lib/utils";
 import { ProductPageClient } from "./ProductPageClient";
 
@@ -22,7 +22,7 @@ export async function generateMetadata({
   params,
 }: ProductPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const product = PRODUCTS.find((p) => p.slug === slug);
+  const product = findProductBySlug(slug) || PRODUCTS.find((p) => p.slug === slug);
 
   if (!product) {
     return {
@@ -43,7 +43,7 @@ export async function generateMetadata({
 
 export default async function ProductDetailPage({ params }: ProductPageProps) {
   const { slug } = await params;
-  const product = PRODUCTS.find((p) => p.slug === slug);
+  const product = findProductBySlug(slug) || PRODUCTS.find((p) => p.slug === slug);
 
   if (!product) {
     notFound();
