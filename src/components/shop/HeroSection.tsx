@@ -86,7 +86,7 @@ export function HeroSection() {
               {/* Imagen del Mega Combo */}
               <div className="relative h-36 sm:h-44 w-full rounded-2xl overflow-hidden border-2 border-[#1C1917] shadow-inner mb-3 bg-white">
                 <Image
-                  src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=800&auto=format&fit=crop"
+                  src="/images/mega-combo-rooster.jpg"
                   alt="Mega Combo Rooster"
                   fill
                   sizes="(max-width: 768px) 100vw, 400px"
